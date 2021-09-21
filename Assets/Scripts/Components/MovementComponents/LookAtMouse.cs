@@ -1,20 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using UniRx;
 using UnityEngine;
 
 public class LookAtMouse : MonoBehaviour
 {
-    public float rotationSpeed;
-    void Start()
+    [SerializeField] private float _rotationFactor;
+
+    private IDisposable _rotationApply;
+    
+    private void Start()
     {
-        
+        _rotationApply = Observable
+            .EveryUpdate()
+            .Subscribe(x => ApplyRotation());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        Vector3 forwardVec = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        Quaternion newRotation = Quaternion.LookRotation(Vector3.forward, forwardVec);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, rotationSpeed);
+        _rotationApply?.Dispose();
+    }
+
+    private void ApplyRotation()
+    {
+        var forwardVec = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        var newRotation = Quaternion.LookRotation(Vector3.forward, forwardVec);
+        
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, _rotationFactor);
     }
 }
