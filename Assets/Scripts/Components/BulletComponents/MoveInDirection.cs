@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MoveInDirection : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
-    public void Init()
+
+    private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }

@@ -1,32 +1,32 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Helpers;
 using UniRx;
 using UnityEngine;
 
 public class DestroyOnRicochetCount : MonoBehaviour
 {
-    public float maxRicochetCount;
+    [SerializeField] float _maxRicochetCount;
+    
     private DataHolder _dataHolder;
-    private IDisposable _x;
-    void Start()
+    private IDisposable _ricochetCountSub;
+
+    private void Start()
     {
-        _dataHolder = Utilities.GetOrAddComponent<DataHolder>(gameObject);
-        Debug.Log(_dataHolder);
-        _x = _dataHolder.properties.GetOrCreate(DataEnum.attributes.RicochetCount).AsObservable().Subscribe(x =>
-        {
-            CheckOnRicochetCount(x);
-        });
+        _dataHolder = this.GetOrAddComponent<DataHolder>();
+        _ricochetCountSub = _dataHolder.Properties
+            .GetOrCreate(Attributes.RicochetCount)
+            .AsObservable()
+            .Subscribe(CheckOnRicochetCount);
     }
     
     private void OnDestroy()
     {
-        _x.Dispose();
+        _ricochetCountSub.Dispose();
     }
 
     private void CheckOnRicochetCount(float x)
     {
-        if (x > maxRicochetCount)
+        if (x > _maxRicochetCount)
         {
             Destroy(gameObject);
         }
