@@ -1,17 +1,21 @@
+using Core;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class MoveInDirection : MonoBehaviour
+namespace Components.BulletComponents
 {
-    private Rigidbody2D _rigidbody2D;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class MoveInDirection : GameComponent
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-    }
+        private Rigidbody2D _rigidbody2D;
 
-    public void AddImpulse(Vector3 movementDirection, float speed)
-    {
-        _rigidbody2D.AddForce(movementDirection.normalized * speed, ForceMode2D.Impulse);
+        private void Awake()
+        {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+        }
+
+        public void AddImpulse(Vector3 movementDirection, float speed)
+        {
+            _rigidbody2D.AddForce(movementDirection.normalized * speed, ForceMode2D.Impulse);
+        }
     }
 }

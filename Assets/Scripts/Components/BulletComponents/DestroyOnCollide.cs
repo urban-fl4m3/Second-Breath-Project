@@ -1,9 +1,28 @@
-using UnityEngine;
+using System;
+using Core;
+using UniRx;
+using UniRx.Triggers;
+using Zenject;
 
-public class DestroyOnCollide : MonoBehaviour
+public class DestroyOnCollide : GameComponent
 {
-    private void OnCollisionEnter2D()
+    [Inject] private RegistrationMap _registrationMap;
+    
+    private IDisposable _destroyAction;
+    
+    private void Start()
     {
-        Destroy(gameObject);
+        _destroyAction = this
+            .OnCollisionEnter2DAsObservable()
+            .Subscribe(_ =>
+            {
+                Destroy(gameObject);
+            });
+    }
+
+    private void OnDestroy()
+    {
+        _registrationMap.UnregisterObject(gameObject);
+        _destroyAction?.Dispose();
     }
 }

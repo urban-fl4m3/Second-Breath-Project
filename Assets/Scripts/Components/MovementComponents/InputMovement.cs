@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Core;
 using UniRx;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class InputMovement : MonoBehaviour
+public class InputMovement : GameComponent
 {
     [SerializeField] private float _movementFactor;
     

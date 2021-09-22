@@ -1,11 +1,15 @@
 using System;
+using Core;
 using Helpers;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
-public class DestroyOnRicochetCount : MonoBehaviour
+public class DestroyOnRicochetCount : GameComponent
 {
-    [SerializeField] float _maxRicochetCount;
+    [SerializeField] private float _maxRicochetCount;
+
+    [Inject] private RegistrationMap _registrationMap;
     
     private DataHolder _dataHolder;
     private IDisposable _ricochetCountSub;
@@ -18,16 +22,17 @@ public class DestroyOnRicochetCount : MonoBehaviour
             .AsObservable()
             .Subscribe(CheckOnRicochetCount);
     }
-    
+
     private void OnDestroy()
     {
-        _ricochetCountSub.Dispose();
+        _ricochetCountSub?.Dispose();
     }
 
     private void CheckOnRicochetCount(float x)
     {
         if (x > _maxRicochetCount)
         {
+            _registrationMap.UnregisterObject(gameObject);
             Destroy(gameObject);
         }
     }
