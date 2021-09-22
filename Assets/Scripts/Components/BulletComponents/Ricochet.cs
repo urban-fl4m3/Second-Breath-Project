@@ -1,18 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Helpers;
+using UniRx;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Ricochet : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private DataHolder _dataHolder;
-
     private Vector3 _prevVelocity;
-    void Start()
+
+    private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _dataHolder = Utilities.GetOrAddComponent<DataHolder>(gameObject);
+        _dataHolder = this.GetOrAddComponent<DataHolder>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,9 +22,8 @@ public class Ricochet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        var newVelocity = _prevVelocity;
-        newVelocity = Vector3.Reflect(_prevVelocity, other.GetContact(0).normal);
+        var newVelocity = Vector3.Reflect(_prevVelocity, other.GetContact(0).normal);
         _rigidbody2D.velocity = newVelocity;
-        _dataHolder.properties[DataEnum.attributes.RicochetCount].Value += 1.0f;
+        _dataHolder.Properties[Attributes.RicochetCount].Value += 1.0f;
     }
 }

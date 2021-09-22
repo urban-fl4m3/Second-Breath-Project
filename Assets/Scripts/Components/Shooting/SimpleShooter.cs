@@ -1,48 +1,62 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Core;
 using UniRx;
 using UnityEngine;
 
-public class SimpleShooter : MonoBehaviour
+public class SimpleShooter : ExtendedMonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public GameObject bulletInitialPosition;
+    [SerializeField] private MoveInDirection _bulletPrefab;
+    [SerializeField] private Transform _bulletInitialPosition;
+    
     public float attackSpeed;
     public float bulletInitialSpeed;
-    private float _timeToNextAttack = 0.0f;
-    private IDisposable _shooter;
-    void Start()
+    
+    private float _timeToNextAttack;
+    private readonly CompositeDisposable _shootingActions = new CompositeDisposable();
+
+    private void Start()
     {
-        _shooter = Observable
+        _shootingActions.Add(Observable
             .EveryUpdate()
             .Where(_ => Input.GetKey(KeyCode.Mouse0))
-            .Subscribe(x =>
+            .Subscribe(_ =>
             {
                 Shoot();
-            });
-    }
-    
-    private void OnDestroy()
-    {
-        _shooter?.Dispose();
+            }));
+        
+        _shootingActions.Add(Observable
+            .EveryUpdate()
+            .Subscribe(_ =>
+            {
+                ReduceTimeToNextAttack();
+            }));
     }
 
-    void Shoot()
+    private void ReduceTimeToNextAttack()
     {
         _timeToNextAttack -= Time.deltaTime;
+    }
+    
+    private void Shoot()
+    {
         if (_timeToNextAttack > 0)
         {
             return;
         }
 
-        _timeToNextAttack += attackSpeed;
+        _timeToNextAttack = attackSpeed;
 
 
-        var newBullet = Instantiate(bulletPrefab);
-        newBullet.transform.position = bulletInitialPosition.transform.position;
-        var moveInDirection = newBullet.AddComponent<MoveInDirection>();
-        moveInDirection.Init();
-        moveInDirection.AddImpulse(transform.up, bulletInitialSpeed);
+        CreateBullet();
+    }
+
+    private void CreateBullet()
+    {
+        var newBullet = InstantiatePrefab(_bulletPrefab, _bulletInitialPosition.transform.position, Quaternion.identity);
+        newBullet.AddImpulse(transform.up, bulletInitialSpeed);
+    }
+    
+    private void OnDestroy()
+    {
+        _shootingActions?.Dispose();
     }
 }
