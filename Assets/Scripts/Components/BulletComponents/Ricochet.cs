@@ -6,43 +6,25 @@ using UnityEngine;
 public class Ricochet : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
-    private Vector3 hitPos;
-    private Vector3 hitNormal;
-    private Vector3 reflectPos;
-    private Vector3 reflectNormal;
-    private Vector3 velocityOnHit;
+    private DataHolder _dataHolder;
+
+    private Vector3 _prevVelocity;
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        // Gizmos.color = Color.cyan;
-        // Gizmos.DrawRay(hitPos, hitNormal * 5);
-        // Gizmos.color = Color.red;
-        // Gizmos.DrawRay(reflectPos, reflectNormal * 5);
-        // Gizmos.color = Color.yellow;
-        // Gizmos.DrawRay(reflectPos, velocityOnHit * 5);
-        // if (_rigidbody2D)
-        // {
-        //     Gizmos.color = Color.green;
-        //     Gizmos.DrawRay(transform.position, _rigidbody2D.velocity.normalized * 5);
-        // }
+        _dataHolder = Utilities.GetOrAddComponent<DataHolder>(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var currentVelocity = _rigidbody2D.velocity;
+        _prevVelocity = _rigidbody2D.velocity;
+    }
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, currentVelocity);
-        print(hit.normal + " ");
-        velocityOnHit = transform.up;
-        hitPos = hit.point;
-        hitNormal = hit.normal;
-        currentVelocity = Vector2.Reflect(currentVelocity, hitNormal);
-        reflectPos = hitPos;
-        reflectNormal = currentVelocity;
-        _rigidbody2D.velocity = currentVelocity;
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        var newVelocity = _prevVelocity;
+        newVelocity = Vector3.Reflect(_prevVelocity, other.GetContact(0).normal);
+        _rigidbody2D.velocity = newVelocity;
+        _dataHolder.properties[DataEnum.attributes.RicochetCount].Value += 1.0f;
     }
 }
