@@ -69,10 +69,9 @@ namespace Skills.Logic
 
         private void CreateBullet()
         {
-            var newBullet = Object.Instantiate(_projectile, _owner.transform.up + new Vector3(1, 0, 0),
+            var newBullet = Object.Instantiate(_projectile, _owner.transform.position + _owner.transform.up,
                 Quaternion.identity);
             
-            _registrationMap.RegisterObject(newBullet);
             newBullet.GetComponent<MoveInDirection>().AddImpulse(_owner.transform.up, 10);
         }
     }

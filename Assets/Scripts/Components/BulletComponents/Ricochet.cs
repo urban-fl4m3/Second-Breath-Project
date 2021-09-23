@@ -15,6 +15,8 @@ namespace Components.BulletComponents
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _dataHolder = this.GetOrAddComponent<DataHolder>();
+            float x = 0.0f;
+            _dataHolder.Properties.AddProperty(Attributes.RicochetCount, x);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -26,7 +28,7 @@ namespace Components.BulletComponents
         {
             var newVelocity = Vector3.Reflect(_prevVelocity, other.GetContact(0).normal);
             _rigidbody2D.velocity = newVelocity;
-            _dataHolder.Properties[Attributes.RicochetCount].Value += 1.0f;
+            _dataHolder.Properties.GetProperty<float>(Attributes.RicochetCount).Value += 1.0f;
         }
     }
 }

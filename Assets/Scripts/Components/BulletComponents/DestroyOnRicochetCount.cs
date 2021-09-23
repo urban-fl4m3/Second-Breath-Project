@@ -18,7 +18,7 @@ public class DestroyOnRicochetCount : GameComponent
     {
         _dataHolder = this.GetOrAddComponent<DataHolder>();
         _ricochetCountSub = _dataHolder.Properties
-            .GetOrCreate(Attributes.RicochetCount)
+            .GetProperty<float>(Attributes.RicochetCount)
             .AsObservable()
             .Subscribe(CheckOnRicochetCount);
     }
@@ -32,7 +32,6 @@ public class DestroyOnRicochetCount : GameComponent
     {
         if (x > _maxRicochetCount)
         {
-            _registrationMap.UnregisterObject(gameObject);
             Destroy(gameObject);
         }
     }

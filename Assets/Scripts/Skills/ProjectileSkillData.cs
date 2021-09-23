@@ -10,7 +10,7 @@ namespace Skills
         [SerializeField] private float _projectilesCount;
         [SerializeField] private float _projectileDamage;
 
-        public override DataModel GetSkillData()
+        public override DataModel GetDataModel()
         {
             var dataModel = new DataModel();
             dataModel.AddProperty(Attributes.Damage, _projectileDamage);

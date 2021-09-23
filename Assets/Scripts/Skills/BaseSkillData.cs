@@ -16,6 +16,6 @@ namespace Skills
         public Sprite Icon => _icon;
         public Type SkillType => _skillType;
         
-        public abstract DataModel GetSkillData();
+        public abstract DataModel GetDataModel();
     }
 }

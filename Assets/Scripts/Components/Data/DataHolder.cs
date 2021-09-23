@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Components.Data;
 using Core;
 using UniRx;
 
 public class DataHolder : GameComponent
 {
-    public readonly Dictionary<Attributes, ReactiveProperty<float>> Properties 
-        = new Dictionary<Attributes, ReactiveProperty<float>>();
+    public readonly DataModel Properties = new DataModel();
 }

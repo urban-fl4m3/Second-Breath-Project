@@ -22,7 +22,6 @@ public class DestroyOnCollide : GameComponent
 
     private void OnDestroy()
     {
-        _registrationMap.UnregisterObject(gameObject);
         _destroyAction?.Dispose();
     }
 }
