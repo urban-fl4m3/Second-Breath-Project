@@ -5,7 +5,7 @@ namespace Core
 {
     public class ExtendedMonoBehaviour : MonoBehaviour
     {
-        [Inject] private DiContainer _diContainer;
+        [Inject] protected DiContainer _diContainer;
 
         protected T InstantiatePrefab<T>(T original, Vector3 position, Quaternion rotation) where T : Component
         {

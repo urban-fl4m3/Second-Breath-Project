@@ -566,6 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 1115299319}
   _character: {fileID: 2022312501251254153, guid: b44618f762b7b9848a21094b24b43857, type: 3}
+  _baseSkillData: {fileID: 11400000, guid: 11fe075d54788fa4a93f2440ff4c97ae, type: 2}
 --- !u!1 &1638943583
 GameObject:
   m_ObjectHideFlags: 0

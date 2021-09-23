@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 2022312501251254155}
   - component: {fileID: 2022312501251254152}
   - component: {fileID: 2022312501251254151}
-  - component: {fileID: 1781824062}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,19 +180,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationFactor: 0.1
---- !u!114 &1781824062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022312501251254153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06040231b2637fb43be1fa3a5979b665, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 4224851710849412686, guid: 57bb08aac29b5bf47bf027a31f935420, type: 3}
-  _bulletInitialPosition: {fileID: 1603016404}
-  attackSpeed: 1
-  bulletInitialSpeed: 5
