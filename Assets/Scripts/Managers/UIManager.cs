@@ -20,23 +20,22 @@ namespace Managers
         
             _healthBarTargetData.GetProperty<float>(Attributes.CurrentHealth).AsObservable().Subscribe(_ =>
             {
-                onHPChange();
+                OnHPChange();
             });
 
             _healthBarTargetData.GetProperty<float>(Attributes.MaxHealth).AsObservable().Subscribe(_ =>
             {
-                onHPChange();
+                OnHPChange();
             });
         }
 
-        private void onHPChange()
+        private void OnHPChange()
         {
             SetHP(_healthBarTargetData.GetProperty<float>(Attributes.CurrentHealth).Value, _healthBarTargetData.GetProperty<float>(Attributes.MaxHealth).Value);
         }
 
         private void SetHP(float currentHP, float maxHP)
         {
-            print(currentHP / maxHP);
             _healthBar.material.SetFloat("normalizeHPValue", currentHP / maxHP);
         }
     }

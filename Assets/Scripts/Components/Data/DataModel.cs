@@ -11,12 +11,12 @@ namespace Components.Data
         
         public void AddProperty<T>(Attributes key, T value)
         {
-            _dataContainers.GetOrCreate(typeof(T)).Add(key, new ReactiveProperty<T>(value));
+            _dataContainers.GetOrCreate(typeof(T)).GetOrCreate(key, new ReactiveProperty<T>(value));
         }
 
         public ReactiveProperty<T> GetProperty<T>(Attributes key)
         {
-            return (ReactiveProperty<T>)_dataContainers[typeof(T)][key];
+            return (ReactiveProperty<T>)_dataContainers.GetOrCreate(typeof(T)).GetOrCreate(key);
         }
     }
 }
