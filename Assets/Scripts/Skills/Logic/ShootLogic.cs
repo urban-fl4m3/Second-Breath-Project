@@ -77,13 +77,13 @@ namespace Skills.Logic
             _timeToNextAttack = 1.0f;
 
 
-            CreateBullet(weapon.Value.projectileSpawner.position);
+            CreateBullet(weapon.Value.projectileSpawner.position, weapon.Value.transform.rotation);
         }
 
-        private void CreateBullet(Vector3 initialPosition)
+        private void CreateBullet(Vector3 initialPosition, Quaternion initialRotation)
         {
             var newBullet = Object.Instantiate(_projectile, initialPosition,
-                Quaternion.identity);
+                initialRotation);
             newBullet.ActivateGameComponents();
             newBullet.GetComponent<MoveInDirection>().AddImpulse(_owner.transform.up, 10);
         }
