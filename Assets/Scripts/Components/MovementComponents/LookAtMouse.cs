@@ -1,14 +1,15 @@
 using System;
+using Core;
 using UniRx;
 using UnityEngine;
 
-public class LookAtMouse : MonoBehaviour
+public class LookAtMouse : GameComponent
 {
     [SerializeField] private float _rotationFactor;
 
     private IDisposable _rotationApply;
     
-    private void Start()
+    public override void Activate()
     {
         _rotationApply = Observable
             .EveryUpdate()

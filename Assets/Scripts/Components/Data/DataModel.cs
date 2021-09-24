@@ -23,5 +23,10 @@ namespace Components.Data
         {
             return (ReactiveProperty<T>)_dataContainers[typeof(T)][key];
         }
+
+        public bool ContainsValue<T>(Attributes key)
+        {
+            return _dataContainers.ContainsKey(typeof(T)) && _dataContainers[typeof(T)].ContainsKey(key);
+        }
     }
 }

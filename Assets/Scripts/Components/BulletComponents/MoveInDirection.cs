@@ -8,7 +8,7 @@ namespace Components.BulletComponents
     {
         private Rigidbody2D _rigidbody2D;
 
-        private void Awake()
+        public override void Activate()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }

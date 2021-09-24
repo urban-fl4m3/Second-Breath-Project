@@ -14,7 +14,7 @@ public class DestroyOnRicochetCount : GameComponent
     private DataHolder _dataHolder;
     private IDisposable _ricochetCountSub;
 
-    private void Start()
+    public override void Activate()
     {
         _dataHolder = this.GetOrAddComponent<DataHolder>();
         _ricochetCountSub = _dataHolder.Properties

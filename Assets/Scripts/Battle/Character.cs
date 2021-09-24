@@ -22,12 +22,14 @@ namespace Battle
 
         [HideInInspector] public DataHolder characterData;
         private float _currentHealth = 50.0f;
-        private ReactiveProperty<Weapon> _weapon;
+        public ReactiveProperty<Weapon> _weapon;
 
         private IDisposable _handPosUpdater;
+        private IDisposable _weaponUpdater;
 
         public void Init()
         {
+            gameObject.ActivateGameComponents();
             InitCharacter();
             InitSkills();
         }
@@ -37,14 +39,22 @@ namespace Battle
             characterData = this.GetOrAddComponent<DataHolder>();
             characterData.Properties.AddProperty(Attributes.CurrentHealth, _currentHealth);
             _handPosUpdater = characterData.Properties.GetOrCreateProperty<Transform>(Attributes.HandTransform).AsObservable().Subscribe(UpdateWeaponParent);
+            _weaponUpdater = _weapon.AsObservable().Subscribe(WeaponWasUpdated);
         }
 
 
         private void UpdateWeaponParent(Transform newValue)
         {
-            _weapon?.Value.transform.SetParent(newValue);
+            _weapon.Value?.transform.SetParent(newValue);
         }
-        
+
+        private void WeaponWasUpdated(Weapon newValue)
+        {
+            if (!characterData.Properties.ContainsValue<Transform>(Attributes.HandTransform) || newValue == null) return;
+            var newParent = characterData.Properties.GetProperty<Transform>(Attributes.HandTransform);
+            newValue.transform.SetParent(newParent.Value);
+        }
+
         private void InitSkills()
         {
             foreach (var skillData in _skillsData)
@@ -60,12 +70,14 @@ namespace Battle
         public void SetData(DataModel dataModel)
         {
             characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
-            _weapon = dataModel.GetProperty<Weapon>(Attributes.Weapon);
+            _weapon.Value = dataModel.GetProperty<Weapon>(Attributes.Weapon).Value;
+
         }
 
         private void OnDestroy()
         {
             _handPosUpdater?.Dispose();
+            _weaponUpdater?.Dispose();
         }
     }
 }

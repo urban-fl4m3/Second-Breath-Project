@@ -10,7 +10,7 @@ public class DestroyOnCollide : GameComponent
     
     private IDisposable _destroyAction;
     
-    private void Start()
+    public override void Activate()
     {
         _destroyAction = this
             .OnCollisionEnter2DAsObservable()

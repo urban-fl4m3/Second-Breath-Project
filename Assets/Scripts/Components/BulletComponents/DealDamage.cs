@@ -1,9 +1,10 @@
 ﻿using Components.Data;
+using Core;
 using UnityEngine;
 
 namespace Components.BulletComponents
 {
-    public class DealDamage : MonoBehaviour
+    public class DealDamage : GameComponent
     {
         [SerializeField] private float damage = 10.0f;
         private void OnCollisionEnter2D(Collision2D other)

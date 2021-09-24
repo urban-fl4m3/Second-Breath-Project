@@ -1,9 +1,13 @@
-﻿using Components.BulletComponents;
+﻿using System;
+using Character;
+using Components.BulletComponents;
 using Components.Data;
 using Core;
+using Helpers;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,12 +20,14 @@ namespace Skills.Logic
         private GameObject _projectile;
         private float _damage;
         private float _count;
+        private Transform bulletInitialPos;
 
         private readonly CompositeDisposable _shootingActions = new CompositeDisposable();
 
         private float _timeToNextAttack;
 
         private GameObject _owner;
+        private Battle.Character _character;
 
         public override void SetData(DataModel dataModel)
         {
@@ -33,6 +39,7 @@ namespace Skills.Logic
         public override void Activate(GameObject owner)
         {
             _owner = owner;
+            _character = _owner.GetComponent<Battle.Character>();
             
             _shootingActions.Add(Observable
                 .EveryUpdate()
@@ -56,6 +63,12 @@ namespace Skills.Logic
 
         private void Shoot()
         {
+            var weapon = _character._weapon;
+            
+            if (weapon == null) return;
+            
+            weapon.Value.Attack();
+            
             if (_timeToNextAttack > 0)
             {
                 return;
@@ -64,14 +77,14 @@ namespace Skills.Logic
             _timeToNextAttack = 1.0f;
 
 
-            CreateBullet();
+            CreateBullet(weapon.Value.projectileSpawner.position);
         }
 
-        private void CreateBullet()
+        private void CreateBullet(Vector3 initialPosition)
         {
-            var newBullet = Object.Instantiate(_projectile, _owner.transform.position + _owner.transform.up,
+            var newBullet = Object.Instantiate(_projectile, initialPosition,
                 Quaternion.identity);
-            
+            newBullet.ActivateGameComponents();
             newBullet.GetComponent<MoveInDirection>().AddImpulse(_owner.transform.up, 10);
         }
     }

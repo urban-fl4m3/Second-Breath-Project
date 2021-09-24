@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 
 namespace Helpers
 {
@@ -12,6 +13,17 @@ namespace Helpers
                 component = self.gameObject.AddComponent<T>();
 
             return component;
+        }
+        
+        public static void ActivateGameComponents(this GameObject self)
+        {
+            var gameComponents = self.GetComponents<GameComponent>();
+
+            foreach (var item in gameComponents)
+            {
+                item.Activate();
+            }
+            
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Components.BulletComponents
         private DataHolder _dataHolder;
         private Vector3 _prevVelocity;
 
-        private void Start()
+        public override void Activate()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _dataHolder = this.GetOrAddComponent<DataHolder>();

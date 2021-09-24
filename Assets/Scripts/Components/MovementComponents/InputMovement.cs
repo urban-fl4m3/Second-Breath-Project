@@ -16,7 +16,7 @@ public class InputMovement : GameComponent
     private List<IDisposable> _inputs;
     private IDisposable _velocityApply;
 
-    private void Start()
+    public override void Activate()
     {
         _inputs = new List<IDisposable>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
