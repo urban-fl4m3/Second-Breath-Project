@@ -36,11 +36,11 @@ namespace Battle
         {
             characterData = this.GetOrAddComponent<DataHolder>();
             characterData.Properties.AddProperty(Attributes.CurrentHealth, _currentHealth);
-            _handPosUpdater = characterData.Properties.GetOrCreateProperty<Transform>(Attributes.HandTransform).AsObservable().Subscribe(UpdateWeponParent);
+            _handPosUpdater = characterData.Properties.GetOrCreateProperty<Transform>(Attributes.HandTransform).AsObservable().Subscribe(UpdateWeaponParent);
         }
 
 
-        private void UpdateWeponParent(Transform newValue)
+        private void UpdateWeaponParent(Transform newValue)
         {
             if (_weapon == null) return;
             _weapon.Value.transform.SetParent(newValue);
