@@ -28,7 +28,7 @@ namespace Components.BulletComponents
         {
             var newVelocity = Vector3.Reflect(_prevVelocity, other.GetContact(0).normal);
             _rigidbody2D.velocity = newVelocity;
-            _dataHolder.Properties.GetProperty<float>(Attributes.RicochetCount).Value += 1.0f;
+            _dataHolder.Properties.GetOrCreateProperty<float>(Attributes.RicochetCount).Value += 1.0f;
         }
     }
 }

@@ -21,7 +21,7 @@ public class PlayerManager : ExtendedMonoBehaviour
     private void SpawnCharacter()
     {
         var characterData = _playerConfig.GetDataModel();
-        _playerCharacter = InstantiatePrefab(characterData.GetProperty<Battle.Character>(Attributes.CharacterPrefab).Value);
+        _playerCharacter = InstantiatePrefab(characterData.GetOrCreateProperty<Battle.Character>(Attributes.CharacterPrefab).Value);
         _playerCharacter.Init();
         _playerCharacter.SetData(characterData);
         

@@ -14,9 +14,14 @@ namespace Components.Data
             _dataContainers.GetOrCreate(typeof(T)).GetOrCreate(key, new ReactiveProperty<T>(value));
         }
 
-        public ReactiveProperty<T> GetProperty<T>(Attributes key)
+        public ReactiveProperty<T> GetOrCreateProperty<T>(Attributes key)
         {
             return (ReactiveProperty<T>)_dataContainers.GetOrCreate(typeof(T)).GetOrCreate(key);
+        }
+        
+        public ReactiveProperty<T> GetProperty<T>(Attributes key)
+        {
+            return (ReactiveProperty<T>)_dataContainers[typeof(T)][key];
         }
     }
 }

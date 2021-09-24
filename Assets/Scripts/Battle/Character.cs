@@ -18,6 +18,7 @@ namespace Battle
 
         [SerializeField] private List<BaseSkillData> _skillsData;
         private List<BaseSkillLogic> _skillsLogic = new List<BaseSkillLogic>();
+        
 
         public DataHolder characterData;
         private float _currentHealth = 50.0f;
@@ -48,7 +49,7 @@ namespace Battle
 
         public void SetData(DataModel dataModel)
         {
-            characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetProperty<float>(Attributes.MaxHealth).Value);
+            characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
         }
 
         private void OnDestroy()

@@ -25,9 +25,9 @@ namespace Skills.Logic
 
         public override void SetData(DataModel dataModel)
         {
-            _projectile = dataModel.GetProperty<GameObject>(Attributes.ProjectilePrefab).Value;
-            _damage = dataModel.GetProperty<float>(Attributes.Damage).Value;
-            _count = dataModel.GetProperty<float>(Attributes.ProjectileCount).Value;
+            _projectile = dataModel.GetOrCreateProperty<GameObject>(Attributes.ProjectilePrefab).Value;
+            _damage = dataModel.GetOrCreateProperty<float>(Attributes.Damage).Value;
+            _count = dataModel.GetOrCreateProperty<float>(Attributes.ProjectileCount).Value;
         }
 
         public override void Activate(GameObject owner)

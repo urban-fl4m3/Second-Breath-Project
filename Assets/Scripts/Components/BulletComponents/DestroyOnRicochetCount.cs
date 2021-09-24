@@ -18,7 +18,7 @@ public class DestroyOnRicochetCount : GameComponent
     {
         _dataHolder = this.GetOrAddComponent<DataHolder>();
         _ricochetCountSub = _dataHolder.Properties
-            .GetProperty<float>(Attributes.RicochetCount)
+            .GetOrCreateProperty<float>(Attributes.RicochetCount)
             .AsObservable()
             .Subscribe(CheckOnRicochetCount);
     }

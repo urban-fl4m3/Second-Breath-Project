@@ -12,7 +12,7 @@ namespace Components.BulletComponents
             if (targetObject.GetComponent<Battle.Character>() == null) return;
             
             DataModel targetData = targetObject.GetComponent<Battle.Character>().characterData.Properties;
-            targetData.GetProperty<float>(Attributes.CurrentHealth).Value -= damage;
+            targetData.GetOrCreateProperty<float>(Attributes.CurrentHealth).Value -= damage;
         }
     }
 }
