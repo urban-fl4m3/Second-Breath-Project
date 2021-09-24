@@ -10,6 +10,7 @@ namespace Character
         public float baseAttack = 0.0f;
         public SpriteRenderer weaponSprite;
         public float visualizeTime = 0.2f;
+        public Transform projectileSpawner;
 
 
         private IDisposable _update;

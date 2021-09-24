@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using Helpers;
 using UnityEngine;
 
-public class WeaponSlot : MonoBehaviour
+namespace Components
 {
-    // Start is called before the first frame update
-    void Start()
+    public class WeaponSlot : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private Transform _weaponSlot;
+        private DataHolder _data;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            _data = this.GetOrAddComponent<DataHolder>();
+            _data.Properties.AddProperty(Attributes.HandTransform, _weaponSlot);
+        }
     }
 }

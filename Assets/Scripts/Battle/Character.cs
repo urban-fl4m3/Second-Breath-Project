@@ -20,7 +20,7 @@ namespace Battle
         [SerializeField] private List<BaseSkillData> _skillsData;
         private List<BaseSkillLogic> _skillsLogic = new List<BaseSkillLogic>();
 
-        public DataHolder characterData;
+        [HideInInspector] public DataHolder characterData;
         private float _currentHealth = 50.0f;
         private ReactiveProperty<Weapon> _weapon;
 
@@ -42,8 +42,7 @@ namespace Battle
 
         private void UpdateWeaponParent(Transform newValue)
         {
-            if (_weapon == null) return;
-            _weapon.Value.transform.SetParent(newValue);
+            _weapon?.Value.transform.SetParent(newValue);
         }
         
         private void InitSkills()
@@ -66,7 +65,7 @@ namespace Battle
 
         private void OnDestroy()
         {
-            
+            _handPosUpdater?.Dispose();
         }
     }
 }
