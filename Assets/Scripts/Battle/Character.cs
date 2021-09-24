@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Character;
 using Cinemachine;
 using Components.Data;
 using Core;
@@ -18,10 +19,12 @@ namespace Battle
 
         [SerializeField] private List<BaseSkillData> _skillsData;
         private List<BaseSkillLogic> _skillsLogic = new List<BaseSkillLogic>();
-        
 
         public DataHolder characterData;
         private float _currentHealth = 50.0f;
+        private ReactiveProperty<Weapon> _weapon;
+
+        private IDisposable _handPosUpdater;
 
         public void Init()
         {
@@ -33,8 +36,16 @@ namespace Battle
         {
             characterData = this.GetOrAddComponent<DataHolder>();
             characterData.Properties.AddProperty(Attributes.CurrentHealth, _currentHealth);
+            _handPosUpdater = characterData.Properties.GetOrCreateProperty<Transform>(Attributes.HandTransform).AsObservable().Subscribe(UpdateWeponParent);
         }
 
+
+        private void UpdateWeponParent(Transform newValue)
+        {
+            if (_weapon == null) return;
+            _weapon.Value.transform.SetParent(newValue);
+        }
+        
         private void InitSkills()
         {
             foreach (var skillData in _skillsData)
@@ -50,6 +61,7 @@ namespace Battle
         public void SetData(DataModel dataModel)
         {
             characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
+            _weapon = dataModel.GetProperty<Weapon>(Attributes.Weapon);
         }
 
         private void OnDestroy()

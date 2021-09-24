@@ -4,6 +4,8 @@ public enum Attributes
     MaxHealth = 11,
     CurrentHealth = 12,
     
+    HandTransform = 97,
+    Weapon = 98,
     CharacterPrefab = 99,
     ProjectilePrefab = 100,
     ProjectileCount = 101,
