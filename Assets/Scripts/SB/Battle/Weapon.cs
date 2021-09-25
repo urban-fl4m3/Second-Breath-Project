@@ -3,7 +3,7 @@ using SB.Core;
 using UniRx;
 using UnityEngine;
 
-namespace SB.Character
+namespace SB.Battle
 {
     public class Weapon : ExtendedMonoBehaviour
     {

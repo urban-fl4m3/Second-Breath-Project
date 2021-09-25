@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SB.Character;
 using SB.Components.Data;
 using SB.Core;
 using SB.Helpers;

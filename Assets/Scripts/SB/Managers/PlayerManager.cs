@@ -1,31 +1,37 @@
-using Managers;
-using SB.Character;
-using SB.Core;
+using SB.Battle;
 using SB.Helpers;
-using UnityEngine;
+using SB.UI;
 
 namespace SB.Managers
 {
-    public class PlayerManager : ExtendedMonoBehaviour
+    public class PlayerManager : InjectManager
     {
-        [SerializeField] private CharacterData _playerConfig;
-        [SerializeField] private CameraManager _cameraManager;
-        [SerializeField] private UIManager _uiManager;
+        private Character _playerCharacter;
 
-        private Battle.Character _playerCharacter;
+        private readonly CameraManager _cameraManager;
+        private readonly UIManager _uiManager;
+        private readonly CharacterData _playerConfig;
+        
+        public PlayerManager(CameraManager cameraManager, UIManager uiManager, CharacterData playerConfig)
+        {
+            _cameraManager = cameraManager;
+            _playerConfig = playerConfig;
+            _uiManager = uiManager;
+        }
 
-        void Start()
+        protected override void OnActivate()
         {
             SpawnCharacter();
-            _uiManager.VisualizeCharacterHealth(_playerCharacter.characterData.Properties);
+            _uiManager.VisualizeCharacterHealth(_playerCharacter.characterData.Properties);   
         }
 
         private void SpawnCharacter()
         {
             var characterData = _playerConfig.GetDataModel();
-            _playerCharacter =
-                InstantiatePrefab(characterData.GetOrCreateProperty<Battle.Character>(Attributes.CharacterPrefab)
-                    .Value);
+            var instance = _container.InstantiatePrefab(
+                characterData.GetOrCreateProperty<Character>(Attributes.CharacterPrefab).Value);
+
+            _playerCharacter = instance.GetComponent<Character>();
             _playerCharacter.Init();
             _playerCharacter.SetData(characterData);
 

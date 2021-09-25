@@ -2,13 +2,13 @@
 using SB.Helpers;
 using UnityEngine;
 
-namespace SB.Character
+namespace SB.Battle
 {
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Configs/CharacterData", order = 0)]
     public class CharacterData : ScriptableObject
     {
         [SerializeField] private float _baseHp;
-        [SerializeField] private Battle.Character _characterPrefab;
+        [SerializeField] private Character _characterPrefab;
         [SerializeField] private WeaponData _weaponData;
         
         public DataModel GetDataModel()

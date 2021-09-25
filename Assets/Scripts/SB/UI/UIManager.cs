@@ -1,16 +1,22 @@
 using SB.Components.Data;
 using SB.Helpers;
+using SB.Managers;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Managers
+namespace SB.UI
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : InjectManager
     {
-        [SerializeField] private Image _healthBar;
+        private readonly ViewProvider _viewProvider;
         
         private DataModel _healthBarTargetData;
+        private static readonly int NormalizeHpValue = Shader.PropertyToID("normalizeHPValue");
+
+        public UIManager(ViewProvider viewProvider)
+        {
+            _viewProvider = viewProvider;
+        }
 
         public void VisualizeCharacterHealth(DataModel characterData)
         {
@@ -36,7 +42,7 @@ namespace Managers
 
         private void SetHP(float currentHP, float maxHP)
         {
-            _healthBar.material.SetFloat("normalizeHPValue", currentHP / maxHP);
+            _viewProvider.HealthBar.material.SetFloat(NormalizeHpValue, currentHP / maxHP);
         }
     }
 }
