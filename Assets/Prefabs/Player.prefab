@@ -167,6 +167,8 @@ MonoBehaviour:
   _skillsData:
   - {fileID: 11400000, guid: 11fe075d54788fa4a93f2440ff4c97ae, type: 2}
   characterData: {fileID: 0}
+  _weapon:
+    value: {fileID: 0}
 --- !u!114 &8325445660630370901
 MonoBehaviour:
   m_ObjectHideFlags: 0
