@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 7019453953876449743}
   - {fileID: -784735406057994525}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
@@ -88,4 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterData: {fileID: 11400000, guid: 1a263ff1e958631419802f25d2e630b8, type: 2}
-  _viewProvider: {fileID: 0}
+  _viewProvider: {fileID: 11400000, guid: 65e3da84331f9174195b34a4deb0a62e, type: 2}
+  _gameItemsData: {fileID: 11400000, guid: d6d3f2bc642281744954ff282dfdbbb3, type: 2}

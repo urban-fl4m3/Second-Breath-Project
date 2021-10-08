@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 978a376a7ea74b0d8863aff54a49d0c3, type: 3}
-  m_Name: ViewProvider
+  m_Script: {fileID: 11500000, guid: 6d8c5d25aa874fffbe658626ef5aa8fa, type: 3}
+  m_Name: GameItemsData
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 8765444923774029869, guid: 203f12fb2fba70e43bba669570b407cf, type: 3}
+  _itemMaterial: 0

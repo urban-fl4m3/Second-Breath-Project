@@ -15,7 +15,5 @@ namespace SB.Skills
         public string Name => _name;
         public Sprite Icon => _icon;
         public Type SkillType => _skillType;
-        
-        public abstract DataModel GetDataModel();
     }
 }

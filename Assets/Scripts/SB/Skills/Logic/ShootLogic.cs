@@ -24,11 +24,13 @@ namespace SB.Skills.Logic
         private GameObject _owner;
         private Battle.Character _character;
 
-        public override void SetData(DataModel dataModel)
+        public override void SetData(BaseSkillData baseSkillData)
         {
-            _projectile = dataModel.GetOrCreateProperty<GameObject>(Attributes.ProjectilePrefab).Value;
-            _damage = dataModel.GetOrCreateProperty<float>(Attributes.Damage).Value;
-            _count = dataModel.GetOrCreateProperty<float>(Attributes.ProjectileCount).Value;
+            ProjectileSkillData skillData = (ProjectileSkillData)baseSkillData;
+            
+            _projectile = skillData.ProjectilePrefab;
+            _damage = skillData.ProjectileDamage;
+            _count = skillData.ProjectilesCount;
         }
 
         public override void Activate(GameObject owner)

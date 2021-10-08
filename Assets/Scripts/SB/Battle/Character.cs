@@ -7,14 +7,11 @@ using SB.Skills;
 using SB.Skills.Logic;
 using UniRx;
 using UnityEngine;
-using Zenject;
 
 namespace SB.Battle
 {
     public class Character : ExtendedMonoBehaviour
     {
-        [Inject] private DiContainer _container;
-
         [SerializeField] private List<BaseSkillData> _skillsData;
         private List<BaseSkillLogic> _skillsLogic = new List<BaseSkillLogic>();
 
@@ -25,25 +22,34 @@ namespace SB.Battle
         private IDisposable _handPosUpdater;
         private IDisposable _weaponUpdater;
 
-        public void Init()
+        public void Init(DataModel dataModel)
         {
             gameObject.ActivateGameComponents();
-            InitCharacter();
+            
+            InitCharacter(dataModel);
             InitSkills();
         }
 
-        public void InitCharacter()
+        public void InitCharacter(DataModel dataModel)
         {
             characterData = this.GetOrAddComponent<DataHolder>();
             characterData.Properties.AddProperty(Attributes.CurrentHealth, _currentHealth);
-            _handPosUpdater = characterData.Properties.GetOrCreateProperty<Transform>(Attributes.HandTransform).AsObservable().Subscribe(UpdateWeaponParent);
+            
+            characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
+            _weapon.Value = dataModel.GetProperty<Weapon>(Attributes.Weapon).Value;
+            
+            _handPosUpdater = characterData.Properties
+                .GetOrCreateProperty<Transform>(Attributes.HandTransform)
+                .AsObservable()
+                .Subscribe(UpdateWeaponParent);
+
             _weaponUpdater = _weapon.AsObservable().Subscribe(WeaponWasUpdated);
         }
 
 
         private void UpdateWeaponParent(Transform newValue)
         {
-            _weapon.Value?.transform.SetParent(newValue);
+            _weapon.Value.transform.SetParent(newValue);
         }
 
         private void WeaponWasUpdated(Weapon newValue)
@@ -57,19 +63,11 @@ namespace SB.Battle
         {
             foreach (var skillData in _skillsData)
             {
-                var data = skillData.GetDataModel();
-                var newSkill = (BaseSkillLogic)_container.Instantiate(skillData.SkillType);
-                newSkill.SetData(data);
+                var newSkill = (BaseSkillLogic)_diContainer.Instantiate(skillData.SkillType);
+                newSkill.SetData(skillData);
                 newSkill.Activate(gameObject);
                 _skillsLogic.Add(newSkill);
             }
-        }
-
-        public void SetData(DataModel dataModel)
-        {
-            characterData.Properties.AddProperty(Attributes.MaxHealth, dataModel.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
-            _weapon.Value = dataModel.GetProperty<Weapon>(Attributes.Weapon).Value;
-
         }
 
         private void OnDestroy()

@@ -1,13 +1,17 @@
 using Cinemachine;
-using SB.Core;
 using UnityEngine;
 
 namespace SB.Managers
 {
-    public class CameraManager : ExtendedMonoBehaviour
+    public class CameraManager : InjectManager
     {
-        [SerializeField] private CinemachineVirtualCamera _mainCamera;
+        private CinemachineVirtualCamera _mainCamera;
 
+        public void AddMainVirtualCamera(CinemachineVirtualCamera camera)
+        {
+            _mainCamera = camera;
+        }
+        
         public void SetMainCameraTarget(Transform target)
         {
             _mainCamera.Follow = target;

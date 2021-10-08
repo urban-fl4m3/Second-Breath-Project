@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace SB.UI
 {
     [CreateAssetMenu(fileName = "ViewProvider", menuName = "Configs/ViewProvider")]
     public class ViewProvider : ScriptableObject
     {
-        [SerializeField] private Image _healthBar;
+        //change later to game object and create MVC
+        [SerializeField] private HealthBarView _healthBar;
 
-        public Image HealthBar => _healthBar;
+        public HealthBarView HealthBar => _healthBar;
     }
 }

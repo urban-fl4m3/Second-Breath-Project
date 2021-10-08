@@ -11,14 +11,8 @@ namespace SB.Skills
         [SerializeField] private float _projectilesCount;
         [SerializeField] private float _projectileDamage;
 
-        public override DataModel GetDataModel()
-        {
-            var dataModel = new DataModel();
-            dataModel.AddProperty(Attributes.Damage, _projectileDamage);
-            dataModel.AddProperty(Attributes.ProjectileCount, _projectilesCount);
-            dataModel.AddProperty(Attributes.ProjectilePrefab, _projectilePrefab);
-            
-            return dataModel;
-        }
+        public GameObject ProjectilePrefab => _projectilePrefab;
+        public float ProjectilesCount => _projectilesCount;
+        public float ProjectileDamage => _projectileDamage;
     }
 }

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2022312501251254149}
   - component: {fileID: 2022312501251254154}
   - component: {fileID: 2022312501251254155}
+  - component: {fileID: 2921997594654525199}
   - component: {fileID: 2022312501251254152}
   - component: {fileID: 2022312501251254151}
-  - component: {fileID: 2921997594654525199}
   - component: {fileID: 8325445660630370901}
   m_Layer: 0
   m_Name: Player
@@ -126,6 +126,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &2921997594654525199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022312501251254153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90f63bdb6a645ea8b1879a55d5f7a13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillsData:
+  - {fileID: 11400000, guid: 11fe075d54788fa4a93f2440ff4c97ae, type: 2}
+  characterData: {fileID: 0}
+  _weapon:
+    value: {fileID: 0}
 --- !u!114 &2022312501251254152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,21 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationFactor: 0.1
---- !u!114 &2921997594654525199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022312501251254153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90f63bdb6a645ea8b1879a55d5f7a13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skillsData:
-  - {fileID: 11400000, guid: 11fe075d54788fa4a93f2440ff4c97ae, type: 2}
-  characterData: {fileID: 0}
 --- !u!114 &8325445660630370901
 MonoBehaviour:
   m_ObjectHideFlags: 0
