@@ -1,4 +1,4 @@
-﻿namespace SB.Core.PauseModule
+﻿namespace SB.Core
 {
     public class PauseController
     {

@@ -1,5 +1,5 @@
-using SB.Components.Data;
-using SB.Helpers;
+using System;
+using SB.Common.Attributes;
 using SB.Managers;
 using UniRx;
 using UnityEngine;
@@ -12,17 +12,15 @@ namespace SB.UI
         private readonly ViewProvider _viewProvider;
         private Canvas _canvas;
         
-        private DataModel _healthBarTargetData;
         private static readonly int NormalizeHpValue = Shader.PropertyToID("normalizeHPValue");
 
-        private CompositeDisposable _sub;
-
         private HealthBarView _healthBarView;
+        private IAttribute _healthAttribute;
+        private IDisposable _healthSub;
         
         public UIManager(ViewProvider viewProvider)
         {
             _viewProvider = viewProvider;
-            _sub = new CompositeDisposable();
         }
 
         public void AddCanvas(Canvas canvas)
@@ -32,36 +30,26 @@ namespace SB.UI
         
         protected override void OnDispose()
         {
-            _sub?.Dispose();
+            _healthSub?.Dispose();
         }
 
-        public void VisualizeCharacterHealth(DataModel characterData)
+        //Add this logic to health bar view and create model and pass attribute to this model
+        //Remove this code later
+        public void VisualizeCharacterHealth(IAttribute healthAttribute)
         {
+            _healthAttribute = healthAttribute;
             _healthBarView = Object.Instantiate(_viewProvider.HealthBar, _canvas.transform);
             
-            _healthBarTargetData = characterData;
-        
-            SetHP(_healthBarTargetData.GetOrCreateProperty<float>(Attributes.CurrentHealth).Value, _healthBarTargetData.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
-            
-            _sub.Add(_healthBarTargetData.GetOrCreateProperty<float>(Attributes.CurrentHealth).AsObservable().Subscribe(_ =>
-            {
-                OnHPChange();
-            }));
+            OnHealthChange();
 
-            _sub.Add(_healthBarTargetData.GetOrCreateProperty<float>(Attributes.MaxHealth).AsObservable().Subscribe(_ =>
-            {
-                OnHPChange();
-            }));
+            _healthSub = null;
+            _healthSub = healthAttribute.AbsoluteValue.Subscribe(_ => OnHealthChange());
         }
 
-        private void OnHPChange()
+        private void OnHealthChange()
         {
-            SetHP(_healthBarTargetData.GetOrCreateProperty<float>(Attributes.CurrentHealth).Value, _healthBarTargetData.GetOrCreateProperty<float>(Attributes.MaxHealth).Value);
-        }
-
-        private void SetHP(float currentHP, float maxHP)
-        {
-            _healthBarView.HealthBar.material.SetFloat(NormalizeHpValue, currentHP / maxHP);
+            var ratio = _healthAttribute.Value / _healthAttribute.MaxValue;
+            _healthBarView.HealthBar.material.SetFloat(NormalizeHpValue, ratio);
         }
     }
 }

@@ -1,9 +1,8 @@
-using SB.Components.Data;
 using SB.Core;
 using SB.Helpers;
 using UnityEngine;
 
-namespace SB.Components.BulletComponents
+namespace SB.Components
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Ricochet : GameComponent

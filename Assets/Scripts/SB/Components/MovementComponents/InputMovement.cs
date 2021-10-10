@@ -4,7 +4,7 @@ using SB.Core;
 using UniRx;
 using UnityEngine;
 
-namespace SB.Components.MovementComponents
+namespace SB.Components
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class InputMovement : GameComponent

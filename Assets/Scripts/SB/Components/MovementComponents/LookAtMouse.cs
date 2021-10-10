@@ -25,6 +25,7 @@ namespace SB.Components.MovementComponents
 
         private void ApplyRotation()
         {
+            //todo remove camera main, get camera from manager or config
             var forwardVec = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             var newRotation = Quaternion.LookRotation(Vector3.forward, forwardVec);
 

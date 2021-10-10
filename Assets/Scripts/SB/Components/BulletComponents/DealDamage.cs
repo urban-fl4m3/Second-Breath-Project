@@ -1,20 +1,21 @@
-﻿using SB.Components.Data;
+﻿using SB.Battle;
+using SB.Common.Attributes;
 using SB.Core;
-using SB.Helpers;
 using UnityEngine;
 
-namespace SB.Components.BulletComponents
+namespace SB.Components
 {
     public class DealDamage : GameComponent
     {
         [SerializeField] private float damage = 10.0f;
+        
         private void OnCollisionEnter2D(Collision2D other)
         {
             var targetObject = other.gameObject;
-            if (targetObject.GetComponent<Battle.Character>() == null) return;
+            if (targetObject.GetComponent<Character>() == null) return;
             
-            DataModel targetData = targetObject.GetComponent<Battle.Character>().characterData.Properties;
-            targetData.GetOrCreateProperty<float>(Attributes.CurrentHealth).Value -= damage;
+            var attributes = targetObject.GetComponent<Character>().Attributes;
+            attributes[AttributeType.Health].Value -= damage;
         }
     }
 }

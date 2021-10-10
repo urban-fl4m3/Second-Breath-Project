@@ -1,5 +1,4 @@
 using SB.Battle;
-using SB.Helpers;
 
 namespace SB.Managers
 {
@@ -16,12 +15,10 @@ namespace SB.Managers
 
         public Character SpawnPlayerCharacter()
         {
-            var characterData = _playerConfig.GetDataModel();
-            var instance = _container.InstantiatePrefab(
-                characterData.GetOrCreateProperty<Character>(Attributes.CharacterPrefab).Value);
+            var instance = _container.InstantiatePrefab(_playerConfig.Character);
 
             _playerCharacter = instance.GetComponent<Character>();
-            _playerCharacter.Init(characterData);
+            _playerCharacter.Init(_playerConfig.Attributes);
 
             return _playerCharacter;
         }

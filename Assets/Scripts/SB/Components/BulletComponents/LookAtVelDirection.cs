@@ -3,12 +3,13 @@ using SB.Core;
 using UniRx;
 using UnityEngine;
 
-namespace SB.Components.BulletComponents
+namespace SB.Components
 {
     public class LookAtVelDirection : GameComponent
     {
         private Rigidbody2D _rigidbody2D;
         private IDisposable _updater;
+        
         public override void Activate()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();

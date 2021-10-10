@@ -1,5 +1,4 @@
 ﻿using SB.Core;
-using SB.Core.PauseModule;
 using Zenject;
 
 namespace SB.Installers

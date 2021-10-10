@@ -1,5 +1,6 @@
-﻿using SB.Components.Data;
-using SB.Helpers;
+﻿using System.Collections.Generic;
+using SB.Common.Attributes;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace SB.Battle
@@ -7,17 +8,10 @@ namespace SB.Battle
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Configs/CharacterData", order = 0)]
     public class CharacterData : ScriptableObject
     {
-        [SerializeField] private float _baseHp;
-        [SerializeField] private Character _characterPrefab;
-        [SerializeField] private WeaponData _weaponData;
-        
-        public DataModel GetDataModel()
-        {
-            var dataModel = new DataModel();
-            dataModel.AddProperty(Attributes.MaxHealth, _baseHp);
-            dataModel.AddProperty(Attributes.CharacterPrefab, _characterPrefab);
-            dataModel.AddProperty(Attributes.Weapon, _weaponData.GetWeapon());
-            return dataModel;
-        }
+        [SerializeField] private GameObject _character;
+        [OdinSerialize] private Dictionary<AttributeType, float> _attributes;
+
+        public GameObject Character => _character;
+        public IReadOnlyDictionary<AttributeType, float> Attributes => _attributes;
     }
 }

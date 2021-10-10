@@ -1,20 +1,14 @@
 using System;
-using SB.Components.Data;
 using SB.Core;
 using SB.Helpers;
-using UniRx;
 using UnityEngine;
-using Zenject;
 
-namespace SB.Components.BulletComponents
+namespace SB.Components
 {
     public class DestroyOnRicochetCount : GameComponent
     {
         [SerializeField] private float _maxRicochetCount;
 
-        [Inject] private RegistrationMap _registrationMap;
-
-        private DataHolder _dataHolder;
         private IDisposable _ricochetCountSub;
 
         public override void Activate()

@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using SB.Common.Attributes;
 using SB.Core;
 using SB.Managers;
 using SB.UI;
@@ -23,7 +24,7 @@ namespace SB.Common
             
             var character = _playerManager.SpawnPlayerCharacter();
             _cameraManager.SetMainCameraTarget(character.transform);
-            _uiManager.VisualizeCharacterHealth(character.characterData.Properties);
+            _uiManager.VisualizeCharacterHealth(character.Attributes[AttributeType.Health]);
         }
     }
 }

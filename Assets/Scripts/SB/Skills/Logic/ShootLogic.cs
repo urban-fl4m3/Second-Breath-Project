@@ -1,5 +1,4 @@
 ﻿using SB.Components.BulletComponents;
-using SB.Components.Data;
 using SB.Core;
 using SB.Helpers;
 using UniRx;

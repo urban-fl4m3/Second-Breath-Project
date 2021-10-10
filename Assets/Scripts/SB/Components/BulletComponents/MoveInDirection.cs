@@ -1,7 +1,7 @@
 using SB.Core;
 using UnityEngine;
 
-namespace SB.Components.BulletComponents
+namespace SB.Components
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class MoveInDirection : GameComponent

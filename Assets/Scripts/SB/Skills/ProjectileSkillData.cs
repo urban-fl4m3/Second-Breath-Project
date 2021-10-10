@@ -1,6 +1,4 @@
-﻿using SB.Components.Data;
-using SB.Helpers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SB.Skills
 {
