@@ -4,14 +4,14 @@ namespace SecondBreath.Game.Stats.Formulas
 {
     public class TierMultiplyStatUpgradeFormula : IStatUpgradeFormula
     {
-        private readonly ILogger _logger;
+        private readonly IDebugLogger _debugLogger;
         
         //todo: move to config
         private const float _upgradePerTier = 0.1f;
         
-        public TierMultiplyStatUpgradeFormula(ILogger logger)
+        public TierMultiplyStatUpgradeFormula(IDebugLogger debugLogger)
         {
-            _logger = logger;
+            _debugLogger = debugLogger;
         }
         
         public float GetValue(StatData statData)
@@ -25,7 +25,7 @@ namespace SecondBreath.Game.Stats.Formulas
 
             if (statData.Tier == 0)
             {
-                _logger.LogError($"Stat data is upgradeable, but tier is 0 (Value: {defaultValue})");
+                _debugLogger.LogError($"Stat data is upgradeable, but tier is 0 (Value: {defaultValue})");
                 return defaultValue;
             }
             

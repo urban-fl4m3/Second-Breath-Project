@@ -2,7 +2,6 @@
 using SecondBreath.Game.Characters.Configs;
 using UnityEngine;
 using Zenject;
-using ILogger = SecondBreath.Common.Logger.ILogger;
 
 namespace SecondBreath.Common.Installers
 {
@@ -12,7 +11,7 @@ namespace SecondBreath.Common.Installers
         
         public override void InstallBindings()
         {
-            Container.Bind<ILogger>().To<UnityLogger>().AsSingle();
+            Container.Bind<IDebugLogger>().To<UnityDebugLogger>().AsSingle();
             
             BindConfigs();
         }

@@ -196,6 +196,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2002209175}
   - component: {fileID: 2002209176}
+  - component: {fileID: 2002209178}
+  - component: {fileID: 2002209177}
   m_Layer: 0
   m_Name: BattleInitializer
   m_TagString: Untagged
@@ -230,6 +232,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007c49126c3244179754027b2e591108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2002209177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002209174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c4e6c2d6d4b7f8b9c524583daff61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+--- !u!114 &2002209178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002209174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebde9aa4ed1540e49a1e1d67067b1c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!108 &2138677392 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 1942887995589170029, guid: 0045bfacdc40c1d44a0f7dcafcd4e197, type: 3}

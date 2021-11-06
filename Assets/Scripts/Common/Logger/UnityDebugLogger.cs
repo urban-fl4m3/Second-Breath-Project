@@ -2,7 +2,7 @@
 
 namespace SecondBreath.Common.Logger
 {
-    public class UnityLogger : ILogger
+    public class UnityDebugLogger : IDebugLogger
     {
         public void Log(string msg)
         {

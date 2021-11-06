@@ -1,6 +1,6 @@
 ﻿namespace SecondBreath.Common.Logger
 {
-    public class FakeLogger : ILogger
+    public class FakeDebugLogger : IDebugLogger
     {
         public void Log(string msg)
         {
