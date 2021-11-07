@@ -1,4 +1,5 @@
 ﻿using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Binds;
 using SecondBreath.Game.Characters.Configs;
 using SecondBreath.Game.States.Binds;
 using SecondBreath.Game.Ticks;
@@ -24,6 +25,7 @@ namespace SecondBreath.Common.Installers
                 .AsSingle();
           
             GameStateBinder.Bind(Container);
+            BattleBinder.Bind(Container);
             
             BindConfigs();
         }
