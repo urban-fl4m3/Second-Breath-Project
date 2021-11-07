@@ -1,26 +1,16 @@
-﻿using System.Collections;
-using SecondBreath.Common.Logger;
-using SecondBreath.Game.Characters.Configs;
-using UnityEngine;
-using Zenject;
+﻿using SecondBreath.Common.Initializer;
+using SecondBreath.Game.States;
 
-namespace Game.Battle
+namespace SecondBreath.Game.Battle
 {
-    public class BattleInitializer : MonoInstaller
+    public class BattleInitializer : BaseSceneInitializer
     {
-        public override void InstallBindings()
+        protected override void OnAwake()
         {
-            StartCoroutine(AfterBindingsInstalled());
-        }
-
-        private IEnumerator AfterBindingsInstalled()
-        {
-            yield return new WaitForEndOfFrame();
-         
-            var config = Container.Resolve<BattleCharactersConfig>();
-            var logger = Container.Resolve<IDebugLogger>();
+            var stateMachine = Container.Resolve<IGameStateMachine>();
             
-            logger.Log(config.ToString());
+            stateMachine.CreateInitialStates();
+            stateMachine.SetState(GameState.Battle);
         }
     }
 }

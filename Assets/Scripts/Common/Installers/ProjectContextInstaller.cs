@@ -1,5 +1,7 @@
 ﻿using SecondBreath.Common.Logger;
 using SecondBreath.Game.Characters.Configs;
+using SecondBreath.Game.States.Binds;
+using SecondBreath.Game.Ticks;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +13,17 @@ namespace SecondBreath.Common.Installers
         
         public override void InstallBindings()
         {
-            Container.Bind<IDebugLogger>().To<UnityDebugLogger>().AsSingle();
+            Container
+                .Bind<IDebugLogger>()
+                .To<UnityDebugLogger>()
+                .AsSingle();
+            
+            Container
+                .Bind<IGameTickHandler>()
+                .To<GameTickHandler>()
+                .AsSingle();
+          
+            GameStateBinder.Bind(Container);
             
             BindConfigs();
         }
