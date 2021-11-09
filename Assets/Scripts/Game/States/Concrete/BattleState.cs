@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.States;
 using SecondBreath.Game.Battle;
+using SecondBreath.Game.Battle.Characters;
 using SecondBreath.Game.Battle.Managers;
 using SecondBreath.Game.Battle.Phases;
 using SecondBreath.Game.Players;
@@ -13,20 +13,25 @@ namespace SecondBreath.Game.States.Concrete
 {
     public class BattleState : BaseState
     {
+        public const int DEBUG_UNITS_COUNT = 3;
+        
         private readonly IGameTickHandler _tickHandler;
         private readonly IBattleScene _battleScene;
         private readonly IDebugLogger _logger;
+        private readonly BattleCharactersFactory _battleCharactersFactory;
 
         private Dictionary<IPlayer, IBattleManager> _battleManagers;
         private Queue<IBattlePhase> _battlePhases;
 
         private IBattlePhase _currentPhase;
         
-        public BattleState(IGameTickHandler tickHandler, IBattleScene battleScene, IDebugLogger logger)
+        public BattleState(IGameTickHandler tickHandler, IBattleScene battleScene, IDebugLogger logger,
+            BattleCharactersFactory battleCharactersFactory)
         {
             _tickHandler = tickHandler;
             _battleScene = battleScene;
             _logger = logger;
+            _battleCharactersFactory = battleCharactersFactory;
         }
 
         protected override void OnEnter()
@@ -37,6 +42,7 @@ namespace SecondBreath.Game.States.Concrete
             
             _battlePhases = new Queue<IBattlePhase>();
             _battlePhases.Enqueue(new PreparePhase(_battleManagers.Values, _logger));
+            
             NextPhase();
         }
 
@@ -48,8 +54,8 @@ namespace SecondBreath.Game.States.Concrete
 
         private void CreateBattleManagers()
         {
-            var playerManager = new BattlePlayerManager(_tickHandler, _battleScene.Field, _logger);
-            var enemyManager = new BattleEnemyManager();
+            var playerManager = new BattlePlayerManager(_tickHandler, _battleScene.Field, _logger, _battleCharactersFactory);
+            var enemyManager = new BattleEnemyManager(_battleScene.Field, _battleCharactersFactory);
 
             _battleManagers = new Dictionary<IPlayer, IBattleManager>
             {
@@ -60,7 +66,7 @@ namespace SecondBreath.Game.States.Concrete
 
         private void NextPhase()
         {
-            if (_battlePhases.Any())
+            if (_battlePhases.Count > 0)
             {
                 var nextPhase = _battlePhases.Dequeue();
                 _currentPhase = nextPhase;

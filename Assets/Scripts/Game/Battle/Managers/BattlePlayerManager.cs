@@ -1,51 +1,32 @@
-﻿using System;
-using SecondBreath.Common.Logger;
-using SecondBreath.Game.Battle.Ticks;
+﻿using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Characters;
+using SecondBreath.Game.Battle.Phases;
 using SecondBreath.Game.Players;
 using SecondBreath.Game.Ticks;
-using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Managers
 {
     public class BattlePlayerManager : IBattleManager
     {
-        public event EventHandler UnitsPrepared;
-        public  IPlayer Player { get; }
-        
+        public IPlayer Player { get; } = new GamePlayer(Team.Green);
+
         private readonly IGameTickCollection _gameTickHandler;
         private readonly IBattleField _battleField;
         private readonly IDebugLogger _debugLogger;
+        private readonly BattleCharactersFactory _battleCharactersFactory;
 
-        private BattleFieldPointSelection _fieldMouseSelector;
-        
         public BattlePlayerManager(IGameTickCollection gameTickHandler, IBattleField battleField,
-            IDebugLogger debugLogger)
+            IDebugLogger debugLogger, BattleCharactersFactory battleCharactersFactory)
         {
             _gameTickHandler = gameTickHandler;
             _battleField = battleField;
             _debugLogger = debugLogger;
-            Player = new GamePlayer(Team.Green);
+            _battleCharactersFactory = battleCharactersFactory;
         }
         
-        public void PrepareUnits()
+        public IBattlePreparationController GetPreparationController()
         {
-            _fieldMouseSelector = new BattleFieldPointSelection(Player, _battleField, _debugLogger);
-            _fieldMouseSelector.PositionSelected += HandleSelectedPosition;
-            _gameTickHandler.AddTick(_fieldMouseSelector); 
-        }
-
-        private int _selectedPoints;
-
-        private void HandleSelectedPosition(object sender, Vector2 selectedPosition)
-        {
-            _debugLogger.Log($"Selected {selectedPosition}.");
-            _selectedPoints++;
-
-            if (_selectedPoints >= 3)
-            {
-                _fieldMouseSelector.PositionSelected -= HandleSelectedPosition;
-                UnitsPrepared?.Invoke(this, EventArgs.Empty);
-            }
+            return new PlayerPreparationController(Player, _battleField, _gameTickHandler, _debugLogger, _battleCharactersFactory);
         }
     }
 }

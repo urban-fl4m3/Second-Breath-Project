@@ -36,13 +36,15 @@ namespace SecondBreath.Game.Battle.Phases
 
         private void RunManagerPreparation(IBattleManager manager)
         {
-            manager.UnitsPrepared += HandlePlayerPrepared;
-            manager.PrepareUnits();
+            var preparationController = manager.GetPreparationController();
+            
+            preparationController.UnitsPrepared += HandlePlayerPrepared;
+            preparationController.PrepareUnits();
             
             void HandlePlayerPrepared(object sender, EventArgs e)
             {
                 _managersCount--;
-                manager.UnitsPrepared -= HandlePlayerPrepared;
+                preparationController.UnitsPrepared -= HandlePlayerPrepared;
 
                 if (_managersCount <= 0)
                 {

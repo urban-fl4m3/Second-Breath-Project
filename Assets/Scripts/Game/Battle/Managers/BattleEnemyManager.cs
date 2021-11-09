@@ -1,21 +1,25 @@
-﻿using System;
+﻿using SecondBreath.Game.Battle.Characters;
+using SecondBreath.Game.Battle.Phases;
 using SecondBreath.Game.Players;
 
 namespace SecondBreath.Game.Battle.Managers
 {
     public class BattleEnemyManager : IBattleManager
     {
-        public event EventHandler UnitsPrepared;
-        public  IPlayer Player { get; }
+        public IPlayer Player { get; } = new GamePlayer(Team.Red);
 
-        public BattleEnemyManager()
+        private readonly IBattleField _battleField;
+        private readonly BattleCharactersFactory _battleCharactersFactory;
+        
+        public BattleEnemyManager(IBattleField battleField, BattleCharactersFactory battleCharactersFactory)
         {
-            Player = new GamePlayer(Team.Red);
+            _battleField = battleField;
+            _battleCharactersFactory = battleCharactersFactory;
         }
         
-        public void PrepareUnits()
+        public IBattlePreparationController GetPreparationController()
         {
-            UnitsPrepared?.Invoke(this, EventArgs.Empty);    
+            return new EnemyPreparationController(Player, _battleField, _battleCharactersFactory);
         }
     }
 }

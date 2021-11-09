@@ -413,5 +413,9 @@ PrefabInstance:
       propertyPath: _battleField
       value: 
       objectReference: {fileID: 117168659}
+    - target: {fileID: 4989615455284326103, guid: 2614531fcedcf8a4f89bf0171d2b0d45, type: 3}
+      propertyPath: _characterId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2614531fcedcf8a4f89bf0171d2b0d45, type: 3}
