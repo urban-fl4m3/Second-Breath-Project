@@ -2,11 +2,9 @@
 
 namespace SecondBreath.Game.Ticks
 {
-    public interface IGameTickHandler
+    public interface IGameTickHandler : IGameTickCollection
     {
         void StartTicking();
         void StopTicking();
-        void AddTick(ITickUpdate tick);
-        void RemoveTick(ITickUpdate tick);
     }
 }

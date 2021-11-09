@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SecondBreath.Game.Players;
+using UnityEngine;
 
 namespace SecondBreath.Game.Battle
 {
@@ -6,7 +7,6 @@ namespace SecondBreath.Game.Battle
     {
         Plane GetPlane();
 
-        bool InFriendlyField(Vector2 point);
-        bool InEnemyField(Vector2 point);
+        Rect GetTeamRect(Team team);
     }
 }

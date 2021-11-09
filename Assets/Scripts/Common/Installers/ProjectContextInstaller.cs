@@ -1,6 +1,6 @@
 ﻿using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Binds;
-using SecondBreath.Game.Characters.Configs;
+using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.States.Binds;
 using SecondBreath.Game.Ticks;
 using UnityEngine;

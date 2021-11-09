@@ -1,18 +1,24 @@
-﻿using SecondBreath.Common.Logger;
+﻿using System;
+using SecondBreath.Common.Logger;
 using SecondBreath.Common.Ticks;
+using SecondBreath.Game.Players;
 using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Ticks
 {
     public class BattleFieldPointSelection : ITickUpdate
     {
-        private const int LEFT_MOUSE_BUTTON = 0;
+        public event EventHandler<Vector2> PositionSelected;
         
+        private const int LEFT_MOUSE_BUTTON = 0;
+
+        private readonly IPlayer _selector;
         private readonly IBattleField _battleField;
         private readonly IDebugLogger _logger;
 
-        public BattleFieldPointSelection(IBattleField battleField, IDebugLogger logger)
+        public BattleFieldPointSelection(IPlayer selector, IBattleField battleField, IDebugLogger logger)
         {
+            _selector = selector;
             _battleField = battleField;
             _logger = logger;
         }
@@ -30,15 +36,11 @@ namespace SecondBreath.Game.Battle.Ticks
                 }
 
                 var point = GetPointOnPlane(camera);
-
-                if (_battleField.InFriendlyField(point))
+                var rect = _battleField.GetTeamRect(_selector.Team);
+                
+                if (rect.Contains(point))
                 {
-                    Debug.Log("CLICKED FRIENDLY RECT");
-                }
-
-                if (_battleField.InEnemyField(point))
-                {
-                    Debug.Log("CLICKED ENEMY RECT");
+                    PositionSelected?.Invoke(this, point);
                 }
             }        
         }

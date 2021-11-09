@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 
-namespace SecondBreath.Game.Characters.Configs
+namespace SecondBreath.Game.Battle.Characters.Configs
 {
     [CreateAssetMenu(fileName = "BattleCharacterData", menuName = "Configs/Characters/BattleCharacterData")]
     public class BattleCharacterData : SerializedScriptableObject
