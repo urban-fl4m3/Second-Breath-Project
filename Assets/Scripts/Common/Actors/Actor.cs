@@ -13,5 +13,15 @@ namespace Common.Actors
                 StartCoroutine(this.DestroyComponentInEditor());
             }
         }
+
+        public virtual void Enable()
+        {
+            
+        }
+
+        public virtual void Disable()
+        {
+            
+        }
     }
 }

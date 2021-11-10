@@ -34,17 +34,13 @@ namespace SecondBreath.Game.Battle.Phases
 
         private void SpawnUnit()
         {
-            var unitId = Random.Range(0, _battleCharactersFactory.CharactersCount);
-
-            var unit = _battleCharactersFactory.CreateBattleCharacter(unitId);
-
             var rect = _battleField.GetTeamRect(_player.Team);
-
             var rectPosition = rect.position;
             var xValue = Random.Range(rectPosition.x, rect.width + rectPosition.x);
             var yValue = Random.Range(rectPosition.y, rect.height + rectPosition.y);
-
-            unit.transform.position = new Vector3(xValue, 0, yValue);
+            var spawnPosition = new Vector3(xValue, 0, yValue);
+            
+            _battleCharactersFactory.SpawnRandomCharacter(_player, spawnPosition);
         }
     }
 }

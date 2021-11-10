@@ -2,36 +2,32 @@
 using System.Collections.Generic;
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.States;
-using SecondBreath.Game.Battle;
-using SecondBreath.Game.Battle.Characters;
 using SecondBreath.Game.Battle.Managers;
 using SecondBreath.Game.Battle.Phases;
 using SecondBreath.Game.Players;
 using SecondBreath.Game.Ticks;
+using Zenject;
 
 namespace SecondBreath.Game.States.Concrete
 {
     public class BattleState : BaseState
     {
         public const int DEBUG_UNITS_COUNT = 3;
-        
-        private readonly IGameTickHandler _tickHandler;
-        private readonly IBattleScene _battleScene;
+
         private readonly IDebugLogger _logger;
-        private readonly BattleCharactersFactory _battleCharactersFactory;
+        private readonly DiContainer _container;
+        private readonly IGameTickHandler _tickHandler;
 
         private Dictionary<IPlayer, IBattleManager> _battleManagers;
         private Queue<IBattlePhase> _battlePhases;
 
         private IBattlePhase _currentPhase;
         
-        public BattleState(IGameTickHandler tickHandler, IBattleScene battleScene, IDebugLogger logger,
-            BattleCharactersFactory battleCharactersFactory)
+        public BattleState(DiContainer container, IDebugLogger logger, IGameTickHandler tickHandler)
         {
-            _tickHandler = tickHandler;
-            _battleScene = battleScene;
             _logger = logger;
-            _battleCharactersFactory = battleCharactersFactory;
+            _container = container;
+            _tickHandler = tickHandler;
         }
 
         protected override void OnEnter()
@@ -54,8 +50,8 @@ namespace SecondBreath.Game.States.Concrete
 
         private void CreateBattleManagers()
         {
-            var playerManager = new BattlePlayerManager(_tickHandler, _battleScene.Field, _logger, _battleCharactersFactory);
-            var enemyManager = new BattleEnemyManager(_battleScene.Field, _battleCharactersFactory);
+            var playerManager = _container.Instantiate<BattlePlayerManager>();
+            var enemyManager = _container.Instantiate<BattleEnemyManager>();
 
             _battleManagers = new Dictionary<IPlayer, IBattleManager>
             {

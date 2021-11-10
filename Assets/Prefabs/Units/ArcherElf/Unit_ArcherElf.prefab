@@ -84,8 +84,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016068776951818}
-  m_LocalRotation: {x: -0.000000011338359, y: 0.0000000050590314, z: -0.27001575,
-    w: 0.962856}
+  m_LocalRotation: {x: -0.000000011338359, y: 0.0000000050590314, z: -0.27001575, w: 0.962856}
   m_LocalPosition: {x: -0.1128404, y: 0.000000007450581, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -229,6 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4398255760794400}
   - component: {fileID: 95635282217120634}
+  - component: {fileID: 2470046639869096888}
   m_Layer: 0
   m_Name: Unit_ArcherElf
   m_TagString: Untagged
@@ -271,6 +271,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2470046639869096888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116677665208918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b89eb7d25b04d1087e9d71c3b75d5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &1141734011407956
 GameObject:
   m_ObjectHideFlags: 0

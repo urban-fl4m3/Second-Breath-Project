@@ -1,6 +1,5 @@
 ﻿using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Binds;
-using SecondBreath.Game.Battle.Characters;
 using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.States.Binds;
 using SecondBreath.Game.Ticks;
@@ -21,10 +20,10 @@ namespace SecondBreath.Common.Installers
                 .AsSingle();
             
             Container
-                .Bind<IGameTickHandler>()
-                .To<GameTickHandler>()
+                .BindInterfacesTo<GameTickHandler>()
                 .AsSingle();
-          
+            
+            
             GameStateBinder.Bind(Container);
             BattleBinder.Bind(Container);
             
@@ -34,7 +33,6 @@ namespace SecondBreath.Common.Installers
         private void BindConfigs()
         {
             Container.BindInstance(_battleCharactersConfig).AsSingle();
-            Container.Bind<BattleCharactersFactory>().AsSingle();
         }
     }
 }

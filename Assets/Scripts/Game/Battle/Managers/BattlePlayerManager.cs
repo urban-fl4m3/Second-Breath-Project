@@ -11,22 +11,22 @@ namespace SecondBreath.Game.Battle.Managers
         public IPlayer Player { get; } = new GamePlayer(Team.Green);
 
         private readonly IGameTickCollection _gameTickHandler;
-        private readonly IBattleField _battleField;
+        private readonly IBattleScene _battleScene;
         private readonly IDebugLogger _debugLogger;
         private readonly BattleCharactersFactory _battleCharactersFactory;
 
-        public BattlePlayerManager(IGameTickCollection gameTickHandler, IBattleField battleField,
+        public BattlePlayerManager(IGameTickCollection gameTickHandler, IBattleScene battleScene,
             IDebugLogger debugLogger, BattleCharactersFactory battleCharactersFactory)
         {
             _gameTickHandler = gameTickHandler;
-            _battleField = battleField;
+            _battleScene = battleScene;
             _debugLogger = debugLogger;
             _battleCharactersFactory = battleCharactersFactory;
         }
         
         public IBattlePreparationController GetPreparationController()
         {
-            return new PlayerPreparationController(Player, _battleField, _gameTickHandler, _debugLogger, _battleCharactersFactory);
+            return new PlayerPreparationController(Player, _battleScene.Field, _gameTickHandler, _debugLogger, _battleCharactersFactory);
         }
     }
 }

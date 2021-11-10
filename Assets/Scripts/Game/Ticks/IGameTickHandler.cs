@@ -1,6 +1,4 @@
-﻿using SecondBreath.Common.Ticks;
-
-namespace SecondBreath.Game.Ticks
+﻿namespace SecondBreath.Game.Ticks
 {
     public interface IGameTickHandler : IGameTickCollection
     {

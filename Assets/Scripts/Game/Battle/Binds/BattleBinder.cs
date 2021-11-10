@@ -1,4 +1,7 @@
-﻿using Zenject;
+﻿using Common.Actors;
+using SecondBreath.Game.Battle.Characters;
+using SecondBreath.Game.Battle.Registration;
+using Zenject;
 
 namespace SecondBreath.Game.Battle.Binds
 {
@@ -9,6 +12,15 @@ namespace SecondBreath.Game.Battle.Binds
             container
                 .Bind<IBattleScene>()
                 .To<BattleScene>()
+                .AsSingle();
+            
+            container
+                .Bind<BattleCharactersFactory>()
+                .AsSingle();
+            
+            container
+                .Bind<ITeamObjectRegisterer<IActor>>()
+                .To<TeamObjectRegisterer<IActor>>()
                 .AsSingle();
         }
     }

@@ -8,18 +8,18 @@ namespace SecondBreath.Game.Battle.Managers
     {
         public IPlayer Player { get; } = new GamePlayer(Team.Red);
 
-        private readonly IBattleField _battleField;
+        private readonly IBattleScene _battleScene;
         private readonly BattleCharactersFactory _battleCharactersFactory;
         
-        public BattleEnemyManager(IBattleField battleField, BattleCharactersFactory battleCharactersFactory)
+        public BattleEnemyManager(IBattleScene battleScene, BattleCharactersFactory battleCharactersFactory)
         {
-            _battleField = battleField;
+            _battleScene = battleScene;
             _battleCharactersFactory = battleCharactersFactory;
         }
         
         public IBattlePreparationController GetPreparationController()
         {
-            return new EnemyPreparationController(Player, _battleField, _battleCharactersFactory);
+            return new EnemyPreparationController(Player, _battleScene.Field, _battleCharactersFactory);
         }
     }
 }

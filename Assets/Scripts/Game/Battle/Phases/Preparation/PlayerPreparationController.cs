@@ -12,7 +12,8 @@ namespace SecondBreath.Game.Battle.Phases
     public class PlayerPreparationController : IBattlePreparationController
     {
         public event EventHandler UnitsPrepared;
-        
+
+        private readonly IPlayer _player;
         private readonly IDebugLogger _debugLogger;
         private readonly BattleCharactersFactory _battleCharactersFactory;
         private readonly IGameTickCollection _gameTickHandler;
@@ -23,6 +24,7 @@ namespace SecondBreath.Game.Battle.Phases
         public PlayerPreparationController(IPlayer player, IBattleField battleField, IGameTickCollection gameTickHandler,
             IDebugLogger debugLogger, BattleCharactersFactory battleCharactersFactory)
         {
+            _player = player;
             _debugLogger = debugLogger;
             _battleCharactersFactory = battleCharactersFactory;
             _gameTickHandler = gameTickHandler;
@@ -40,8 +42,8 @@ namespace SecondBreath.Game.Battle.Phases
             _debugLogger.Log($"Selected {selectedPosition}.");
             _selectedPoints++;
 
-            var unit = _battleCharactersFactory.CreateBattleCharacter(0);
-            unit.transform.position = new Vector3(selectedPosition.x, 0, selectedPosition.y);
+            var spawnPosition = new Vector3(selectedPosition.x, 0, selectedPosition.y);
+            _battleCharactersFactory.SpawnRandomCharacter(_player, spawnPosition);
             
             if (_selectedPoints >= BattleState.DEBUG_UNITS_COUNT)
             {
