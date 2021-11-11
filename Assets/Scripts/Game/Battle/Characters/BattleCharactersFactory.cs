@@ -16,12 +16,14 @@ namespace SecondBreath.Game.Battle.Characters
         private readonly DiContainer _diContainer;
         private readonly BattleCharactersConfig _battleCharactersConfig;
         private readonly ITeamObjectRegisterer<IActor> _actorRegisterer;
+        private readonly IDebugLogger _logger;
 
         public BattleCharactersFactory(DiContainer diContainer, BattleCharactersConfig battleCharactersConfig, 
-            ITeamObjectRegisterer<IActor> actorRegisterer)
+            ITeamObjectRegisterer<IActor> actorRegisterer, IDebugLogger logger)
         {
             _diContainer = diContainer;
             _actorRegisterer = actorRegisterer;
+            _logger = logger;
             _battleCharactersConfig = battleCharactersConfig;
         }
 
@@ -39,7 +41,7 @@ namespace SecondBreath.Game.Battle.Characters
             var characterInstance = _diContainer.InstantiatePrefab(prefab, initialPosition, Quaternion.identity, null);
             var battleCharacter = characterInstance.GetComponent<BattleCharacter>();
             
-            battleCharacter.Init(owner, randomCharacterData.Stats);
+            battleCharacter.Init(owner, randomCharacterData.Stats, _logger);
             
             _actorRegisterer.Register(owner.Team, battleCharacter); 
         }
