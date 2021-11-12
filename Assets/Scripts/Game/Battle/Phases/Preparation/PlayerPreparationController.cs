@@ -39,7 +39,6 @@ namespace SecondBreath.Game.Battle.Phases
         
         private void HandleSelectedPosition(object sender, Vector2 selectedPosition)
         {
-            _debugLogger.Log($"Selected {selectedPosition}.");
             _selectedPoints++;
 
             var spawnPosition = new Vector3(selectedPosition.x, 0, selectedPosition.y);

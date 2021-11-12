@@ -1,7 +1,10 @@
-﻿namespace Common.Actors
+﻿using System;
+
+namespace Common.Actors
 {
-    public interface IActorComponent
+    public interface IActorComponent : IDisposable
     {
-        
+        void Enable();
+        void Disable();
     }
 }

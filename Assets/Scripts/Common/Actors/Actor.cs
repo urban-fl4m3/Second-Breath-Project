@@ -1,5 +1,4 @@
-﻿using System;
-using SecondBreath.Common.Logger;
+﻿using SecondBreath.Common.Logger;
 using SecondBreath.Game.Players;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -7,17 +6,22 @@ using UnityEngine;
 namespace Common.Actors
 {
     [RequireComponent(typeof(ActorComponentContainer))]
-    public class Actor : SerializedMonoBehaviour, IActor
+    public abstract class Actor : SerializedMonoBehaviour, IActor
     {
         public IPlayer Owner => _owner;
         public IReadOnlyComponentContainer Components => _components;
         
-        [SerializeField] protected ActorComponentContainer _components;
-
-        private IDebugLogger _logger;
+        protected ActorComponentContainer _components;
+        protected IDebugLogger _logger;
+        
         private IPlayer _owner;
 
-        public void Init(IPlayer owner, IDebugLogger logger)
+        private void Awake()
+        {
+            _components = GetComponent<ActorComponentContainer>();
+        }
+
+        protected void Init(IPlayer owner, IDebugLogger logger)
         {
             _owner = owner;
             _logger = logger;
