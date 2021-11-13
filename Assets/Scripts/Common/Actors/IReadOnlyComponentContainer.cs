@@ -3,7 +3,7 @@
     public interface IReadOnlyComponentContainer
     {
         IActor Owner { get; }
-        
-        T Get<T>() where T : IActorComponent;
+
+        T Get<T>();
     }
 }

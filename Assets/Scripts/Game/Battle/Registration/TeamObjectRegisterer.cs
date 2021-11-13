@@ -7,6 +7,9 @@ namespace SecondBreath.Game.Battle.Registration
 {
     public class TeamObjectRegisterer<T> : ITeamObjectRegisterer<T>
     {
+        public event EventHandler<RegistrationTeamObjectArgs<T>> ObjectRegistered;
+        public event EventHandler<RegistrationTeamObjectArgs<T>> ObjectUnregistered;
+        
         private readonly Dictionary<Team, List<T>> _registeredObjects = new Dictionary<Team, List<T>>();
         
         public void Register(Team team, T obj)

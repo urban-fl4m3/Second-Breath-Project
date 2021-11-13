@@ -7,6 +7,7 @@ namespace Common.Actors
     public abstract class ActorComponent : SerializedMonoBehaviour, IActorComponent
     {
         protected IDebugLogger _logger;
+        
         protected void Init(IDebugLogger logger)
         {
             _logger = logger;

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Actors;
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.States;
 using SecondBreath.Game.Battle.Managers;
 using SecondBreath.Game.Battle.Phases;
+using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Players;
 using SecondBreath.Game.Ticks;
 using Zenject;
@@ -17,17 +19,20 @@ namespace SecondBreath.Game.States.Concrete
         private readonly IDebugLogger _logger;
         private readonly DiContainer _container;
         private readonly IGameTickHandler _tickHandler;
+        private readonly ITeamObjectRegisterer<IActor> _actorRegisterer;
 
         private Dictionary<IPlayer, IBattleManager> _battleManagers;
         private Queue<IBattlePhase> _battlePhases;
 
         private IBattlePhase _currentPhase;
         
-        public BattleState(DiContainer container, IDebugLogger logger, IGameTickHandler tickHandler)
+        public BattleState(DiContainer container, IDebugLogger logger, IGameTickHandler tickHandler,
+            ITeamObjectRegisterer<IActor> actorRegisterer)
         {
             _logger = logger;
             _container = container;
             _tickHandler = tickHandler;
+            _actorRegisterer = actorRegisterer;
         }
 
         protected override void OnEnter()
@@ -37,7 +42,7 @@ namespace SecondBreath.Game.States.Concrete
             _tickHandler.StartTicking();
             
             _battlePhases = new Queue<IBattlePhase>();
-            _battlePhases.Enqueue(new PreparePhase(_battleManagers.Values, _logger));
+            _battlePhases.Enqueue(new PreparePhase(_battleManagers.Values, _logger, _actorRegisterer));
             
             NextPhase();
         }

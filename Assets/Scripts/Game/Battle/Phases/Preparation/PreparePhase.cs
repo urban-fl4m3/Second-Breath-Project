@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Actors;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Managers;
+using SecondBreath.Game.Battle.Registration;
 
 namespace SecondBreath.Game.Battle.Phases
 {
@@ -9,15 +11,19 @@ namespace SecondBreath.Game.Battle.Phases
     {
         public event EventHandler PhaseCompleted;
         
+        private readonly ITeamObjectRegisterer<IActor> _actorRegisterer;
         private readonly IEnumerable<IBattleManager> _battleManagers;
         private readonly IDebugLogger _debugLogger;
 
         private int _managersCount;
         
-        public PreparePhase(IReadOnlyCollection<IBattleManager> battleManagers, IDebugLogger debugLogger)
+        public PreparePhase(IReadOnlyCollection<IBattleManager> battleManagers, IDebugLogger debugLogger, 
+            ITeamObjectRegisterer<IActor> actorRegisterer)
         {
             _battleManagers = battleManagers;
+            _actorRegisterer = actorRegisterer;
             _debugLogger = debugLogger;
+            
             _managersCount = battleManagers.Count;
         }
         
@@ -32,6 +38,11 @@ namespace SecondBreath.Game.Battle.Phases
         public void End()
         {
             _debugLogger.Log("Prepare phase ends.");
+
+            foreach (var actor in _actorRegisterer.GetRegisteredObjects())
+            {
+                actor.Enable();
+            }
         }
 
         private void RunManagerPreparation(IBattleManager manager)

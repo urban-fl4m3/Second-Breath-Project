@@ -35,7 +35,7 @@ namespace Common.Actors
             }
         }
 
-        public T Get<T>() where T : IActorComponent
+        public T Get<T>()
         {
             var type = typeof(T);
             var hasComponent = _components.TryGetValue(type, out var component);
@@ -89,7 +89,7 @@ namespace Common.Actors
         {
             foreach (var type in types)
             {
-                if (typeof(T) == type && !_components.ContainsKey(type))
+                if (!_components.ContainsKey(type))
                 {
                     _components.Add(type, component);
                 }
