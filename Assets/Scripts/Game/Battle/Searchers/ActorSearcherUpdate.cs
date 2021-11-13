@@ -36,8 +36,6 @@ namespace SecondBreath.Game.Battle.Searchers
         public void Update()
         {
             _target.Value ??= GetNearestEnemyActor();
-             
-            Debug.Log("A");
         }
 
         public void Dispose()

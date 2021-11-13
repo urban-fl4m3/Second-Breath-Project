@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Common.Actors;
+﻿using Common.Actors;
 using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Movement.Components;
 using SecondBreath.Game.Battle.Searchers;
@@ -13,6 +13,7 @@ namespace SecondBreath.Game.Battle.Characters.Actors
 {
     [RequireComponent(typeof(MovementComponent))]
     [RequireComponent(typeof(ActorSearcher))]
+    [RequireComponent(typeof(RotationComponent))]
     public class BattleCharacter : Actor
     {
         public IStatDataContainer StatContainer { get; private set; }
@@ -20,18 +21,18 @@ namespace SecondBreath.Game.Battle.Characters.Actors
         private MovementComponent _movementComponent;
         private ActorSearcher _actorSearcher;
         
-        public void Init(IPlayer owner, IReadOnlyDictionary<Stat, StatData> stats, 
+        public void Init(IPlayer owner, BattleCharacterData data, 
             IStatUpgradeFormula statUpgradeFormula, IDebugLogger logger)
         {
             base.Init(owner, logger);
             
-            StatContainer = new StatDataContainer(0, statUpgradeFormula, stats, logger);
+            StatContainer = new StatDataContainer(0, statUpgradeFormula, data.Stats, logger);
 
             _actorSearcher = _components.Create<ActorSearcher>();
             _movementComponent = _components.Create<MovementComponent>(typeof(ITranslatable));
             
             _actorSearcher.Init(logger, owner.Team, _components);
-            _movementComponent.Init(logger, StatContainer, _components);
+            _movementComponent.Init(logger, StatContainer, _components, data.Radius);
         }
 
         public override void Enable()

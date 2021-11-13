@@ -45,7 +45,7 @@ namespace SecondBreath.Game.Battle.Characters
             var characterInstance = _diContainer.InstantiatePrefab(prefab, initialPosition, Quaternion.identity, null);
             var battleCharacter = characterInstance.GetComponent<BattleCharacter>();
             
-            battleCharacter.Init(owner, randomCharacterData.Stats, _statUpgradeFormula, _logger);
+            battleCharacter.Init(owner, randomCharacterData, _statUpgradeFormula, _logger);
             
             _actorRegisterer.Register(owner.Team, battleCharacter); 
         }

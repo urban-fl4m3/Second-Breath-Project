@@ -5,5 +5,6 @@ namespace SecondBreath.Game.Battle.Movement
     public interface ITranslatable
     {
         Vector3 Position { get; }
+        float Radius { get; }
     }
 }

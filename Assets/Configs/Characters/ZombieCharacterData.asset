@@ -124,7 +124,7 @@ MonoBehaviour:
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 5
+      Data: 0.3
     - Name: _isUpgradeable
       Entry: 5
       Data: false
@@ -168,3 +168,4 @@ MonoBehaviour:
       Entry: 8
       Data: 
   _prefab: {fileID: 1544180832531774, guid: 254d78355a4df624ca1f15827790e3f8, type: 3}
+  _radius: 2
