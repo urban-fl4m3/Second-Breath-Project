@@ -4,9 +4,11 @@ using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Players;
+using SecondBreath.Game.Stats;
 using SecondBreath.Game.Ticks;
 using Zenject;
 using UniRx;
+using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Searchers
 {
@@ -16,13 +18,16 @@ namespace SecondBreath.Game.Battle.Searchers
         [Inject] private IGameTickCollection _tickHandler;
 
         private ActorSearcherUpdate _actorSearcherUpdate;
+        private IStatDataContainer _statContainer;
         private ITranslatable _translatable;
+        private ITranslatable _targetTranslatable;
         private IDisposable _targetSearchSub;
 
-        public void Init(IDebugLogger logger, Team ownerTeam, IReadOnlyComponentContainer container)
+        public void Init(IDebugLogger logger, Team ownerTeam, IStatDataContainer statContainer, IReadOnlyComponentContainer container)
         {
             base.Init(logger, ownerTeam);
 
+            _statContainer = statContainer;
             _translatable = container.Get<ITranslatable>();
         }
 
@@ -32,19 +37,7 @@ namespace SecondBreath.Game.Battle.Searchers
             
             _actorSearcherUpdate = new ActorSearcherUpdate(_actorsRegisterer, OwnerTeam, Target, _translatable);
             
-            _targetSearchSub = Target.Subscribe(OnTargetChanged);
-        }
-
-        private void OnTargetChanged(IActor target)
-        {
-            if (target == null)
-            {
-                _tickHandler.AddTick(_actorSearcherUpdate);
-            }
-            else
-            {
-                _tickHandler.RemoveTick(_actorSearcherUpdate);
-            }
+            _targetSearchSub = CurrentTarget.Subscribe(OnTargetChanged);
         }
 
         public override void Disable()
@@ -53,6 +46,35 @@ namespace SecondBreath.Game.Battle.Searchers
             
             _actorSearcherUpdate?.Dispose();
             _targetSearchSub?.Dispose();
+        }
+
+        public bool IsInAttackRange()
+        {
+            if (CurrentTarget.Value == null)
+            {
+                return false;
+            }
+            
+            var position = _translatable.Position;
+            var direction = _targetTranslatable.Position - position;
+            var distance = Vector3.SqrMagnitude(direction);
+            var attackRange = _statContainer.GetStatValue(Stat.AttackRange);
+            var attackRadius = attackRange * attackRange + _targetTranslatable.Radius * _targetTranslatable.Radius;
+
+            return attackRadius >= distance;
+        }
+        
+        private void OnTargetChanged(IActor target)
+        {
+            if (target == null)
+            {
+                _tickHandler.AddTick(_actorSearcherUpdate);
+            }
+            else
+            {
+                _targetTranslatable = target.Components.Get<ITranslatable>();
+                _tickHandler.RemoveTick(_actorSearcherUpdate);
+            }
         }
     }
 }

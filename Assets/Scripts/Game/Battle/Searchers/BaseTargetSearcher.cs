@@ -7,9 +7,10 @@ namespace SecondBreath.Game.Battle.Searchers
 {
     public abstract class BaseTargetSearcher<T> : ActorComponent
     {
-        public IReactiveProperty<T> Target { get; private set; }
-            
+        public IReadOnlyReactiveProperty<T> CurrentTarget => Target;
+
         protected Team OwnerTeam { get; private set; }
+        protected IReactiveProperty<T> Target { get; private set; }
         
         protected void Init(IDebugLogger logger, Team ownerTeam)
         {

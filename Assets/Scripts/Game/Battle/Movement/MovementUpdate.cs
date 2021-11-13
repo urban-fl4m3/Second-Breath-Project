@@ -11,6 +11,9 @@ namespace SecondBreath.Game.Battle.Movement
     //todo refactor. Subscribe should be in movement component
     public class MovementUpdate : ITickUpdate, IDisposable
     {
+        //todo remove into some config
+        private const float _movementFixDivider = 0.01f;
+        
         private readonly RotationComponent _rotationComponent;
         private readonly ActorSearcher _searcher;
         private readonly Transform _transform;
@@ -26,21 +29,25 @@ namespace SecondBreath.Game.Battle.Movement
             _movementSpeed = movementSpeed;
             _rotationComponent = rotationComponent;
 
-            _targetSearchSub = _searcher.Target.Subscribe(OnTargetFound);
+            _targetSearchSub = searcher.CurrentTarget.Subscribe(OnTargetFound);
         }
         
         public void Update()
         {
             if (_target != null)
             {
-                var position = _transform.position;
-                var direction = _target.Position - position;
-                var distance = Vector3.SqrMagnitude(direction);
-
-                if (distance > _target.Radius * _target.Radius)
+                if (CanMove())
                 {
-                    position += direction * _movementSpeed * Time.deltaTime;
-                    _transform.position = position;
+                    var position = _transform.position;
+                    var direction = _target.Position - position;
+                    var distance = Vector3.SqrMagnitude(direction);
+
+                    
+                    if (distance > _target.Radius * _target.Radius)
+                    {
+                        position += direction.normalized * _movementSpeed * Time.deltaTime * _movementFixDivider;
+                        _transform.position = position;
+                    }
                 }
 
                 _rotationComponent.LookAt(_target);
@@ -58,6 +65,11 @@ namespace SecondBreath.Game.Battle.Movement
             {
                 _target = actor.Components.Get<ITranslatable>();
             }
+        }
+
+        private bool CanMove()
+        {
+            return !_searcher.IsInAttackRange();
         }
     }
 }

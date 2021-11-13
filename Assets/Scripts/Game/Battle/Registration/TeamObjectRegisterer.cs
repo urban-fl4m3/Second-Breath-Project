@@ -27,6 +27,7 @@ namespace SecondBreath.Game.Battle.Registration
             }
             
             teamObjects.Add(obj);
+            ObjectRegistered?.Invoke(this, new RegistrationTeamObjectArgs<T>(obj, team));
         }
 
         public void Unregister(T obj)
@@ -34,6 +35,7 @@ namespace SecondBreath.Game.Battle.Registration
             foreach (var teamObjects in _registeredObjects)
             {
                 teamObjects.Value.Remove(obj);
+                ObjectUnregistered?.Invoke(this, new RegistrationTeamObjectArgs<T>(obj, teamObjects.Key));
             }
         }
 
