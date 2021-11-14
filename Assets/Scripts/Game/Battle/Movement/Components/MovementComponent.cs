@@ -32,7 +32,6 @@ namespace SecondBreath.Game.Battle.Movement.Components
             _transform = transform;
             _statContainer = statContainer;
             
-            //get components
             _rotationComponent = components.Get<RotationComponent>();
             _actorSearcher = components.Get<ActorSearcher>();
         }

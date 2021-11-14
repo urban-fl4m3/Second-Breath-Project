@@ -55,13 +55,31 @@ namespace SecondBreath.Game.Battle.Searchers
                 return false;
             }
             
-            var position = _translatable.Position;
-            var direction = _targetTranslatable.Position - position;
-            var distance = Vector3.SqrMagnitude(direction);
+            var distance = GetDistanceToCurrentTarget();
             var attackRange = _statContainer.GetStatValue(Stat.AttackRange);
             var attackRadius = attackRange * attackRange + _targetTranslatable.Radius * _targetTranslatable.Radius;
 
             return attackRadius >= distance;
+        }
+
+        public float GetDistanceToCurrentTarget()
+        {
+            var direction = GetDirectionToCurrentTarget();
+            return Vector3.SqrMagnitude(direction);
+        }
+        
+        public Vector3 GetDirectionToCurrentTarget()
+        {
+            if (CurrentTarget.Value == null)
+            {
+                _logger.LogError($"Current target is null for {gameObject.name}!");
+                return Vector3.zero;
+            }
+            
+            var position = _translatable.Position;
+            var direction = _targetTranslatable.Position - position;
+
+            return direction;
         }
         
         private void OnTargetChanged(IActor target)

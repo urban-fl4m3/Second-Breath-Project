@@ -38,10 +38,9 @@ namespace SecondBreath.Game.Battle.Movement
             {
                 if (CanMove())
                 {
-                    var position = _transform.position;
-                    var direction = _target.Position - position;
+                    var direction = _searcher.GetDirectionToCurrentTarget();
                     var distance = Vector3.SqrMagnitude(direction);
-
+                    var position = _transform.position;
                     
                     if (distance > _target.Radius * _target.Radius)
                     {
