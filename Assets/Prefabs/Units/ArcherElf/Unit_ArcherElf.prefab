@@ -1762,6 +1762,7 @@ GameObject:
   - component: {fileID: 1287380332560175468}
   - component: {fileID: 78841358857594578}
   - component: {fileID: 2953715694388611332}
+  - component: {fileID: 4655755352778264799}
   m_Layer: 0
   m_Name: Unit_ArcherElf
   m_TagString: Untagged
@@ -1827,6 +1828,7 @@ MonoBehaviour:
     - {fileID: 2953715694388611332}
     - {fileID: 6982010671160222092}
     - {fileID: 6680991214341155390}
+    - {fileID: 4655755352778264799}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1838,7 +1840,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 7
     - Name: 
       Entry: 10
       Data: 0
@@ -1857,6 +1859,9 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 5
+    - Name: 
+      Entry: 10
+      Data: 6
     - Name: 
       Entry: 13
       Data: 
@@ -1947,3 +1952,32 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+--- !u!114 &4655755352778264799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925901049854717938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f31bb8a48da4d17bafffbf680912b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  _animator: {fileID: 6982010671160222092}
+  _idleParameter: IsIdle
+  _runningParameter: IsRunning
+  _attackParameter: Attack
+  _cast1Parameter: Cast1
+  _cast2Parameter: Cast2
+  _cast3Parameter: Cast3
+  _deathParameter: Death

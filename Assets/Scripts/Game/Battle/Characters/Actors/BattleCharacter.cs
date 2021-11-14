@@ -1,5 +1,6 @@
 ﻿using Common.Actors;
 using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Attack;
 using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Movement;
@@ -16,6 +17,7 @@ namespace SecondBreath.Game.Battle.Characters.Actors
     [RequireComponent(typeof(ActorSearcher))]
     [RequireComponent(typeof(RotationComponent))]
     [RequireComponent(typeof(AttackController))]
+    [RequireComponent(typeof(BattleCharacterAnimator))]
     public class BattleCharacter : Actor
     {
         public IStatDataContainer StatContainer { get; private set; }
@@ -31,10 +33,8 @@ namespace SecondBreath.Game.Battle.Characters.Actors
             
             StatContainer = new StatDataContainer(0, statUpgradeFormula, data.Stats, logger);
 
-            _actorSearcher = _components.Create<ActorSearcher>();
-            _attackController = _components.Create<AttackController>();
-            _movementComponent = _components.Create<MovementComponent>(typeof(ITranslatable));
-            
+            SetComponent();
+
             _actorSearcher.Init(logger, owner.Team, StatContainer, _components);
             _attackController.Init(logger, StatContainer, _components);
             _movementComponent.Init(logger, StatContainer, _components, data.Radius);
@@ -54,6 +54,15 @@ namespace SecondBreath.Game.Battle.Characters.Actors
             base.Disable();
             
             _movementComponent.Disable();
+        }
+
+        private void SetComponent()
+        {
+            _actorSearcher = _components.Create<ActorSearcher>();
+            _attackController = _components.Create<AttackController>();
+            _movementComponent = _components.Create<MovementComponent>(typeof(ITranslatable));
+            _components.Create<BattleCharacterAnimator>(typeof(IMovementAnimator), typeof(IAttackAnimator),
+                typeof(ICommonCharacterAnimator));
         }
     }
 }

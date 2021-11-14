@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Actors;
 using SecondBreath.Common.Ticks;
+using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Movement.Components;
 using SecondBreath.Game.Battle.Searchers;
 using UniRx;
@@ -18,15 +19,18 @@ namespace SecondBreath.Game.Battle.Movement
         private readonly ActorSearcher _searcher;
         private readonly Transform _transform;
         private readonly float _movementSpeed;
+        private readonly IMovementAnimator _movementAnimator;
 
         private readonly IDisposable _targetSearchSub;
         private ITranslatable _target;
         
-        public MovementUpdate(ActorSearcher searcher, RotationComponent rotationComponent, Transform transform, float movementSpeed)
+        public MovementUpdate(ActorSearcher searcher, RotationComponent rotationComponent, Transform transform,
+            float movementSpeed, IMovementAnimator movementAnimator)
         {
             _searcher = searcher;
             _transform = transform;
             _movementSpeed = movementSpeed;
+            _movementAnimator = movementAnimator;
             _rotationComponent = rotationComponent;
 
             _targetSearchSub = searcher.CurrentTarget.Subscribe(OnTargetFound);
@@ -36,7 +40,8 @@ namespace SecondBreath.Game.Battle.Movement
         {
             if (_target != null)
             {
-                if (CanMove())
+                var canMove = CanMove();
+                if (canMove)
                 {
                     var direction = _searcher.GetDirectionToCurrentTarget();
                     var distance = Vector3.SqrMagnitude(direction);
@@ -50,7 +55,12 @@ namespace SecondBreath.Game.Battle.Movement
                 }
 
                 _rotationComponent.LookAt(_target);
+
+                _movementAnimator.IsRunning = canMove;
+                return;
             }
+
+            _movementAnimator.IsRunning = false;
         }
 
         public void Dispose()

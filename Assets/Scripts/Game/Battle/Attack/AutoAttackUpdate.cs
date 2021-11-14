@@ -1,8 +1,11 @@
 ﻿using Common.Actors;
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.Ticks;
+using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
+using SecondBreath.Game.Stats;
+using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Attack
 {
@@ -11,14 +14,20 @@ namespace SecondBreath.Game.Battle.Attack
         private readonly IDebugLogger _logger;
         private readonly ActorSearcher _searcher;
         private readonly ITranslatable _translatable;
+        private readonly IAttackAnimator _attackAnimator;
+        private readonly IStatDataContainer _statDataContainer;
 
         private IActor _target;
+        private float _lastAttackTime;
         
-        public AutoAttackUpdate(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher)
+        public AutoAttackUpdate(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher, 
+            IAttackAnimator attackAnimator, IStatDataContainer statDataContainer)
         {
             _logger = logger;
             _searcher = searcher;
             _translatable = translatable;
+            _attackAnimator = attackAnimator;
+            _statDataContainer = statDataContainer;
         }
         
         public void Update()
@@ -29,9 +38,17 @@ namespace SecondBreath.Game.Battle.Attack
                 return;
             }
 
+            var attackSpeed = _statDataContainer.GetStatValue(Stat.AttackSpeed);
+
+            if (_lastAttackTime + 1 / attackSpeed > Time.time)
+            {
+                return;
+            }
+
             if (_searcher.IsInAttackRange())
             {
-                
+                _attackAnimator.SetAttackTrigger();
+                _lastAttackTime = Time.time;
             }         
         }
 

@@ -2,12 +2,12 @@
 {
     public enum Stat
     {
-        MaximumHealth,
-        CurrentHealth,
-        AttackDamage,
-        AttackRange,
-        MovementSpeed,
-        CriticalStrikeChance,
-        CriticalStrikeDamage
+        MaximumHealth = 0,
+        AttackDamage = 1,
+        AttackRange = 2,
+        MovementSpeed = 3,
+        CriticalStrikeChance = 4,
+        CriticalStrikeDamage = 5,
+        AttackSpeed = 6
     }
 }

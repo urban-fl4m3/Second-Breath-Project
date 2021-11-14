@@ -1,5 +1,6 @@
 ﻿using Common.Actors;
 using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
 using SecondBreath.Game.Ticks;
@@ -16,6 +17,7 @@ namespace SecondBreath.Game.Battle.Movement.Components
         public float Radius { get; private set; }
         
         private RotationComponent _rotationComponent;
+        private IMovementAnimator _movementAnimator;
         private IStatDataContainer _statContainer;
         private MovementUpdate _movement;
         private Transform _transform;
@@ -33,6 +35,7 @@ namespace SecondBreath.Game.Battle.Movement.Components
             _statContainer = statContainer;
             
             _rotationComponent = components.Get<RotationComponent>();
+            _movementAnimator = components.Get<IMovementAnimator>();
             _actorSearcher = components.Get<ActorSearcher>();
         }
 
@@ -41,7 +44,7 @@ namespace SecondBreath.Game.Battle.Movement.Components
             base.Enable();
 
             var movementSpeed = _statContainer.GetStatValue(Stat.MovementSpeed);
-            _movement = new MovementUpdate(_actorSearcher, _rotationComponent, _transform, movementSpeed);
+            _movement = new MovementUpdate(_actorSearcher, _rotationComponent, _transform, movementSpeed, _movementAnimator);
             
             _tickHandler.AddTick(_movement);
         }

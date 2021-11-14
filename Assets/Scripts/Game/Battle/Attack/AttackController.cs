@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Actors;
 using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
@@ -18,6 +19,7 @@ namespace SecondBreath.Game.Battle.Attack
 
         private ActorSearcher _searcher;
         private ITranslatable _translatable;
+        private IAttackAnimator _attackAnimator;
         private IDisposable _targetSearchingSub;
         private AutoAttackUpdate _autoAttackUpdate;
         
@@ -29,13 +31,14 @@ namespace SecondBreath.Game.Battle.Attack
 
             _searcher = components.Get<ActorSearcher>();
             _translatable = components.Get<ITranslatable>();
+            _attackAnimator = components.Get<IAttackAnimator>();
         }
 
         public override void Enable()
         {
             base.Enable();
 
-            _autoAttackUpdate = new AutoAttackUpdate(_logger, _translatable, _searcher);
+            _autoAttackUpdate = new AutoAttackUpdate(_logger, _translatable, _searcher, _attackAnimator, _statContainer);
             _targetSearchingSub = _searcher.CurrentTarget.Subscribe(OnTargetFound);
         }
 
