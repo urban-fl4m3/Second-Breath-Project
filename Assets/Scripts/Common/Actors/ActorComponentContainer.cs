@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SecondBreath.Common.Logger;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 
 namespace Common.Actors
 {
@@ -10,7 +11,7 @@ namespace Common.Actors
     {
         public IActor Owner => _owner;
         
-        [OdinSerialize] private List<IActorComponent> _serializableComponents;
+        [OdinSerialize] private List<Component> _serializableComponents;
 
         private readonly Dictionary<Type, object> _components = new Dictionary<Type, object>();
         private IDebugLogger _logger;
@@ -48,7 +49,7 @@ namespace Common.Actors
             return FindComponentOfType<T>();
         }
 
-        public T Create<T>(params Type[] storeAsTypes) where T : IActorComponent
+        public T Create<T>(params Type[] storeAsTypes)
         {
             var type = typeof(T);
             var hasComponent = _components.TryGetValue(type, out var component);
@@ -73,7 +74,7 @@ namespace Common.Actors
             return obj;
         }
 
-        public void Add<T>(T component) where T : IActorComponent
+        public void Add<T>(T component)
         {
             var type = typeof(T);
 
