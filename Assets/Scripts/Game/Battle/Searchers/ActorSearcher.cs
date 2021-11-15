@@ -92,6 +92,14 @@ namespace SecondBreath.Game.Battle.Searchers
             {
                 _targetTranslatable = target.Components.Get<ITranslatable>();
                 _tickHandler.RemoveTick(_actorSearcherUpdate);
+
+                target.Killed += HandleTargetKilled;
+            }
+
+            void HandleTargetKilled(object sender, EventArgs e)
+            {
+                target.Killed -= HandleTargetKilled;
+                Target.Value = null;
             }
         }
     }

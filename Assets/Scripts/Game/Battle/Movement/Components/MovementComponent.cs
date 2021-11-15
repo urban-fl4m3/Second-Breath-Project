@@ -53,6 +53,7 @@ namespace SecondBreath.Game.Battle.Movement.Components
         {
             base.Disable();
             
+            _movement?.Dispose();
             _tickHandler.RemoveTick(_movement);
         }
     }

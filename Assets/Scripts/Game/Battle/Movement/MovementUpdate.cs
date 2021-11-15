@@ -70,10 +70,7 @@ namespace SecondBreath.Game.Battle.Movement
 
         private void OnTargetFound(IActor actor)
         {
-            if (actor != null)
-            {
-                _target = actor.Components.Get<ITranslatable>();
-            }
+            _target = actor?.Components.Get<ITranslatable>();
         }
 
         private bool CanMove()

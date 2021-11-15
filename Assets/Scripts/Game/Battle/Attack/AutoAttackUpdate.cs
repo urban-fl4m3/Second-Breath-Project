@@ -2,6 +2,7 @@
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.Ticks;
 using SecondBreath.Game.Battle.Animations;
+using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
@@ -17,7 +18,7 @@ namespace SecondBreath.Game.Battle.Attack
         private readonly IAttackAnimator _attackAnimator;
         private readonly IStatDataContainer _statDataContainer;
 
-        private IActor _target;
+        private IDamageable _target;
         private float _lastAttackTime;
         
         public AutoAttackUpdate(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher, 
@@ -49,12 +50,15 @@ namespace SecondBreath.Game.Battle.Attack
             {
                 _attackAnimator.SetAttackTrigger();
                 _lastAttackTime = Time.time;
+
+                var damageData = new DamageData(_statDataContainer.GetStatValue(Stat.AttackDamage));
+                _target.DealDamage(damageData);
             }         
         }
 
         public void SetTarget(IActor target)
         {
-            _target = target;
+            _target = target.Components.Get<IDamageable>();
         }
     }
 }

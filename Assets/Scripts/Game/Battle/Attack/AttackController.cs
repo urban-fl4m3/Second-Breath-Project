@@ -7,6 +7,7 @@ using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
 using SecondBreath.Game.Ticks;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace SecondBreath.Game.Battle.Attack
@@ -47,6 +48,7 @@ namespace SecondBreath.Game.Battle.Attack
             base.Disable();
             
             _targetSearchingSub?.Dispose();
+            _tickHandler.RemoveTick(_autoAttackUpdate);
         }
 
         private void OnTargetFound(IActor target)

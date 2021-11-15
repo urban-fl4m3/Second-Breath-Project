@@ -1731,6 +1731,7 @@ GameObject:
   - component: {fileID: 6461672663359843260}
   - component: {fileID: 6461672663359843261}
   - component: {fileID: 8422405053509763090}
+  - component: {fileID: 6959926618541350711}
   m_Layer: 0
   m_Name: Unit_WarlockUndead
   m_TagString: Untagged
@@ -1797,6 +1798,8 @@ MonoBehaviour:
     - {fileID: 1572405436937926903}
     - {fileID: 7567674931056566309}
     - {fileID: 8422405053509763090}
+    - {fileID: 6959926618541350711}
+    - {fileID: 8524159747646819365, guid: 254d78355a4df624ca1f15827790e3f8, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1808,7 +1811,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 9
     - Name: 
       Entry: 10
       Data: 0
@@ -1830,6 +1833,12 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 13
       Data: 
@@ -1949,3 +1958,24 @@ MonoBehaviour:
   _cast2Parameter: Cast2
   _cast3Parameter: Cast3
   _deathParameter: Death
+--- !u!114 &6959926618541350711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461672663359843263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a9ca7c7164467e8ed010a87a4e0ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
