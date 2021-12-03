@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Movement
 {
     public interface ITranslatable
     {
-        Vector3 Position { get; }
+        IReadOnlyReactiveProperty<Vector3> Position { get; }
         float Radius { get; }
     }
 }

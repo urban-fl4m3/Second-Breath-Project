@@ -52,8 +52,8 @@ namespace SecondBreath.Game.Battle.Searchers
             foreach (var enemy in _enemies)
             {
                 var enemyTranslatable = enemy.Components.Get<ITranslatable>();
-
-                var dist = Vector3.SqrMagnitude(enemyTranslatable.Position - _ownerTranslatable.Position);
+                var diff = enemyTranslatable.Position.Value - _ownerTranslatable.Position.Value;
+                var dist = Vector3.SqrMagnitude(diff);
                 
                 if (dist < lowestDistance)
                 {

@@ -22,7 +22,7 @@ namespace SecondBreath.Game.Battle.Health
             _statDataContainer = statDataContainer;
 
             MaximumHealth = _statDataContainer.GetStatValue(Stat.MaximumHealth);
-            CurrentHealth = MaximumHealth;
+            AddHealth(MaximumHealth);
         }
 
         public void AddHealth(float health)

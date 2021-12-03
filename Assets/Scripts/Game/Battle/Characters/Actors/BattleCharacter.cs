@@ -32,17 +32,15 @@ namespace SecondBreath.Game.Battle.Characters.Actors
         private HealthComponent _healthComponent;
         
         public void Init(IPlayer owner, BattleCharacterData data, 
-            IStatUpgradeFormula statUpgradeFormula, IDebugLogger logger)
+            IStatUpgradeFormula statUpgradeFormula, IDebugLogger logger, Vector3 initialPosition)
         {
             base.Init(owner, logger);
             
             StatContainer = new StatDataContainer(0, statUpgradeFormula, data.Stats, logger);
 
-            SetComponent();
-
             _actorSearcher.Init(logger, owner.Team, StatContainer, _components);
             _attackController.Init(logger, StatContainer, _components);
-            _movementComponent.Init(logger, StatContainer, _components, data.Radius);
+            _movementComponent.Init(logger, StatContainer, _components, initialPosition, data.Radius);
             _healthComponent.Init(logger, StatContainer);
         }
 
@@ -88,8 +86,10 @@ namespace SecondBreath.Game.Battle.Characters.Actors
             animator.SetDeathTrigger();
         }
 
-        private void SetComponent()
+        protected override void SetComponents()
         {
+            _components.Add<IHealable>(this);
+            
             _actorSearcher = _components.Create<ActorSearcher>();
             _attackController = _components.Create<AttackController>();
             _movementComponent = _components.Create<MovementComponent>(typeof(ITranslatable));

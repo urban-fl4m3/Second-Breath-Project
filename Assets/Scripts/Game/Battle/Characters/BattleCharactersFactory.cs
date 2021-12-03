@@ -38,10 +38,10 @@ namespace SecondBreath.Game.Battle.Characters
             var randomCharacterData = charactersData.GetValue(randomKey);
             var prefab = randomCharacterData.Prefab;
 
-            var characterInstance = _diContainer.InstantiatePrefab(prefab, initialPosition, Quaternion.identity, null);
+            var characterInstance = _diContainer.InstantiatePrefab(prefab);
             var battleCharacter = characterInstance.GetComponent<BattleCharacter>();
             
-            battleCharacter.Init(owner, randomCharacterData, _statUpgradeFormula, _logger);
+            battleCharacter.Init(owner, randomCharacterData, _statUpgradeFormula, _logger, initialPosition);
         }
     }
 }

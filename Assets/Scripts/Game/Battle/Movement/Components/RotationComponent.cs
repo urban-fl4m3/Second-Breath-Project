@@ -7,7 +7,7 @@ namespace SecondBreath.Game.Battle.Movement.Components
     {
         public void LookAt(ITranslatable translatable)
         {
-            var direction = translatable.Position - transform.position;
+            var direction = translatable.Position.Value - transform.position;
             var rotation = Quaternion.LookRotation(direction, Vector3.up);
             
             transform.rotation = rotation;

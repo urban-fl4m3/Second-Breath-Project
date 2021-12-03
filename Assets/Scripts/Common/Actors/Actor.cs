@@ -23,22 +23,19 @@ namespace Common.Actors
         
         private IPlayer _owner;
 
-        private void Awake()
-        {
-            _components = GetComponent<ActorComponentContainer>();
-        }
-
         protected void Init(IPlayer owner, IDebugLogger logger)
         {
-            _actorRegisterer.Register(owner.Team, this); 
-            
             _owner = owner;
             _logger = logger;
             
+            _components = GetComponent<ActorComponentContainer>();
             _components.Init(this, logger);
             _components.StoreSerializableComponents();
+            SetComponents();
+            
+            _actorRegisterer.Register(owner.Team, this);
         }
-        
+
         public virtual void Enable()
         {
             
@@ -53,6 +50,11 @@ namespace Common.Actors
         {
             _actorRegisterer.Unregister(this); 
             Killed?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void SetComponents()
+        {
+            
         }
         
         private void OnValidate()

@@ -77,7 +77,7 @@ namespace SecondBreath.Game.Battle.Searchers
             }
             
             var position = _translatable.Position;
-            var direction = _targetTranslatable.Position - position;
+            var direction = _targetTranslatable.Position.Value - position.Value;
 
             return direction;
         }

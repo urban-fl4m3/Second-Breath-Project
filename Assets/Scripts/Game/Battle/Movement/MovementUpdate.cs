@@ -12,6 +12,8 @@ namespace SecondBreath.Game.Battle.Movement
     //todo refactor. Subscribe should be in movement component
     public class MovementUpdate : ITickUpdate, IDisposable
     {
+        public event EventHandler<Vector3> PositionChanged;
+        
         //todo remove into some config
         private const float _movementFixDivider = 0.01f;
         
@@ -50,7 +52,7 @@ namespace SecondBreath.Game.Battle.Movement
                     if (distance > _target.Radius * _target.Radius)
                     {
                         position += direction.normalized * _movementSpeed * Time.deltaTime * _movementFixDivider;
-                        _transform.position = position;
+                        PositionChanged?.Invoke(this, position);
                     }
                 }
 
