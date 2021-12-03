@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Actors;
+using Common.Animations;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Movement;
@@ -15,6 +16,8 @@ namespace SecondBreath.Game.Battle.Attack
     public class AttackController : ActorComponent
     {
         [Inject] private IGameTickCollection _tickHandler;
+
+        [SerializeField] private string _attackEvent;
         
         private IStatDataContainer _statContainer;
 
@@ -23,6 +26,7 @@ namespace SecondBreath.Game.Battle.Attack
         private IAttackAnimator _attackAnimator;
         private IDisposable _targetSearchingSub;
         private AutoAttackUpdate _autoAttackUpdate;
+        private AnimationEventHandler _animationEventHandler;
         
         public void Init(IDebugLogger logger, IStatDataContainer statContainer, IReadOnlyComponentContainer components)
         {
@@ -33,13 +37,16 @@ namespace SecondBreath.Game.Battle.Attack
             _searcher = components.Get<ActorSearcher>();
             _translatable = components.Get<ITranslatable>();
             _attackAnimator = components.Get<IAttackAnimator>();
+            _animationEventHandler = components.Get<AnimationEventHandler>();
         }
 
         public override void Enable()
         {
             base.Enable();
 
-            _autoAttackUpdate = new AutoAttackUpdate(_logger, _translatable, _searcher, _attackAnimator, _statContainer);
+            _autoAttackUpdate = new AutoAttackUpdate(_logger, _translatable, _searcher, _attackAnimator, _statContainer,
+                _animationEventHandler, _attackEvent);
+            
             _targetSearchingSub = _searcher.CurrentTarget.Subscribe(OnTargetFound);
         }
 

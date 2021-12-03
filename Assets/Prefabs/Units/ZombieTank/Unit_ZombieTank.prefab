@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 8524159747646819367}
   - component: {fileID: 8524159747646819364}
   - component: {fileID: 7971527801442929685}
+  - component: {fileID: 3495535464730205037}
   m_Layer: 0
   m_Name: Unit_ZombieTank
   m_TagString: Untagged
@@ -268,6 +269,7 @@ MonoBehaviour:
     - {fileID: 8582246943311043023}
     - {fileID: 5050083538605698729}
     - {fileID: 7971527801442929685}
+    - {fileID: 3495535464730205037}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -279,7 +281,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 10
       Data: 0
@@ -301,6 +303,9 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 6
+    - Name: 
+      Entry: 10
+      Data: 7
     - Name: 
       Entry: 13
       Data: 
@@ -391,6 +396,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  _attackEvent: attack
 --- !u!114 &7971527801442929685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +426,27 @@ MonoBehaviour:
   _cast2Parameter: Cast2
   _cast3Parameter: Cast3
   _deathParameter: Death
+--- !u!114 &3495535464730205037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8524159747646819362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a9ca7c7164467e8ed010a87a4e0ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &8524439092564994433
 GameObject:
   m_ObjectHideFlags: 0

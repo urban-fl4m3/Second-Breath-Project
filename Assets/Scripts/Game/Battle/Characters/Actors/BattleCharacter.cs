@@ -64,7 +64,7 @@ namespace SecondBreath.Game.Battle.Characters.Actors
             
             _movementComponent.Disable();
             _attackController.Disable();
-            _movementComponent.Disable();
+            _actorSearcher.Disable();
             _healthComponent.Disable();
             
             _healthComponent.HealthRemained -= HandleHealthChanged;
