@@ -3,6 +3,7 @@ using Common.Actors;
 using Common.Animations;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Animations;
+using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
@@ -16,6 +17,7 @@ namespace SecondBreath.Game.Battle.Attack
     public class AttackController : ActorComponent
     {
         [Inject] private IGameTickCollection _tickHandler;
+        [Inject] private DiContainer _diContainer;
 
         [SerializeField] private string _attackEvent;
         
@@ -25,13 +27,15 @@ namespace SecondBreath.Game.Battle.Attack
         private ITranslatable _translatable;
         private IAttackAnimator _attackAnimator;
         private IDisposable _targetSearchingSub;
-        private AutoAttackUpdate _autoAttackUpdate;
+        private BaseAttackLogic _attackLogic;
         private AnimationEventHandler _animationEventHandler;
+        private BattleCharacterData _data;
         
-        public void Init(IDebugLogger logger, IStatDataContainer statContainer, IReadOnlyComponentContainer components)
+        public void Init(IDebugLogger logger, BattleCharacterData data, IStatDataContainer statContainer, IReadOnlyComponentContainer components)
         {
             base.Init(logger);
 
+            _data = data;
             _statContainer = statContainer;
 
             _searcher = components.Get<ActorSearcher>();
@@ -44,7 +48,8 @@ namespace SecondBreath.Game.Battle.Attack
         {
             base.Enable();
 
-            _autoAttackUpdate = new AutoAttackUpdate(_logger, _translatable, _searcher, _attackAnimator, _statContainer,
+            _attackLogic = _diContainer.Instantiate(_data.attackLogic.GetType()) as BaseAttackLogic;
+            _attackLogic?.init(_logger, _translatable, _searcher, _attackAnimator, _data, _statContainer,
                 _animationEventHandler, _attackEvent);
             
             _targetSearchingSub = _searcher.CurrentTarget.Subscribe(OnTargetFound);
@@ -55,19 +60,19 @@ namespace SecondBreath.Game.Battle.Attack
             base.Disable();
             
             _targetSearchingSub?.Dispose();
-            _tickHandler.RemoveTick(_autoAttackUpdate);
+            _tickHandler.RemoveTick(_attackLogic);
         }
 
         private void OnTargetFound(IActor target)
         {
             if (target != null)
             {
-                _autoAttackUpdate.SetTarget(target);
-                _tickHandler.AddTick(_autoAttackUpdate);
+                _attackLogic.SetTarget(target);
+                _tickHandler.AddTick(_attackLogic);
             }
             else
             {
-                _tickHandler.RemoveTick(_autoAttackUpdate);
+                _tickHandler.RemoveTick(_attackLogic);
             }
         }
     }
