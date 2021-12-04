@@ -191,6 +191,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _attackLogic
+      Entry: 7
+      Data: 2|SecondBreath.Game.Battle.Attack.MeleeAttackLogic, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
   _unitName: Pudge
   _unitIcon: {fileID: 21300000, guid: 05c871ef5a5ff4b4abce5caa69c5f8cf, type: 3}
   _prefab: {fileID: 8524159747646819362, guid: 254d78355a4df624ca1f15827790e3f8, type: 3}

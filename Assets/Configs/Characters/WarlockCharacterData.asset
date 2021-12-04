@@ -191,6 +191,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _attackLogic
+      Entry: 7
+      Data: 2|SecondBreath.Game.Battle.Attack.RangeAttackLogic, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
   _unitName: Sophia
   _unitIcon: {fileID: 21300000, guid: c28ad550acada0744ad6de90c5bb3a5f, type: 3}
   _prefab: {fileID: 6461672663359843263, guid: c339f98203d585d469369448d3d59ff9, type: 3}

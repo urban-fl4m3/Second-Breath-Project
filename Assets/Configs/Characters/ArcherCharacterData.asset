@@ -215,6 +215,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _attackLogic
+      Entry: 7
+      Data: 2|SecondBreath.Game.Battle.Attack.RangeAttackLogic, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
   _unitName: Cringelf
   _unitIcon: {fileID: 21300000, guid: db2b21164622db641a07406340f57c81, type: 3}
   _prefab: {fileID: 7925901049854717938, guid: 241fa28db83ac7f40a4d40c64b754d29, type: 3}
