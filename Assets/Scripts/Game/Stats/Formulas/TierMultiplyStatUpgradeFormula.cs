@@ -16,7 +16,7 @@ namespace SecondBreath.Game.Stats.Formulas
                 return defaultValue;
             }
 
-            var upgradeValue = Mathf.Pow(1 + statData.Tier * _upgradePerTier, level + 1);
+            var upgradeValue = Mathf.Pow(1 + statData.Tier * _upgradePerTier, level);
             return Mathf.Floor(defaultValue * upgradeValue);
         }
     }

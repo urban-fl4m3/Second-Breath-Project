@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SecondBreath.Game.Battle.Abilities;
 using SecondBreath.Game.Battle.Attack;
 using SecondBreath.Game.Stats;
 using Sirenix.OdinInspector;
@@ -17,6 +18,8 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         [SerializeField] private GameObject _projectile;
         [OdinSerialize] private Dictionary<Stat, StatData> _stats;
         [OdinSerialize] private BaseAttackLogic _attackLogic;
+        [SerializeField] private AbilityData[] _abilitiesData;
+        
         [SerializeField] [Min(0.0f)] private float _radius;
         [SerializeField] [Min(0.0f)] private float _height;
 
@@ -27,6 +30,7 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         public GameObject Projectile => _projectile;
         public IReadOnlyDictionary<Stat, StatData> Stats => _stats;
         public BaseAttackLogic AttackLogic => _attackLogic;
+        public IEnumerable<AbilityData> AbilitiesData => _abilitiesData;
         public float Radius => _radius;
         public float Height => _height;
     }

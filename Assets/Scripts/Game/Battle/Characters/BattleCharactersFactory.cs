@@ -18,13 +18,12 @@ namespace SecondBreath.Game.Battle.Characters
         private readonly BattleCharactersConfig _battleCharactersConfig;
 
         public BattleCharactersFactory(DiContainer diContainer, BattleCharactersConfig battleCharactersConfig, 
-            IDebugLogger logger)
+            IDebugLogger logger, IStatUpgradeFormula formula)
         {
             _logger = logger;
             _diContainer = diContainer;
             _battleCharactersConfig = battleCharactersConfig;
-
-            _statUpgradeFormula = new TierMultiplyStatUpgradeFormula();
+            _statUpgradeFormula = formula;
         }
 
         public void SpawnRandomCharacter(IPlayer owner, Vector3 initialPosition)

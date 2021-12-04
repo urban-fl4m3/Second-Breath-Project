@@ -1765,6 +1765,7 @@ GameObject:
   - component: {fileID: 2953715694388611332}
   - component: {fileID: 4655755352778264799}
   - component: {fileID: 4493344956438230115}
+  - component: {fileID: 8651129200801772938}
   m_Layer: 0
   m_Name: Unit_ArcherElf
   m_TagString: Untagged
@@ -1832,6 +1833,7 @@ MonoBehaviour:
     - {fileID: 6680991214341155390}
     - {fileID: 4655755352778264799}
     - {fileID: 4493344956438230115}
+    - {fileID: 8651129200801772938}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -1843,7 +1845,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 10
       Data: 0
@@ -1868,6 +1870,9 @@ MonoBehaviour:
     - Name: 
       Entry: 10
       Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
     - Name: 
       Entry: 13
       Data: 
@@ -1999,6 +2004,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a9ca7c7164467e8ed010a87a4e0ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+--- !u!114 &8651129200801772938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925901049854717938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f18fa5a3f34238b367cd9daf01b70e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:

@@ -3,6 +3,7 @@ using SecondBreath.Game.Battle.Binds;
 using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Signals;
 using SecondBreath.Game.States.Binds;
+using SecondBreath.Game.Stats.Formulas;
 using SecondBreath.Game.Ticks;
 using SecondBreath.Game.UI;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace SecondBreath.Common.Installers
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
-            
+
             Container
                 .Bind<ViewFactory>()
                 .AsSingle();
@@ -32,6 +33,9 @@ namespace SecondBreath.Common.Installers
                 .BindInterfacesTo<GameTickHandler>()
                 .AsSingle();
             
+            Container
+                .BindInterfacesTo<TierMultiplyStatUpgradeFormula>()
+                .AsSingle();
             
             GameStateBinder.Bind(Container);
             BattleBinder.Bind(Container);
