@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SecondBreath.Game.Battle.Attack;
 using SecondBreath.Game.Stats;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -13,6 +14,8 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         [OdinSerialize] private Dictionary<Stat, StatData> _stats;
         [SerializeField] [Min(0.0f)] private float _radius;
         [SerializeField] [Min(0.0f)] private float _height;
+
+        [OdinSerialize] public BaseAttackLogic attackLogic;
         
         public GameObject Prefab => _prefab;
         public IReadOnlyDictionary<Stat, StatData> Stats => _stats;

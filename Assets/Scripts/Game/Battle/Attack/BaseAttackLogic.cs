@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using Common.Actors;
 using Common.Animations;
 using SecondBreath.Common.Logger;
 using SecondBreath.Common.Ticks;
 using SecondBreath.Game.Battle.Animations;
+using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
@@ -12,24 +13,32 @@ using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Attack
 {
-    public class AutoAttackUpdate : ITickUpdate
+    public abstract class BaseAttackLogic : ITickUpdate
     {
-        private readonly string _attackEvent;
-        private readonly IDebugLogger _logger;
-        private readonly ActorSearcher _searcher;
-        private readonly ITranslatable _translatable;
-        private readonly IAttackAnimator _attackAnimator;
-        private readonly IStatDataContainer _statDataContainer;
-        private readonly AnimationEventHandler _animationEventHandler;
-
-        private IDamageable _target;
-        private float _lastAttackTime;
-        private bool _isAttacking;
         
-        public AutoAttackUpdate(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher, 
-            IAttackAnimator attackAnimator, IStatDataContainer statDataContainer, AnimationEventHandler animationEventHandler,
+        protected string _attackEvent;
+        protected IDebugLogger _logger;
+        protected ActorSearcher _searcher;
+        protected BattleCharacterData _data;
+        protected ITranslatable _translatable;
+        protected IAttackAnimator _attackAnimator;
+        protected IStatDataContainer _statDataContainer;
+        protected AnimationEventHandler _animationEventHandler;
+
+        protected IDamageable _target;
+        protected float _lastAttackTime;
+        protected bool _isAttacking;
+        
+        public BaseAttackLogic()
+        {
+
+        }
+
+        public void init(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher, 
+            IAttackAnimator attackAnimator, BattleCharacterData data, IStatDataContainer statDataContainer, AnimationEventHandler animationEventHandler,
             string attackEvent)
         {
+            _data = data;
             _logger = logger;
             _searcher = searcher;
             _attackEvent = attackEvent;
@@ -75,15 +84,6 @@ namespace SecondBreath.Game.Battle.Attack
             _target = target.Components.Get<IDamageable>();
         }
 
-        private void HandleAttackEvent(object sender, EventArgs e)
-        {
-            _isAttacking = false;
-            _animationEventHandler.Unsubscribe(_attackEvent);
-            
-            _lastAttackTime = Time.time;
-
-            var damageData = new DamageData(_statDataContainer.GetStatValue(Stat.AttackDamage));
-            _target.DealDamage(damageData);
-        }
+        protected abstract void HandleAttackEvent(object sender, EventArgs e);
     }
 }

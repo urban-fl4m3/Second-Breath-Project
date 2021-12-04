@@ -39,7 +39,7 @@ namespace SecondBreath.Game.Battle.Characters.Actors
             StatContainer = new StatDataContainer(0, statUpgradeFormula, data.Stats, logger);
 
             _actorSearcher.Init(logger, owner.Team, StatContainer, _components);
-            _attackController.Init(logger, StatContainer, _components);
+            _attackController.Init(logger, data, StatContainer, _components);
             _movementComponent.Init(logger, StatContainer, _components, initialPosition, data.Radius, data.Height);
             _healthComponent.Init(logger, StatContainer);
         }
