@@ -15,7 +15,7 @@ namespace SecondBreath.Game.Battle.Attack
             _lastAttackTime = Time.time;
 
             var damageData = new DamageData(_statDataContainer.GetStatValue(Stat.AttackDamage));
-            _target.DealDamage(damageData);
+            _target.Components.Get<IDamageable>().DealDamage(damageData);
         }
     }
 }

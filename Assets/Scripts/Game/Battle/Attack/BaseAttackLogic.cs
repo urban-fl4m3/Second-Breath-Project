@@ -23,18 +23,20 @@ namespace SecondBreath.Game.Battle.Attack
         protected IAttackAnimator _attackAnimator;
         protected IStatDataContainer _statDataContainer;
         protected AnimationEventHandler _animationEventHandler;
+        protected Transform _projectileSpawner;
 
-        protected IDamageable _target;
+        protected IActor _target;
         protected float _lastAttackTime;
         protected bool _isAttacking;
 
         public void Init(IDebugLogger logger, IReadOnlyComponentContainer components, BattleCharacterData data,
-            IStatDataContainer statDataContainer, string attackEvent)
+            IStatDataContainer statDataContainer, string attackEvent, Transform projectileSpawner)
         {
             _data = data;
             _logger = logger;
             _attackEvent = attackEvent;
             _statDataContainer = statDataContainer;
+            _projectileSpawner = projectileSpawner;
 
 
             _searcher = components.Get<ActorSearcher>();
@@ -76,7 +78,7 @@ namespace SecondBreath.Game.Battle.Attack
 
         public void SetTarget(IActor target)
         {
-            _target = target.Components.Get<IDamageable>();
+            _target = target;
         }
 
         protected abstract void HandleAttackEvent(object sender, EventArgs e);

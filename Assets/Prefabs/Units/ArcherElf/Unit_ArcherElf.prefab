@@ -1959,6 +1959,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   _attackEvent: attack
+  projectileSpawner: {fileID: 7058436029816603947}
 --- !u!114 &4655755352778264799
 MonoBehaviour:
   m_ObjectHideFlags: 0

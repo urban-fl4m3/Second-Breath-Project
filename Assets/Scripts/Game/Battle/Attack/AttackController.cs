@@ -17,6 +17,7 @@ namespace SecondBreath.Game.Battle.Attack
         [Inject] private DiContainer _diContainer;
 
         [SerializeField] private string _attackEvent;
+        [SerializeField] private Transform projectileSpawner;
         
         private IStatDataContainer _statContainer;
 
@@ -42,7 +43,7 @@ namespace SecondBreath.Game.Battle.Attack
             base.Enable();
 
             _attackLogic = _diContainer.Instantiate(_data.AttackLogic.GetType()) as BaseAttackLogic;
-            _attackLogic?.Init(_logger, _components, _data, _statContainer, _attackEvent);
+            _attackLogic?.Init(_logger, _components, _data, _statContainer, _attackEvent, projectileSpawner);
             
             _targetSearchingSub = _searcher.CurrentTarget.Subscribe(OnTargetFound);
         }

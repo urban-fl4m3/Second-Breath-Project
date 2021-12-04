@@ -14,6 +14,7 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         [SerializeField] private Sprite _unitIcon;
         
         [SerializeField] private GameObject _prefab;
+        [SerializeField] private GameObject _projectile;
         [OdinSerialize] private Dictionary<Stat, StatData> _stats;
         [OdinSerialize] private BaseAttackLogic _attackLogic;
         [SerializeField] [Min(0.0f)] private float _radius;
@@ -21,8 +22,9 @@ namespace SecondBreath.Game.Battle.Characters.Configs
 
         public string Name => _unitName;
         public Sprite Icon => _unitIcon;
-        
+
         public GameObject Prefab => _prefab;
+        public GameObject Projectile => _projectile;
         public IReadOnlyDictionary<Stat, StatData> Stats => _stats;
         public BaseAttackLogic AttackLogic => _attackLogic;
         public float Radius => _radius;
