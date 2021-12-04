@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1601f788584ae688a787a88dd1c108, type: 3}
+  m_Name: ViewProvider
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 8223664397496329367, guid: e9341d0875838464db4c0f363e5f2acd, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _characterSelectionViewData
+      Entry: 7
+      Data: SecondBreath.Game.UI.ViewData, Assembly-CSharp
+    - Name: _viewObject
+      Entry: 10
+      Data: 0
+    - Name: _layer
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 

@@ -74,4 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb8a070e4cd4355b93032b13ff568e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _viewProvider: {fileID: 11400000, guid: 1fde2abb0f9561845bcce09ec86717c4, type: 2}
   _battleCharactersConfig: {fileID: 11400000, guid: 19bd2d3ff1024954ba08ebc908b3d95b, type: 2}

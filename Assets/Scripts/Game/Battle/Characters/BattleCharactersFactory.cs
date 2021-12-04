@@ -35,7 +35,12 @@ namespace SecondBreath.Game.Battle.Characters
             var randomIndex = Random.Range(0, keys.Length);
             var randomKey = keys[randomIndex];
 
-            var randomCharacterData = charactersData.GetValue(randomKey);
+            SpawnCharacter(randomKey, owner, initialPosition);
+        }
+
+        public void SpawnCharacter(int id, IPlayer owner, Vector3 initialPosition)
+        {
+            var randomCharacterData = _battleCharactersConfig.CharactersData.GetValue(id);
             var prefab = randomCharacterData.Prefab;
 
             var characterInstance = _diContainer.InstantiatePrefab(prefab);
