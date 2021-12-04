@@ -201,5 +201,6 @@ MonoBehaviour:
   _unitIcon: {fileID: 21300000, guid: c28ad550acada0744ad6de90c5bb3a5f, type: 3}
   _prefab: {fileID: 6461672663359843263, guid: c339f98203d585d469369448d3d59ff9, type: 3}
   _projectile: {fileID: 2479051136284294989, guid: 9d791857b5824834b9687bc74a55943c, type: 3}
-  _radius: 2
+  _abilitiesData: []
+  _radius: 0.5
   _height: 2.5

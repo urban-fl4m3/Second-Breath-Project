@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 3
+      Data: 1.5
     - Name: _isUpgradeable
       Entry: 5
       Data: false
