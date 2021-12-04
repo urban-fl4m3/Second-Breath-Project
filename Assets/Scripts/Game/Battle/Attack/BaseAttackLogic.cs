@@ -15,7 +15,6 @@ namespace SecondBreath.Game.Battle.Attack
 {
     public abstract class BaseAttackLogic : ITickUpdate
     {
-        
         protected string _attackEvent;
         protected IDebugLogger _logger;
         protected ActorSearcher _searcher;
@@ -28,25 +27,21 @@ namespace SecondBreath.Game.Battle.Attack
         protected IDamageable _target;
         protected float _lastAttackTime;
         protected bool _isAttacking;
-        
-        public BaseAttackLogic()
-        {
 
-        }
-
-        public void init(IDebugLogger logger, ITranslatable translatable,  ActorSearcher searcher, 
-            IAttackAnimator attackAnimator, BattleCharacterData data, IStatDataContainer statDataContainer, AnimationEventHandler animationEventHandler,
-            string attackEvent)
+        public void Init(IDebugLogger logger, IReadOnlyComponentContainer components, BattleCharacterData data,
+            IStatDataContainer statDataContainer, string attackEvent)
         {
             _data = data;
             _logger = logger;
-            _searcher = searcher;
             _attackEvent = attackEvent;
-            _translatable = translatable;
-            _attackAnimator = attackAnimator;
             _statDataContainer = statDataContainer;
-            _animationEventHandler = animationEventHandler;
 
+
+            _searcher = components.Get<ActorSearcher>();
+            _translatable = components.Get<ITranslatable>();
+            _attackAnimator = components.Get<IAttackAnimator>();
+            _animationEventHandler = components.Get<AnimationEventHandler>();
+            
             _lastAttackTime = Mathf.NegativeInfinity;
         }
         

@@ -15,7 +15,7 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         
         [SerializeField] private GameObject _prefab;
         [OdinSerialize] private Dictionary<Stat, StatData> _stats;
-        [OdinSerialize] public BaseAttackLogic attackLogic;
+        [OdinSerialize] private BaseAttackLogic _attackLogic;
         [SerializeField] [Min(0.0f)] private float _radius;
         [SerializeField] [Min(0.0f)] private float _height;
 
@@ -24,6 +24,7 @@ namespace SecondBreath.Game.Battle.Characters.Configs
         
         public GameObject Prefab => _prefab;
         public IReadOnlyDictionary<Stat, StatData> Stats => _stats;
+        public BaseAttackLogic AttackLogic => _attackLogic;
         public float Radius => _radius;
         public float Height => _height;
     }

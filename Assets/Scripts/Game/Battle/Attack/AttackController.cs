@@ -1,10 +1,7 @@
 ﻿using System;
 using Common.Actors;
-using Common.Animations;
 using SecondBreath.Common.Logger;
-using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Characters.Configs;
-using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
 using SecondBreath.Game.Ticks;
@@ -23,34 +20,29 @@ namespace SecondBreath.Game.Battle.Attack
         
         private IStatDataContainer _statContainer;
 
-        private ActorSearcher _searcher;
-        private ITranslatable _translatable;
-        private IAttackAnimator _attackAnimator;
+        private IReadOnlyComponentContainer _components;
         private IDisposable _targetSearchingSub;
         private BaseAttackLogic _attackLogic;
-        private AnimationEventHandler _animationEventHandler;
         private BattleCharacterData _data;
+        private ActorSearcher _searcher;
         
         public void Init(IDebugLogger logger, BattleCharacterData data, IStatDataContainer statContainer, IReadOnlyComponentContainer components)
         {
             base.Init(logger);
 
             _data = data;
+            _components = components;
             _statContainer = statContainer;
-
+            
             _searcher = components.Get<ActorSearcher>();
-            _translatable = components.Get<ITranslatable>();
-            _attackAnimator = components.Get<IAttackAnimator>();
-            _animationEventHandler = components.Get<AnimationEventHandler>();
         }
 
         public override void Enable()
         {
             base.Enable();
 
-            _attackLogic = _diContainer.Instantiate(_data.attackLogic.GetType()) as BaseAttackLogic;
-            _attackLogic?.init(_logger, _translatable, _searcher, _attackAnimator, _data, _statContainer,
-                _animationEventHandler, _attackEvent);
+            _attackLogic = _diContainer.Instantiate(_data.AttackLogic.GetType()) as BaseAttackLogic;
+            _attackLogic?.Init(_logger, _components, _data, _statContainer, _attackEvent);
             
             _targetSearchingSub = _searcher.CurrentTarget.Subscribe(OnTargetFound);
         }
