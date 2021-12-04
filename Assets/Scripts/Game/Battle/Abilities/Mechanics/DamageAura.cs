@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Common.Actors;
+using Common.VFX;
 using SecondBreath.Common.Ticks;
 using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
+using SecondBreath.Game.Battle.Movement.Components;
 using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Stats.Formulas;
 using SecondBreath.Game.Ticks;
@@ -21,6 +23,8 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
         private float _radius;
         private float _damage;
 
+        private VfxObject _vfx;
+
         protected override void OnInit(IActor owner, DamageAuraData data)
         {
             _actorRegisterer = Container.Resolve<ITeamObjectRegisterer<IActor>>();
@@ -30,7 +34,9 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
         
             _radius  = _statUpgradeFormula.GetValue(Data.Radius, Level);
             _damage = _statUpgradeFormula.GetValue(Data.Damage, Level);
-        
+
+            _vfx = Object.Instantiate(data.VFX, owner.Components.Get<RotationComponent>().transform).GetComponent<VfxObject>();
+            _vfx.UpdateScale(_radius);
             
             _gameTickCollection.AddTick(this);
         }
@@ -38,6 +44,7 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
         public override void Dispose()
         {
             _gameTickCollection.RemoveTick(this);
+            Object.Destroy(_vfx.gameObject);
         }
 
         public void Update()
