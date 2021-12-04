@@ -16,9 +16,10 @@ namespace SecondBreath.Game.Battle.Movement.Components
     
         public IReadOnlyReactiveProperty<Vector3> Position => _position;
         public float Radius { get; private set; }
+        public float Height { get; private set; }
 
-        private readonly ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>()
-            ;
+        private readonly ReactiveProperty<Vector3> _position = new ReactiveProperty<Vector3>();
+        
         private RotationComponent _rotationComponent;
         private IMovementAnimator _movementAnimator;
         private IStatDataContainer _statContainer;
@@ -27,11 +28,12 @@ namespace SecondBreath.Game.Battle.Movement.Components
         private Transform _transform;
 
         public void Init(IDebugLogger logger, IStatDataContainer statContainer, IReadOnlyComponentContainer components,
-            Vector3 initialPosition, float radius)
+            Vector3 initialPosition, float radius, float height)
         {
             base.Init(logger);
 
             Radius = radius;
+            Height = height;
             
             _transform = transform;
             _statContainer = statContainer;

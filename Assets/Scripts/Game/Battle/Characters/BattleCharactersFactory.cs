@@ -24,7 +24,7 @@ namespace SecondBreath.Game.Battle.Characters
             _diContainer = diContainer;
             _battleCharactersConfig = battleCharactersConfig;
 
-            _statUpgradeFormula = new TierMultiplyStatUpgradeFormula(logger);
+            _statUpgradeFormula = new TierMultiplyStatUpgradeFormula();
         }
 
         public void SpawnRandomCharacter(IPlayer owner, Vector3 initialPosition)

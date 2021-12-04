@@ -40,7 +40,7 @@ namespace SecondBreath.Game.Battle.Characters.Actors
 
             _actorSearcher.Init(logger, owner.Team, StatContainer, _components);
             _attackController.Init(logger, StatContainer, _components);
-            _movementComponent.Init(logger, StatContainer, _components, initialPosition, data.Radius);
+            _movementComponent.Init(logger, StatContainer, _components, initialPosition, data.Radius, data.Height);
             _healthComponent.Init(logger, StatContainer);
         }
 

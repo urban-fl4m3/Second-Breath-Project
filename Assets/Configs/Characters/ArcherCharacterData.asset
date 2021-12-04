@@ -52,13 +52,13 @@ MonoBehaviour:
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 350
+      Data: 200
     - Name: _isUpgradeable
       Entry: 5
       Data: true
     - Name: _tier
       Entry: 3
-      Data: 3
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -76,13 +76,13 @@ MonoBehaviour:
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 60
+      Data: 40
     - Name: _isUpgradeable
       Entry: 5
       Data: true
     - Name: _tier
       Entry: 3
-      Data: 5
+      Data: 13
     - Name: 
       Entry: 8
       Data: 
@@ -103,7 +103,7 @@ MonoBehaviour:
       Data: 5
     - Name: _isUpgradeable
       Entry: 5
-      Data: true
+      Data: false
     - Name: _tier
       Entry: 3
       Data: 2
@@ -217,3 +217,4 @@ MonoBehaviour:
       Data: 
   _prefab: {fileID: 7925901049854717938, guid: 241fa28db83ac7f40a4d40c64b754d29, type: 3}
   _radius: 2
+  _height: 2

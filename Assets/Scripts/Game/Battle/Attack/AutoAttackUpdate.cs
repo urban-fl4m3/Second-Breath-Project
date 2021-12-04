@@ -70,6 +70,11 @@ namespace SecondBreath.Game.Battle.Attack
             }         
         }
 
+        public void SetTarget(IActor target)
+        {
+            _target = target.Components.Get<IDamageable>();
+        }
+
         private void HandleAttackEvent(object sender, EventArgs e)
         {
             _isAttacking = false;
@@ -79,11 +84,6 @@ namespace SecondBreath.Game.Battle.Attack
 
             var damageData = new DamageData(_statDataContainer.GetStatValue(Stat.AttackDamage));
             _target.DealDamage(damageData);
-        }
-
-        public void SetTarget(IActor target)
-        {
-            _target = target.Components.Get<IDamageable>();
         }
     }
 }

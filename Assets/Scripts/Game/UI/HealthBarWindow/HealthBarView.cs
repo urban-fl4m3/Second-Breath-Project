@@ -46,6 +46,8 @@ namespace SecondBreath.Game.UI
 
         private void OnPositionChanged(Vector3 newPosition)
         {
+            //todo add camera provider and bind it
+            newPosition.y += _translatable.Height;
             transform.position = Camera.main.WorldToScreenPoint(newPosition);
         }
     }

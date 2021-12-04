@@ -7,5 +7,6 @@ namespace SecondBreath.Game.Battle.Movement
     {
         IReadOnlyReactiveProperty<Vector3> Position { get; }
         float Radius { get; }
+        float Height { get; }
     }
 }
