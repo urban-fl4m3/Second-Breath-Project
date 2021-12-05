@@ -5,27 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b2a102d-8438-4d9e-9c49-3b57a69789f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/BaseMechanicData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/BaseMechanicData.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/AllyTeamChooser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/AllyTeamChooser.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/EnemyTeamChooser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/EnemyTeamChooser.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/ITargetChooser.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/ITargetChooser.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/ITrigger.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/ITrigger.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UpdateTrigger.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UpdateTrigger.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UnregisterTrigger.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UnregisterTrigger.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Ability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Ability.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/AbilityData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/AbilityData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/BaseMechanic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/BaseMechanic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/IMechanic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/IMechanic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/IMechanicData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/IMechanicData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/DamageAura.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/DamageAura.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/DamageAuraData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/DamageAuraData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/AllyTeamChooser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/TargetChoosers/AllyTeamChooser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Players/Team.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Players/Team.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +81,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638689232736</updated>
-      <workItem from="1638689233944" duration="8066000" />
+      <workItem from="1638689233944" duration="8973000" />
     </task>
     <servers />
   </component>
