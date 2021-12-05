@@ -28,8 +28,6 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
             _hpAmount = StatUpgradeFormula.GetValue(Data.HPAmount, Level);
             _healable = Caster.Components.Get<IHealable>();
             _animator = Caster.Components.Get<BattleCharacterAnimator>();
-
-
         }
 
         private IEnumerator DelayForAction()

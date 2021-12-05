@@ -32,6 +32,8 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
             if (objectArgs == null) return;
 
             IActor diedActor = objectArgs.Obj;
+            if (diedActor == Caster) return;
+            
             var diedActorComponents = diedActor.Components;
             
             Vector3 diedActorPosition = diedActorComponents.Get<ITranslatable>().Position.Value;
