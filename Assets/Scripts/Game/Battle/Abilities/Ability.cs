@@ -49,7 +49,6 @@ namespace SecondBreath.Game.Battle.Abilities
             foreach (var mechanic in _mechanics)
             {
                 mechanic.UnRegister(_triggers);
-                mechanic.Dispose();
             }
         }
     }

@@ -25,6 +25,9 @@ namespace SecondBreath.Game.Battle.Animations
 
         [SerializeField] [AnimationParameter(AnimatorControllerParameterType.Trigger, nameof(_animator))]
         private string _deathParameter;
+        
+        [SerializeField] [AnimationParameter(AnimatorControllerParameterType.Trigger, nameof(_animator))]
+        private string _reviveParameter;
 
         public bool IsRunning
         {
@@ -62,6 +65,11 @@ namespace SecondBreath.Game.Battle.Animations
         public void SetDeathTrigger()
         {
             SetTrigger(_deathParameter);
+        }
+
+        public void SetReviveTrigger()
+        {
+            SetTrigger(_reviveParameter);
         }
     }
 }

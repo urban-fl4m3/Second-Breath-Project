@@ -72,7 +72,7 @@ namespace SecondBreath.Game.Battle.Searchers
         {
             if (CurrentTarget.Value == null)
             {
-                _logger.LogError($"Current target is null for {gameObject.name}!");
+                //    _logger.LogError($"Current target is null for {gameObject.name}!");
                 return Vector3.zero;
             }
             

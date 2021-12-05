@@ -432,6 +432,7 @@ MonoBehaviour:
   _cast2Parameter: Cast2
   _cast3Parameter: Cast3
   _deathParameter: Death
+  _reviveParameter: Revive
 --- !u!114 &3495535464730205037
 MonoBehaviour:
   m_ObjectHideFlags: 0

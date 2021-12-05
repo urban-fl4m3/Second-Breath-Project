@@ -58,7 +58,7 @@ namespace SecondBreath.Game.Battle.Abilities
             }
         }
 
-        public void UnRegister(List<ITrigger> triggers)
+        public virtual void UnRegister(List<ITrigger> triggers)
         {
             foreach (var trigger in triggers)
             {

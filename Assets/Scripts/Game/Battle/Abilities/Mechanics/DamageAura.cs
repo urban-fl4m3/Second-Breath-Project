@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using Common.Actors;
 using Common.VFX;
-using SecondBreath.Common.Ticks;
-using SecondBreath.Game.Battle.Abilities.Triggers;
 using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Movement.Components;
-using SecondBreath.Game.Battle.Registration;
-using SecondBreath.Game.Stats.Formulas;
-using SecondBreath.Game.Ticks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
