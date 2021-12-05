@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Actors;
@@ -23,9 +24,10 @@ namespace SecondBreath.Game.Battle.Abilities.TargetChoosers
             return side == Side.Ally ? _actorRegisterer.GetTeamObjects(_owner.Owner.Team).ToList() : _actorRegisterer.GetOppositeTeamObjects(_owner.Owner.Team).ToList();
         }
 
-        public void Init(IActor actor)
+        public void Init(IActor actor, ITargetChooserData data)
         {
             _owner = actor;
+            side = ((TeamChooserData) data).ChoosenSide;
         }
     }
 }

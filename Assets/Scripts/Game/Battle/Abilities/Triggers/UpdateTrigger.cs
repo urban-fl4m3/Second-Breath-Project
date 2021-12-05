@@ -1,6 +1,7 @@
 using System;
 using Common.Actors;
 using SecondBreath.Common.Ticks;
+using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Ticks;
 
 namespace SecondBreath.Game.Battle.Abilities.Triggers
@@ -14,7 +15,8 @@ namespace SecondBreath.Game.Battle.Abilities.Triggers
             _tickCollection = tickCollection;
         }
 
-        public event Action Events;
+
+        public event EventHandler<EventArgs> Events;
 
         public void Init(IActor actor)
         {
@@ -23,7 +25,7 @@ namespace SecondBreath.Game.Battle.Abilities.Triggers
 
         public void Update()
         {
-            Events?.Invoke();    
+            Events?.Invoke(this, EventArgs.Empty);    
         }
 
         public void Dispose()

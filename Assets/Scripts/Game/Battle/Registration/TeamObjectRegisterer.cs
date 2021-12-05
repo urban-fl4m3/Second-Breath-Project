@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Actors;
 using SecondBreath.Game.Players;
 
 namespace SecondBreath.Game.Battle.Registration
 {
     public class TeamObjectRegisterer<T> : ITeamObjectRegisterer<T>
     {
-        public event EventHandler<RegistrationTeamObjectArgs<T>> ObjectRegistered;
-        public event EventHandler<RegistrationTeamObjectArgs<T>> ObjectUnregistered;
+        public event EventHandler<RegistrationTeamObjectArgs> ObjectRegistered;
+        public event EventHandler<RegistrationTeamObjectArgs> ObjectUnregistered;
         
         private readonly Dictionary<Team, List<T>> _registeredObjects = new Dictionary<Team, List<T>>();
         
@@ -27,7 +28,7 @@ namespace SecondBreath.Game.Battle.Registration
             }
             
             teamObjects.Add(obj);
-            ObjectRegistered?.Invoke(this, new RegistrationTeamObjectArgs<T>(obj, team));
+            ObjectRegistered?.Invoke(this, new RegistrationTeamObjectArgs((IActor)obj, team));
         }
 
         public void Unregister(T obj)
@@ -35,7 +36,7 @@ namespace SecondBreath.Game.Battle.Registration
             foreach (var teamObjects in _registeredObjects)
             {
                 teamObjects.Value.Remove(obj);
-                ObjectUnregistered?.Invoke(this, new RegistrationTeamObjectArgs<T>(obj, teamObjects.Key));
+                ObjectUnregistered?.Invoke(this, new RegistrationTeamObjectArgs((IActor)obj, teamObjects.Key));
             }
         }
 

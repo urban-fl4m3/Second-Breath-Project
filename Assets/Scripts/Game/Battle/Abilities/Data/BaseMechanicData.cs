@@ -6,7 +6,7 @@ namespace SecondBreath.Game.Battle.Abilities
 {
     public class BaseMechanicData : IMechanicData
     {
-        [OdinSerialize] public ITargetChooser[] TargetChoosers { get; private set;}
+        [OdinSerialize] public ITargetChooserData[] TargetChoosersData { get; private set;}
         public virtual Type LogicInstanceType => typeof(BaseMechanicData);
     }
 }

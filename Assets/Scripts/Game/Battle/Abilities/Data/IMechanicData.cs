@@ -6,7 +6,7 @@ namespace SecondBreath.Game.Battle.Abilities
 {
     public interface IMechanicData
     {
-        ITargetChooser[] TargetChoosers { get; }
+        ITargetChooserData[] TargetChoosersData { get; }
         Type LogicInstanceType { get; }
     }
 }

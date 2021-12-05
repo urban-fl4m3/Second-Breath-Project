@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6c91c3174b49169dbea3dbbfd1b8c9, type: 3}
-  m_Name: 0_Plague
+  m_Name: Devour
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 6069560558330108496, guid: adf8684e146d09341a776d02a3094943, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,51 +29,27 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.DamageAuraData, Assembly-CSharp
+      Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.AddHpBasedOnActorHpData,
+        Assembly-CSharp
     - Name: TargetChoosersData
       Entry: 7
       Data: 2|SecondBreath.Game.Battle.Abilities.TargetChoosers.ITargetChooserData[],
         Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 3|SecondBreath.Game.Battle.Abilities.TargetChoosers.TeamChooserData,
-        Assembly-CSharp
-    - Name: _choosenSide
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 0
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
       Data: 
-    - Name: _damage
+    - Name: _hpPercent
       Entry: 7
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
       Data: 20
-    - Name: _isUpgradeable
-      Entry: 5
-      Data: true
-    - Name: _tier
-      Entry: 3
-      Data: 15
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: _radius
-      Entry: 7
-      Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
-    - Name: _value
-      Entry: 4
-      Data: 1.25
     - Name: _isUpgradeable
       Entry: 5
       Data: false
@@ -84,8 +59,23 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: _vfx
-      Entry: 10
+    - Name: _radius
+      Entry: 7
+      Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
+    - Name: _value
+      Entry: 4
+      Data: 3
+    - Name: _isUpgradeable
+      Entry: 5
+      Data: false
+    - Name: _tier
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _choosenSide
+      Entry: 3
       Data: 0
     - Name: 
       Entry: 8
@@ -98,13 +88,13 @@ MonoBehaviour:
       Data: 
     - Name: _triggers
       Entry: 7
-      Data: 4|SecondBreath.Game.Battle.Abilities.Triggers.ITrigger[], Assembly-CSharp
+      Data: 3|SecondBreath.Game.Battle.Abilities.Triggers.ITrigger[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 5|SecondBreath.Game.Battle.Abilities.Triggers.UpdateTrigger, Assembly-CSharp
+      Data: 4|SecondBreath.Game.Battle.Abilities.Triggers.UnregisterTrigger, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

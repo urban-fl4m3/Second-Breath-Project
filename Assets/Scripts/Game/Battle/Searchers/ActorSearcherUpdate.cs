@@ -65,15 +65,17 @@ namespace SecondBreath.Game.Battle.Searchers
             return nearestActor;
         }
         
-        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs e)
         {
+            RegistrationTeamObjectArgs args = e;
+   
             if (e.Team != _team)
             {
                 _enemies.Add(e.Obj);
             }
         }
 
-        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs e)
         {
             if (e.Team != _team)
             {

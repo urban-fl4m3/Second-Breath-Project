@@ -24,7 +24,7 @@ namespace SecondBreath.Game.UI
             _actorRegisterer.ObjectUnregistered += HandleActorUnregistered;
         }
 
-        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs e)
         {
             var actor = e.Obj;
             
@@ -39,7 +39,7 @@ namespace SecondBreath.Game.UI
             }
         }
         
-        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs e)
         {
             var actor = e.Obj;
             

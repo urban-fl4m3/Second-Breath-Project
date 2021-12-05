@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Actors;
 using Common.VFX;
 using SecondBreath.Common.Ticks;
@@ -10,12 +11,12 @@ using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Stats.Formulas;
 using SecondBreath.Game.Ticks;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SecondBreath.Game.Battle.Abilities.Mechanics
 {
     public class DamageAura : BaseMechanic<DamageAuraData>
     {
-        private IStatUpgradeFormula _statUpgradeFormula;
 
         private ITranslatable _casterTranslatable;
 
@@ -24,15 +25,14 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
 
         private VfxObject _vfx;
 
-        protected override void OnInit(IActor owner, DamageAuraData data)
+        protected override void OnInit(DamageAuraData data)
         {
-            _statUpgradeFormula = Container.Resolve<IStatUpgradeFormula>();
             _casterTranslatable = Caster.Components.Get<ITranslatable>();  
         
-            _radius  = _statUpgradeFormula.GetValue(Data.Radius, Level);
-            _damage = _statUpgradeFormula.GetValue(Data.Damage, Level);
+            _radius  = StatUpgradeFormula.GetValue(Data.Radius, Level);
+            _damage = StatUpgradeFormula.GetValue(Data.Damage, Level);
 
-            _vfx = Object.Instantiate(data.VFX, owner.Components.Get<RotationComponent>().transform).GetComponent<VfxObject>();
+            _vfx = Object.Instantiate(data.VFX, Caster.Components.Get<RotationComponent>().transform).GetComponent<VfxObject>();
             _vfx.UpdateScale(_radius);
         }
 
@@ -41,7 +41,7 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
             Object.Destroy(_vfx.gameObject);
         }
 
-        public override void Action()
+        public override void Action(object sender, EventArgs args)
         {
             List<IActor> targets = new List<IActor>();
             foreach (var chooser in _choosers)

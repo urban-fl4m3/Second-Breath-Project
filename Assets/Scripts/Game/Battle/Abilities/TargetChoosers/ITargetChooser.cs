@@ -8,6 +8,6 @@ namespace SecondBreath.Game.Battle.Abilities.TargetChoosers
     {
         List<IActor> ChooseTarget();
         
-        void Init(IActor actor);
+        void Init(IActor actor, ITargetChooserData data);
     }
 }

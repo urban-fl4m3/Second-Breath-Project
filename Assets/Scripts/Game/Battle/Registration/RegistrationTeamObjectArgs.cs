@@ -1,13 +1,15 @@
-﻿using SecondBreath.Game.Players;
+﻿using System;
+using Common.Actors;
+using SecondBreath.Game.Players;
 
 namespace SecondBreath.Game.Battle.Registration
 {
-    public readonly struct RegistrationTeamObjectArgs<T>
+    public class RegistrationTeamObjectArgs : EventArgs
     {
-        public T Obj { get; }
+        public IActor Obj { get; }
         public Team Team { get; }
         
-        public RegistrationTeamObjectArgs(T obj, Team team)
+        public RegistrationTeamObjectArgs(IActor obj, Team team)
         {
             Obj = obj;
             Team = team;
