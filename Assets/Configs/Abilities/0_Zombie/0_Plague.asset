@@ -31,6 +31,33 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.DamageAuraData, Assembly-CSharp
+    - Name: TargetChoosers
+      Entry: 7
+      Data: 2|SecondBreath.Game.Battle.Abilities.TargetChoosers.ITargetChooser[],
+        Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 3|SecondBreath.Game.Battle.Abilities.TargetChoosers.AllyTeamChooser,
+        Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|SecondBreath.Game.Battle.Abilities.TargetChoosers.EnemyTeamChooser,
+        Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: _damage
       Entry: 7
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
@@ -64,6 +91,24 @@ MonoBehaviour:
     - Name: _vfx
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _triggers
+      Entry: 7
+      Data: 5|SecondBreath.Game.Battle.Abilities.Triggers.ITrigger[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 6|SecondBreath.Game.Battle.Abilities.Triggers.UpdateTrigger, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

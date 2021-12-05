@@ -1,9 +1,12 @@
 ﻿using System;
+using SecondBreath.Game.Battle.Abilities.TargetChoosers;
+using Sirenix.Serialization;
 
 namespace SecondBreath.Game.Battle.Abilities
 {
     public interface IMechanicData
     {
-        public Type LogicInstanceType { get; }
+        ITargetChooser[] TargetChoosers { get; }
+        Type LogicInstanceType { get; }
     }
 }

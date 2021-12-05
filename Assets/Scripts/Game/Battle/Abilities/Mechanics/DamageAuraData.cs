@@ -1,11 +1,12 @@
 ﻿using System;
+using SecondBreath.Game.Battle.Abilities.TargetChoosers;
 using SecondBreath.Game.Stats;
 using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Abilities.Mechanics
 {
     [Serializable]
-    public class DamageAuraData : IMechanicData
+    public class DamageAuraData : BaseMechanicData
     {
         [SerializeField] private StatData _damage;
         [SerializeField] private StatData _radius;
@@ -15,7 +16,6 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
         public StatData Radius => _radius;
 
         public GameObject VFX => _vfx;
-        
-        public Type LogicInstanceType => typeof(DamageAura);
+        public override Type LogicInstanceType => typeof(DamageAura);
     }
 }
