@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using SecondBreath.Common.Extensions;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Players;
 using Sirenix.OdinInspector;
@@ -21,6 +25,11 @@ namespace SecondBreath.Game.Battle
         
         private readonly Dictionary<Team, Rect> _registeredRects = new Dictionary<Team, Rect>();
 
+        [SerializeField] private GameObject _cellVisual;
+        [SerializeField] private int _hSize = 1;
+        [SerializeField] private int _wSize = 1;
+        private Vector2 _cellSize;
+
         public Plane GetPlane()
         {
             return new Plane(transform.up, 0);
@@ -40,9 +49,88 @@ namespace SecondBreath.Game.Battle
         private void Awake()
         {
             UpdateRects();
-            
+
             _registeredRects.Add(Team.Green, _greenRect);
             _registeredRects.Add(Team.Red, _redRect);
+
+            _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize, (_mainRect.yMax - _mainRect.yMin) / _hSize);
+
+            for (int i = 0; i < _hSize; i++)
+            {
+                for (int j = 0; j < _wSize; j++)
+                {
+                    var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
+                        _cellSize.y * (j + 0.5f) + _mainRect.yMin);
+                    
+                    var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
+                    newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
+                    new Cell(i, j, newObject, new Vector2Int(_hSize, _wSize));
+                }
+            }
+
+            StartCoroutine(PathFinding());
+        }
+
+        private IEnumerator PathFinding()
+        {
+            Cell startCell = GetCell(9, 0);
+            startCell.CellDirection = 0.0f;
+            Cell finishCell = GetCell(9, 19);
+            startCell.SetCellColor(Color.blue);
+            finishCell.SetCellColor(Color.red);
+            HashSet<Cell> openList = new HashSet<Cell>();
+
+            while (true)
+            {
+                startCell.IsSelected = true;
+                var nearCells = startCell.GetNearCells();
+
+                foreach (var cell in nearCells)
+                {
+                    if (cell.IsSelected) continue;
+                    if (cell.CellDirection > startCell.CellDirection + cell.GetCellDirection(startCell))
+                    {
+                        cell.PreviousCell = startCell;
+                        cell.CellDirection = startCell.CellDirection + cell.GetCellDirection(startCell);
+                        cell.UpdateCellCost(finishCell);
+                    }
+
+                    openList.Add(cell);
+                }
+
+                if (openList.Count == 0) break;
+                float minimumCost = Mathf.Infinity;
+                Cell nextCell = startCell;
+
+                foreach (var cell in openList)
+                {
+                    if (cell.CellCost < minimumCost)
+                    {
+                        minimumCost = cell.CellCost;
+                        nextCell = cell;
+                    }
+                }
+
+                if (finishCell.CellCost < minimumCost) break;
+                openList.Remove(nextCell);
+                startCell = nextCell;   
+
+            }
+
+            float coef = 0.0f;
+            while (finishCell != null)
+            {
+                yield return new WaitForSeconds(0.25f);
+                finishCell.SetCellColor(Color.yellow);
+                finishCell = finishCell.PreviousCell;
+            }
+            
+            yield break;
+        }  
+
+        private Cell GetCell(int x, int y)
+        {
+            return Cell.Cells.GetValue(new Tuple<int, int>(x, y));
         }
 
         private void UpdateRects()

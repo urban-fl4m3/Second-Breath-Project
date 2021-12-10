@@ -592,9 +592,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
+      propertyPath: _hSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
+      propertyPath: _wSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
+      propertyPath: _cellVisual
+      value: 
+      objectReference: {fileID: 5568728278037632285, guid: bbac6f7774d36154c8f1d90d8ac01174, type: 3}
+    - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2031217937934570373, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: m_RootOrder
       value: 3

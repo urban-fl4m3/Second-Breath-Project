@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b2a102d-8438-4d9e-9c49-3b57a69789f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/AddHpBasedOnActorHp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/AddHpBasedOnActorHp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/Revive.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Mechanics/Revive.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UnregisterTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Abilities/Triggers/UnregisterTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BattleScene/BattleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/BattleScene/BattleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/BattleField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/BattleField.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +28,13 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f98083cbc97e4fa0a4ef2f523feff5e113bc00/85/d9df7562/Vector2Int.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/86/992e0601/Type.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/f7/ef95388c/Tuple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/56/c50a0eb9/EventHandler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/e8/2a33fba9/Tuple`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/6a/ab616b4e/IDisposable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fd824cfb55004855b9e6d51b008c90e4568778/10/2d1a6801/IStructuralEquatable.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="21rBG5zWdlxLXYUbzhOggphdCMt" />
   <component name="ProjectLevelVcsManager">
@@ -64,10 +69,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="28636">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="16616">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="28636" />
+      <option name="pid" value="16616" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -85,6 +90,7 @@
       <updated>1638689232736</updated>
       <workItem from="1638689233944" duration="15184000" />
       <workItem from="1638720053275" duration="7346000" />
+      <workItem from="1639161317429" duration="10749000" />
     </task>
     <servers />
   </component>
@@ -95,5 +101,13 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="UNITY_DEBUG_RUN_CONFIGURATION">
+        <watch expression="nearCells" />
+        <watch expression="new System.Collections.Generic.ICollectionDebugView&lt;SecondBreath.Game.Battle.Cell&gt;(openList).Items[0]" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
