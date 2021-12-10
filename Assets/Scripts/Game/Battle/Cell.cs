@@ -43,7 +43,7 @@ namespace SecondBreath.Game.Battle
             _indexes = new Vector2Int(x, y);
             _fieldSize = fieldSize;
 
-            if (Random.Range(0.0f, 1.0f) < 0.25f)
+            if (Random.Range(0.0f, 1.0f) < 0.51f)
             {
                 IsEmpty = false;
                 SetCellColor(Color.black);
@@ -67,7 +67,6 @@ namespace SecondBreath.Game.Battle
                 for (int j = -1; j < 2; j++)
                 {
                     if (i == 0 && j == 0) continue;
-                    if (i != 0 && j != 0) continue;
                     if ((_indexes.x + i < _fieldSize.x) && (_indexes.x + i > -1) && 
                         (_indexes.y + j < _fieldSize.y) && (_indexes.y + j > -1))
                     {
@@ -95,7 +94,7 @@ namespace SecondBreath.Game.Battle
 
         public float DistanceToCell(Cell cell)
         {
-            return Vector2Int.Distance(cell._indexes, _indexes) * 10.0f;
+            return (Mathf.Abs(_indexes.x - cell._indexes.x) + Mathf.Abs(_indexes.y - cell._indexes.y)) * 10.0f;
         }
         
     }

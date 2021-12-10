@@ -29,6 +29,7 @@ namespace SecondBreath.Game.Battle
         [SerializeField] private int _hSize = 1;
         [SerializeField] private int _wSize = 1;
         private Vector2 _cellSize;
+        [SerializeField] private bool pathFindingTest;
 
         public Plane GetPlane()
         {
@@ -53,36 +54,44 @@ namespace SecondBreath.Game.Battle
             _registeredRects.Add(Team.Green, _greenRect);
             _registeredRects.Add(Team.Red, _redRect);
 
-            _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize, (_mainRect.yMax - _mainRect.yMin) / _hSize);
 
-            for (int i = 0; i < _hSize; i++)
+            if (pathFindingTest)
             {
-                for (int j = 0; j < _wSize; j++)
-                {
-                    var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
-                        _cellSize.y * (j + 0.5f) + _mainRect.yMin);
-                    
-                    var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
-                    newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
-                    new Cell(i, j, newObject, new Vector2Int(_hSize, _wSize));
-                }
-            }
+                _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize,
+                    (_mainRect.yMax - _mainRect.yMin) / _hSize);
 
-            StartCoroutine(PathFinding());
+                for (int i = 0; i < _hSize; i++)
+                {
+                    for (int j = 0; j < _wSize; j++)
+                    {
+                        var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
+                            _cellSize.y * (j + 0.5f) + _mainRect.yMin);
+
+                        var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
+                        newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
+                        new Cell(i, j, newObject, new Vector2Int(_hSize, _wSize));
+                    }
+                }
+
+                StartCoroutine(PathFinding());
+            }
         }
 
         private IEnumerator PathFinding()
         {
-            Cell startCell = GetCell(9, 0);
+            Cell startCell = GetCell(_hSize - 1, 0);
             startCell.CellDirection = 0.0f;
-            Cell finishCell = GetCell(9, 19);
+            Cell finishCell = GetCell(0, _wSize - 1);
             startCell.SetCellColor(Color.blue);
             finishCell.SetCellColor(Color.red);
+            startCell.IsEmpty = true;
+            finishCell.IsEmpty = true;
             HashSet<Cell> openList = new HashSet<Cell>();
 
             while (true)
             {
                 startCell.IsSelected = true;
+                startCell.SetCellColor(Color.grey);
                 var nearCells = startCell.GetNearCells();
 
                 foreach (var cell in nearCells)
@@ -124,7 +133,8 @@ namespace SecondBreath.Game.Battle
                 finishCell.SetCellColor(Color.yellow);
                 finishCell = finishCell.PreviousCell;
             }
-            
+
+
             yield break;
         }  
 
