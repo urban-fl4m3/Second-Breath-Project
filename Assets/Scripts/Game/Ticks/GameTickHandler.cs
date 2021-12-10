@@ -1,4 +1,5 @@
-﻿using SecondBreath.Common.Ticks;
+﻿using System;
+using SecondBreath.Common.Ticks;
 
 namespace SecondBreath.Game.Ticks
 {
@@ -16,12 +17,12 @@ namespace SecondBreath.Game.Ticks
             _tickProcessor.Stop();
         }
 
-        public void AddTick(ITickUpdate tick)
+        public void AddTick(Action tick)
         {
             _tickProcessor.AddTick(tick);
         }
 
-        public void RemoveTick(ITickUpdate tick)
+        public void RemoveTick(Action tick)
         {
             _tickProcessor.RemoveTick(tick);
         }

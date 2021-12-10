@@ -2,10 +2,8 @@ using System;
 using Common.Actors;
 using Common.Animations;
 using SecondBreath.Common.Logger;
-using SecondBreath.Common.Ticks;
 using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Characters.Configs;
-using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
@@ -13,24 +11,30 @@ using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Attack
 {
-    public abstract class BaseAttackLogic : ITickUpdate
+    public abstract class BaseAttackLogic 
     {
-        protected string _attackEvent;
-        protected IDebugLogger _logger;
-        protected ActorSearcher _searcher;
+        protected IActor _target;
         protected BattleCharacterData _data;
-        protected ITranslatable _translatable;
-        protected IAttackAnimator _attackAnimator;
+        protected Transform _projectileSpawner;
         protected IStatDataContainer _statDataContainer;
         protected AnimationEventHandler _animationEventHandler;
-        protected Transform _projectileSpawner;
-
-        protected IActor _target;
+        
         protected float _lastAttackTime;
+        protected string _attackEvent;
         protected bool _isAttacking;
 
-        public void Init(IDebugLogger logger, IReadOnlyComponentContainer components, BattleCharacterData data,
-            IStatDataContainer statDataContainer, string attackEvent, Transform projectileSpawner)
+        private IDebugLogger _logger;
+        private ActorSearcher _searcher;
+        private ITranslatable _translatable;
+        private IAttackAnimator _attackAnimator;
+        
+        public void Init(
+            IDebugLogger logger,
+            IReadOnlyComponentContainer components,
+            BattleCharacterData data,
+            IStatDataContainer statDataContainer, 
+            string attackEvent,
+            Transform projectileSpawner)
         {
             _data = data;
             _logger = logger;
@@ -47,7 +51,7 @@ namespace SecondBreath.Game.Battle.Attack
             _lastAttackTime = Mathf.NegativeInfinity;
         }
         
-        public void Update()
+        public void TryAttack()
         {
             if (_isAttacking)
             {

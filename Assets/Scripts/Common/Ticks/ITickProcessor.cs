@@ -1,11 +1,13 @@
-﻿namespace SecondBreath.Common.Ticks
+﻿using System;
+
+namespace SecondBreath.Common.Ticks
 {
     public interface ITickProcessor
     {
         void Start();
         void Stop();
         
-        void AddTick(ITickUpdate tick);
-        void RemoveTick(ITickUpdate tick);
+        void AddTick(Action tick);
+        void RemoveTick(Action tick);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Common.Actors;
-using SecondBreath.Common.Ticks;
 using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
 using SecondBreath.Game.Battle.Registration;
@@ -10,13 +9,12 @@ using UnityEngine;
 
 namespace SecondBreath.Game.Battle.Abilities.Mechanics
 {
-    public class DamageAura : BaseMechanic<DamageAuraData>, ITickUpdate
+    public class DamageAura : BaseMechanic<DamageAuraData>
     {
         private ITeamObjectRegisterer<IActor> _actorRegisterer;
-        private IGameTickCollection _gameTickCollection;
         private IStatUpgradeFormula _statUpgradeFormula;
-
         private ITranslatable _casterTranslatable;
+        private IGameTickWriter _gameTickWriter;
 
         private float _radius;
         private float _damage;
@@ -24,23 +22,22 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
         protected override void OnInit(IActor owner, DamageAuraData data)
         {
             _actorRegisterer = Container.Resolve<ITeamObjectRegisterer<IActor>>();
-            _gameTickCollection = Container.Resolve<IGameTickCollection>();
+            _gameTickWriter = Container.Resolve<IGameTickWriter>();
             _statUpgradeFormula = Container.Resolve<IStatUpgradeFormula>();
             _casterTranslatable = Caster.Components.Get<ITranslatable>();  
         
             _radius  = _statUpgradeFormula.GetValue(Data.Radius, Level);
             _damage = _statUpgradeFormula.GetValue(Data.Damage, Level);
-        
-            
-            _gameTickCollection.AddTick(this);
+
+            _gameTickWriter.AddTick(ApplyMechanic);
         }
 
         public override void Dispose()
         {
-            _gameTickCollection.RemoveTick(this);
+            _gameTickWriter.RemoveTick(ApplyMechanic);
         }
 
-        public void Update()
+        private void ApplyMechanic()
         {
             var enemies = _actorRegisterer.GetOppositeTeamObjects(Caster.Owner.Team);
             var localEnemies = new List<IActor>(enemies);
@@ -48,13 +45,10 @@ namespace SecondBreath.Game.Battle.Abilities.Mechanics
             foreach (var enemyActor in localEnemies)
             {
                 var enemyTranslatable = enemyActor.Components.Get<ITranslatable>();
-
-                var sqrMagnitude =
-                    Vector3.SqrMagnitude(enemyTranslatable.Position.Value - _casterTranslatable.Position.Value);
-
-                    
+                var diff = enemyTranslatable.Position.Value - _casterTranslatable.Position.Value;
+                var sqrMagnitude = Vector3.SqrMagnitude(diff);
                 var radiusDiff = _radius * _radius + 2 * _radius * enemyTranslatable.Radius +
-                               enemyTranslatable.Radius * enemyTranslatable.Radius;
+                                 enemyTranslatable.Radius * enemyTranslatable.Radius;
                 
                 if (sqrMagnitude <= radiusDiff)
                 {
