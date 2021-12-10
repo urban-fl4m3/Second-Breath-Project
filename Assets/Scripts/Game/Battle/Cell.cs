@@ -43,7 +43,7 @@ namespace SecondBreath.Game.Battle
             _indexes = new Vector2Int(x, y);
             _fieldSize = fieldSize;
 
-            if (Random.Range(0.0f, 1.0f) < 0.51f)
+            if (Random.Range(0.0f, 1.0f) < 0.35f)
             {
                 IsEmpty = false;
                 SetCellColor(Color.black);
