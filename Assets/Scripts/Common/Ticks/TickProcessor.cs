@@ -7,9 +7,9 @@ namespace SecondBreath.Common.Ticks
 {
     public class TickProcessor : ITickProcessor
     {
-        private readonly List<ITickUpdate> _ticks = new List<ITickUpdate>();
-        private readonly Queue<ITickUpdate> _ticksToAdd = new Queue<ITickUpdate>();
-        private readonly Queue<ITickUpdate> _ticksToRemove = new Queue<ITickUpdate>();
+        private readonly List<Action> _ticks = new List<Action>();
+        private readonly Queue<Action> _ticksToAdd = new Queue<Action>();
+        private readonly Queue<Action> _ticksToRemove = new Queue<Action>();
 
         private IDisposable _tickSub;
         
@@ -31,12 +31,12 @@ namespace SecondBreath.Common.Ticks
             _tickSub = null;
         }
 
-        public void AddTick(ITickUpdate tick)
+        public void AddTick(Action tick)
         {
             _ticksToAdd.Enqueue(tick);
         }
 
-        public void RemoveTick(ITickUpdate tick)
+        public void RemoveTick(Action tick)
         {
             _ticksToRemove.Enqueue(tick);
         }
@@ -55,7 +55,7 @@ namespace SecondBreath.Common.Ticks
 
             foreach (var tick in _ticks)
             {
-                tick.Update();
+                tick();
             }
         }
     }

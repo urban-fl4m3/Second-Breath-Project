@@ -1,4 +1,5 @@
-﻿using Common.Actors;
+﻿using System;
+using Common.Actors;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Searchers;
@@ -12,7 +13,10 @@ namespace SecondBreath.Game.Battle.Movement.Components
 {
     public class MovementComponent : ActorComponent, ITranslatable
     {
-        [Inject] private IGameTickCollection _tickHandler;
+        //todo remove into some config
+        private const float _movementFixDivider = 0.01f;
+        
+        [Inject] private IGameTickWriter _tickHandler;
     
         public IReadOnlyReactiveProperty<Vector3> Position => _position;
         public float Radius { get; private set; }
@@ -24,11 +28,20 @@ namespace SecondBreath.Game.Battle.Movement.Components
         private IMovementAnimator _movementAnimator;
         private IStatDataContainer _statContainer;
         private ActorSearcher _actorSearcher;
-        private MovementUpdate _movement;
         private Transform _transform;
+        
+        private ITranslatable _target;
+        private IDisposable _targetSearchSub;
 
-        public void Init(IDebugLogger logger, IStatDataContainer statContainer, IReadOnlyComponentContainer components,
-            Vector3 initialPosition, float radius, float height)
+        private float _movementSpeed;
+        
+        public void Init(
+            IDebugLogger logger, 
+            IStatDataContainer statContainer,
+            IReadOnlyComponentContainer components,
+            Vector3 initialPosition, 
+            float radius,
+            float height)
         {
             base.Init(logger);
 
@@ -49,29 +62,54 @@ namespace SecondBreath.Game.Battle.Movement.Components
         {
             base.Enable();
 
-            var movementSpeed = _statContainer.GetStatValue(Stat.MovementSpeed);
-            _movement = new MovementUpdate(_actorSearcher, _rotationComponent, _transform, movementSpeed, _movementAnimator);
-            _movement.PositionChanged += HandlePositionChanged; 
-            
-            _tickHandler.AddTick(_movement);
+            _movementSpeed = _statContainer.GetStatValue(Stat.MovementSpeed);
+            _targetSearchSub = _actorSearcher.CurrentTarget.Subscribe(OnTargetFound);
+            _tickHandler.AddTick(DoStep);
         }
 
         public override void Disable()
         {
             base.Disable();
 
-            if (_movement != null)
-            {
-                _movement.Dispose();
-                _movement.PositionChanged -= HandlePositionChanged;
-            }
-
-            _tickHandler.RemoveTick(_movement);
+            _targetSearchSub?.Dispose();
+            _tickHandler.RemoveTick(DoStep);
         }
 
-        private void HandlePositionChanged(object sender, Vector3 e)
+        private void DoStep()
         {
-            ChangePosition(e);
+            if (_target != null)
+            {
+                var canMove = CanMove();
+                if (canMove)
+                {
+                    var direction = _actorSearcher.GetDirectionToCurrentTarget();
+                    var distance = Vector3.SqrMagnitude(direction);
+                    var position = _transform.position;
+                    
+                    if (distance > _target.Radius * _target.Radius)
+                    {
+                        position += direction.normalized * _movementSpeed * Time.deltaTime * _movementFixDivider;
+                        ChangePosition(position);
+                    }
+                }
+
+                _rotationComponent.LookAt(_target);
+
+                _movementAnimator.IsRunning = canMove;
+                return;
+            }
+
+            _movementAnimator.IsRunning = false;
+        }
+        
+        private void OnTargetFound(IActor actor)
+        {
+            _target = actor?.Components.Get<ITranslatable>();
+        }
+
+        private bool CanMove()
+        {
+            return !_actorSearcher.IsInAttackRange();
         }
 
         private void ChangePosition(Vector3 newPosition)

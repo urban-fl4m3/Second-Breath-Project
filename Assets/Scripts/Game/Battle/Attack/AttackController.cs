@@ -13,7 +13,7 @@ namespace SecondBreath.Game.Battle.Attack
 {
     public class AttackController : ActorComponent
     {
-        [Inject] private IGameTickCollection _tickHandler;
+        [Inject] private IGameTickWriter _tickHandler;
         [Inject] private DiContainer _diContainer;
 
         [SerializeField] private string _attackEvent;
@@ -27,7 +27,11 @@ namespace SecondBreath.Game.Battle.Attack
         private BattleCharacterData _data;
         private ActorSearcher _searcher;
         
-        public void Init(IDebugLogger logger, BattleCharacterData data, IStatDataContainer statContainer, IReadOnlyComponentContainer components)
+        public void Init(
+            IDebugLogger logger, 
+            BattleCharacterData data,
+            IStatDataContainer statContainer,
+            IReadOnlyComponentContainer components)
         {
             base.Init(logger);
 
@@ -53,7 +57,7 @@ namespace SecondBreath.Game.Battle.Attack
             base.Disable();
             
             _targetSearchingSub?.Dispose();
-            _tickHandler.RemoveTick(_attackLogic);
+            _tickHandler.RemoveTick(_attackLogic.TryAttack);
         }
 
         private void OnTargetFound(IActor target)
@@ -61,11 +65,11 @@ namespace SecondBreath.Game.Battle.Attack
             if (target != null)
             {
                 _attackLogic.SetTarget(target);
-                _tickHandler.AddTick(_attackLogic);
+                _tickHandler.AddTick(_attackLogic.TryAttack);
             }
             else
             {
-                _tickHandler.RemoveTick(_attackLogic);
+                _tickHandler.RemoveTick(_attackLogic.TryAttack);
             }
         }
     }

@@ -1,24 +1,22 @@
 using System;
-using Common.Actors;
 
 namespace SecondBreath.Game.Battle.Abilities.Triggers
 {
-    public class OnDeathTrigger : ITrigger
+    public class OnDeathTrigger : BaseAbilityTrigger
     {
-        public void Dispose()
+        public override void Dispose()
         {
-            
+            Actor.Killed -= Action;
         }
 
-        public event EventHandler<EventArgs> Events;
-
-        public void Action(object sender, EventArgs args)
+        protected override void OnInit()
         {
-            Events?.Invoke(this, EventArgs.Empty);
+            Actor.Killed += Action;
         }
-        public void Init(IActor actor)
+        
+        private void Action(object sender, EventArgs args)
         {
-            actor.Killed += Action;
+            Trigger(args);
         }
     }
 }

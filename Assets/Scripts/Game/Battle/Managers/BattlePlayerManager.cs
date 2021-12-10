@@ -12,7 +12,7 @@ namespace SecondBreath.Game.Battle.Managers
     {
         public IPlayer Player { get; } = new GamePlayer(Team.Green);
 
-        private readonly IGameTickCollection _gameTickHandler;
+        private readonly IGameTickWriter _gameTickHandler;
         private readonly IBattleScene _battleScene;
         private readonly IDebugLogger _debugLogger;
         private readonly BattleCharactersFactory _battleCharactersFactory;
@@ -20,7 +20,7 @@ namespace SecondBreath.Game.Battle.Managers
         private readonly ViewProvider _viewProvider;
         private readonly SignalBus _signalBus;
 
-        public BattlePlayerManager(IGameTickCollection gameTickHandler, IBattleScene battleScene,
+        public BattlePlayerManager(IGameTickWriter gameTickHandler, IBattleScene battleScene,
             IDebugLogger debugLogger, BattleCharactersFactory battleCharactersFactory, ViewFactory viewFactory,
             ViewProvider viewProvider, SignalBus signalBus)
         {

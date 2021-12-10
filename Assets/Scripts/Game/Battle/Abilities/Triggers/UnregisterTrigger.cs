@@ -1,30 +1,30 @@
-using System;
 using Common.Actors;
 using SecondBreath.Game.Battle.Registration;
 
 namespace SecondBreath.Game.Battle.Abilities.Triggers
 {
-    public class UnregisterTrigger : ITrigger
+    public class UnregisterTrigger : BaseAbilityTrigger
     {
-        private ITeamObjectRegisterer<IActor> _teamObjectRegisterer;
+        private readonly ITeamObjectRegisterer<IActor> _teamObjectRegisterer;
+        
         public UnregisterTrigger(ITeamObjectRegisterer<IActor> teamObjectRegisterer)
         {
             _teamObjectRegisterer = teamObjectRegisterer;
         }
-        public void Dispose()
+
+        public override void Dispose()
         {
             _teamObjectRegisterer.ObjectUnregistered -= Action;
         }
 
-        private void Action(object obj, RegistrationTeamObjectArgs actorArgs)
-        {
-            Events?.Invoke(obj, actorArgs);
-        }
-
-        public event EventHandler<EventArgs> Events;
-        public void Init(IActor actor)
+        protected override void OnInit()
         {
             _teamObjectRegisterer.ObjectUnregistered += Action;
+        }
+        
+        private void Action(object obj, RegistrationTeamObjectArgs actorArgs)
+        {
+            Trigger(actorArgs);
         }
     }
 }

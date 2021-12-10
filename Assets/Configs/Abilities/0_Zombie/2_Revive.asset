@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6c91c3174b49169dbea3dbbfd1b8c9, type: 3}
-  m_Name: Devour
+  m_Name: 2_Revive
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -29,8 +29,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.AddHpBasedOnActorHpData,
-        Assembly-CSharp
+      Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.ReviveData, Assembly-CSharp
     - Name: TargetChoosersData
       Entry: 7
       Data: 2|SecondBreath.Game.Battle.Abilities.TargetChoosers.ITargetChooserData[],
@@ -44,12 +43,12 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: _hpPercent
+    - Name: _hpAmount
       Entry: 7
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 20
+      Data: 50
     - Name: _isUpgradeable
       Entry: 5
       Data: false
@@ -59,24 +58,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: _radius
-      Entry: 7
-      Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
-    - Name: _value
+    - Name: _delay
       Entry: 4
-      Data: 3
-    - Name: _isUpgradeable
-      Entry: 5
-      Data: false
-    - Name: _tier
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: _choosenSide
-      Entry: 3
-      Data: 1
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -94,7 +78,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 7
-      Data: 4|SecondBreath.Game.Battle.Abilities.Triggers.UnregisterTrigger, Assembly-CSharp
+      Data: 4|SecondBreath.Game.Battle.Abilities.Triggers.OnDeathTrigger, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
