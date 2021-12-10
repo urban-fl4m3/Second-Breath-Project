@@ -1,36 +1,30 @@
 using System;
-using Common.Actors;
-using SecondBreath.Common.Ticks;
-using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Ticks;
 
 namespace SecondBreath.Game.Battle.Abilities.Triggers
 {
-    public class UpdateTrigger : ITrigger, ITickUpdate
+    public class UpdateTrigger : BaseAbilityTrigger
     {
-        private readonly IGameTickCollection _tickCollection;
+        private readonly IGameTickWriter _tickWriter;
 
-        public UpdateTrigger(IGameTickCollection tickCollection)
+        public UpdateTrigger(IGameTickWriter tickWriter)
         {
-            _tickCollection = tickCollection;
+            _tickWriter = tickWriter;
         }
 
-
-        public event EventHandler<EventArgs> Events;
-
-        public void Init(IActor actor)
+        public override void Dispose()
         {
-            _tickCollection.AddTick(this);
+            _tickWriter.RemoveTick(OnUpdate);
         }
 
-        public void Update()
+        protected override void OnInit()
         {
-            Events?.Invoke(this, EventArgs.Empty);    
+            _tickWriter.AddTick(OnUpdate);
         }
 
-        public void Dispose()
+        private void OnUpdate()
         {
-            _tickCollection.RemoveTick(this);
+            Trigger(EventArgs.Empty);    
         }
     }
 }

@@ -3,17 +3,11 @@ using Common.Actors;
 
 namespace SecondBreath.Game.Battle.Abilities.TargetChoosers
 {
-    public class SelfChooser : ITargetChooser
+    public class SelfChooser : BaseTargetChooser<SelfChooserData>
     {
-        private IActor _owner;
-        public List<IActor> ChooseTarget()
+        public override IEnumerable<IActor> ChooseTarget()
         {
-            return new List<IActor> {_owner};
-        }
-
-        public void Init(IActor actor, ITargetChooserData data)
-        {
-            _owner = actor;
+            return new List<IActor> { Owner };
         }
     }
 }

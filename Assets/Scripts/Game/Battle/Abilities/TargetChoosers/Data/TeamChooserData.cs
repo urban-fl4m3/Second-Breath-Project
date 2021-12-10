@@ -4,11 +4,13 @@ using Sirenix.Serialization;
 
 namespace SecondBreath.Game.Battle.Abilities.TargetChoosers
 {
+    [Serializable]
     public class TeamChooserData : ITargetChooserData
     {
-        [OdinSerialize] private Side _choosenSide;
+        [OdinSerialize] private Side _chosenSide;
         
-        public Side ChoosenSide => _choosenSide;
-        public virtual Type LogicInstanceType => typeof(TeamChooser);
+        public Side ChosenSide => _chosenSide;
+        
+        public Type LogicInstanceType => typeof(TeamChooser);
     }
 }

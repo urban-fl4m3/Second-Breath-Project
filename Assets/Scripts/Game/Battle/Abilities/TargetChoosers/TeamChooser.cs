@@ -1,33 +1,32 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Actors;
 using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Players;
-using Sirenix.Serialization;
 
 namespace SecondBreath.Game.Battle.Abilities.TargetChoosers
 {
-    public class TeamChooser : ITargetChooser
+    public class TeamChooser : BaseTargetChooser<TeamChooserData>
     {
+        private Side _side;
+        
         private readonly ITeamObjectRegisterer<IActor> _actorRegisterer;
-        private IActor _owner;
-        [OdinSerialize] private Side side;
-
+        
         public TeamChooser(ITeamObjectRegisterer<IActor> actorRegisterer)
         {
             _actorRegisterer = actorRegisterer;
         }
 
-        public List<IActor> ChooseTarget()
+        protected override void OnInit()
         {
-            return side == Side.Ally ? _actorRegisterer.GetTeamObjects(_owner.Owner.Team).ToList() : _actorRegisterer.GetOppositeTeamObjects(_owner.Owner.Team).ToList();
+            _side = Data.ChosenSide;
         }
 
-        public void Init(IActor actor, ITargetChooserData data)
+        public override IEnumerable<IActor> ChooseTarget()
         {
-            _owner = actor;
-            side = ((TeamChooserData) data).ChoosenSide;
+            return _side == Side.Ally 
+                ? _actorRegisterer.GetTeamObjects(Owner.Owner.Team).ToList()
+                : _actorRegisterer.GetOppositeTeamObjects(Owner.Owner.Team).ToList();
         }
     }
 }

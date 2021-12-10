@@ -136,7 +136,7 @@ namespace SecondBreath.Game.Battle.Searchers
             return nearestActor;
         }
         
-        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorRegistered(object sender, RegistrationTeamObjectArgs e)
         {
             if (e.Team != OwnerTeam)
             {
@@ -144,7 +144,7 @@ namespace SecondBreath.Game.Battle.Searchers
             }
         }
 
-        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs<IActor> e)
+        private void HandleActorUnregistered(object sender, RegistrationTeamObjectArgs e)
         {
             if (e.Team != OwnerTeam)
             {

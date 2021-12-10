@@ -42,7 +42,7 @@ MonoBehaviour:
       Entry: 7
       Data: 3|SecondBreath.Game.Battle.Abilities.TargetChoosers.TeamChooserData,
         Assembly-CSharp
-    - Name: _choosenSide
+    - Name: _chosenSide
       Entry: 3
       Data: 1
     - Name: 
