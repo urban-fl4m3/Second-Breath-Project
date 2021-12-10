@@ -6,8 +6,8 @@ namespace SecondBreath.Game.Battle.Registration
 {
     public interface ITeamObjectRegisterer<T>
     {
-        event EventHandler<RegistrationTeamObjectArgs<T>> ObjectRegistered;
-        event EventHandler<RegistrationTeamObjectArgs<T>> ObjectUnregistered;
+        event EventHandler<RegistrationTeamObjectArgs> ObjectRegistered;
+        event EventHandler<RegistrationTeamObjectArgs> ObjectUnregistered;
         
         void Register(Team team, T obj);
         void Unregister(T obj);

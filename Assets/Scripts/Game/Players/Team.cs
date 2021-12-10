@@ -6,4 +6,10 @@
         Green = 1,
         Red = 2
     }
+
+    public enum Side
+    {
+        Ally = 0,
+        Enemy = 1
+    }
 }

@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 6069560558330108496, guid: adf8684e146d09341a776d02a3094943, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,6 +31,29 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|SecondBreath.Game.Battle.Abilities.Mechanics.DamageAuraData, Assembly-CSharp
+    - Name: TargetChoosersData
+      Entry: 7
+      Data: 2|SecondBreath.Game.Battle.Abilities.TargetChoosers.ITargetChooserData[],
+        Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|SecondBreath.Game.Battle.Abilities.TargetChoosers.TeamChooserData,
+        Assembly-CSharp
+    - Name: _choosenSide
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: _damage
       Entry: 7
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
@@ -50,7 +74,7 @@ MonoBehaviour:
       Data: SecondBreath.Game.Stats.StatData, Assembly-CSharp
     - Name: _value
       Entry: 4
-      Data: 1.5
+      Data: 1.25
     - Name: _isUpgradeable
       Entry: 5
       Data: false
@@ -60,6 +84,27 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _vfx
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _triggers
+      Entry: 7
+      Data: 4|SecondBreath.Game.Battle.Abilities.Triggers.ITrigger[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 5|SecondBreath.Game.Battle.Abilities.Triggers.UpdateTrigger, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

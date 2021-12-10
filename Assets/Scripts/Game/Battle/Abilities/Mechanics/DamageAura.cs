@@ -1,48 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Actors;
+using Common.VFX;
 using SecondBreath.Game.Battle.Damage;
 using SecondBreath.Game.Battle.Movement;
-using SecondBreath.Game.Battle.Registration;
-using SecondBreath.Game.Stats.Formulas;
-using SecondBreath.Game.Ticks;
+using SecondBreath.Game.Battle.Movement.Components;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SecondBreath.Game.Battle.Abilities.Mechanics
 {
     public class DamageAura : BaseMechanic<DamageAuraData>
     {
-        private ITeamObjectRegisterer<IActor> _actorRegisterer;
-        private IStatUpgradeFormula _statUpgradeFormula;
         private ITranslatable _casterTranslatable;
-        private IGameTickWriter _gameTickWriter;
+        private VfxObject _vfx;
 
         private float _radius;
         private float _damage;
 
-        protected override void OnInit(IActor owner, DamageAuraData data)
+        protected override void OnInit()
         {
-            _actorRegisterer = Container.Resolve<ITeamObjectRegisterer<IActor>>();
-            _gameTickWriter = Container.Resolve<IGameTickWriter>();
-            _statUpgradeFormula = Container.Resolve<IStatUpgradeFormula>();
             _casterTranslatable = Caster.Components.Get<ITranslatable>();  
         
-            _radius  = _statUpgradeFormula.GetValue(Data.Radius, Level);
-            _damage = _statUpgradeFormula.GetValue(Data.Damage, Level);
+            _radius  = StatUpgradeFormula.GetValue(Data.Radius, Level);
+            _damage = StatUpgradeFormula.GetValue(Data.Damage, Level);
 
-            _gameTickWriter.AddTick(ApplyMechanic);
+            _vfx = Object.Instantiate(Data.VFX, Caster.Components.Get<RotationComponent>().transform).GetComponent<VfxObject>();
+            _vfx.UpdateScale(_radius);
         }
 
         public override void Dispose()
         {
-            _gameTickWriter.RemoveTick(ApplyMechanic);
+            Object.Destroy(_vfx.gameObject);
         }
 
-        private void ApplyMechanic()
+        protected override void ApplyMechanic(object sender, EventArgs args)
         {
-            var enemies = _actorRegisterer.GetOppositeTeamObjects(Caster.Owner.Team);
-            var localEnemies = new List<IActor>(enemies);
+            var targets = new List<IActor>();
             
-            foreach (var enemyActor in localEnemies)
+            foreach (var chooser in _choosers)
+            {
+                targets.AddRange(chooser.ChooseTarget());
+            }
+            
+            foreach (var enemyActor in targets)
             {
                 var enemyTranslatable = enemyActor.Components.Get<ITranslatable>();
                 var diff = enemyTranslatable.Position.Value - _casterTranslatable.Position.Value;
