@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b2a102d-8438-4d9e-9c49-3b57a69789f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Common/Structures.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Common/Structures/Heap.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Common/Structures/Heap.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/BattleField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/BattleField.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs" afterDir="false" />
@@ -72,10 +69,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="25344">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="25344" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -94,7 +91,8 @@
       <workItem from="1638689233944" duration="15184000" />
       <workItem from="1638720053275" duration="7346000" />
       <workItem from="1639161317429" duration="12574000" />
-      <workItem from="1639218625282" duration="5519000" />
+      <workItem from="1639218625282" duration="5987000" />
+      <workItem from="1639235216431" duration="605000" />
     </task>
     <servers />
   </component>

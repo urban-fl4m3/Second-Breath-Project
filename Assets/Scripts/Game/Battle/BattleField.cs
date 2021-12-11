@@ -26,6 +26,7 @@ namespace SecondBreath.Game.Battle
         
         private readonly Dictionary<Team, Rect> _registeredRects = new Dictionary<Team, Rect>();
 
+        private Dictionary<Tuple<int, int>, Cell> Cells = new Dictionary<Tuple<int, int>, Cell>();
         [SerializeField] private GameObject _cellVisual;
         [SerializeField] private int _hSize = 1;
         [SerializeField] private int _wSize = 1;
@@ -70,12 +71,32 @@ namespace SecondBreath.Game.Battle
 
                         var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
                         newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
-                        new Cell(i, j, newObject, new Vector2Int(_hSize, _wSize));
+                        Cells.Add(new Tuple<int, int>(i, j), new Cell(i, j, newObject));
                     }
                 }
 
                 StartCoroutine(PathFinding());
             }
+        }
+
+        private List<Cell> GetNearCells(Cell cell)
+        {
+            List<Cell> ans = new List<Cell>();
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (i == 0 && j == 0) continue;
+                    if ((cell._indexes.x + i < _hSize) && (cell._indexes.x + i > -1) && 
+                        (cell._indexes.y + j < _wSize) && (cell._indexes.y + j > -1))
+                    {
+                        var chosenCell = Cells.GetValue(new Tuple<int, int>(cell._indexes.x + i, cell._indexes.y + j));
+                        if (!chosenCell.IsEmpty) continue;
+                        ans.Add(chosenCell);
+                    }
+                }
+            }
+            return ans;
         }
 
         private IEnumerator PathFinding()
@@ -93,7 +114,7 @@ namespace SecondBreath.Game.Battle
             {
                 startCell.IsSelected = true;
                 startCell.SetCellColor(Color.grey);
-                var nearCells = startCell.GetNearCells();
+                var nearCells = GetNearCells(startCell);
 
                 foreach (var cell in nearCells)
                 {
@@ -131,7 +152,7 @@ namespace SecondBreath.Game.Battle
 
         private Cell GetCell(int x, int y)
         {
-            return Cell.Cells.GetValue(new Tuple<int, int>(x, y));
+            return Cells.GetValue(new Tuple<int, int>(x, y));
         }
 
         private void UpdateRects()

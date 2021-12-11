@@ -9,7 +9,6 @@ namespace SecondBreath.Game.Battle
 {
     public class Cell : IComparable<Cell>
     {
-        public static Dictionary<Tuple<int, int>, Cell> Cells = new Dictionary<Tuple<int, int>, Cell>();
         public bool IsEmpty = true;
         public bool IsSelected;
         public Cell PreviousCell;
@@ -19,8 +18,7 @@ namespace SecondBreath.Game.Battle
         
         private GameObject _cellVisual;
         private Material _cellMaterial;
-        private Vector2Int _indexes;
-        private Vector2Int _fieldSize;
+        public Vector2Int _indexes;
 
         public static bool operator < (Cell lhs, Cell rhs)
         {
@@ -43,14 +41,12 @@ namespace SecondBreath.Game.Battle
             return lhs?._indexes != rhs?._indexes;
         }
 
-        public Cell(int x, int y, GameObject cellVisual, Vector2Int fieldSize)
+        public Cell(int x, int y, GameObject cellVisual)
         {
-            Cells.Add(new Tuple<int, int>(x, y), this);
             _cellVisual = cellVisual;
             _cellMaterial = _cellVisual.GetComponent<Renderer>().material;
 
             _indexes = new Vector2Int(x, y);
-            _fieldSize = fieldSize;
 
             if (Random.Range(0.0f, 1.0f) < 0.35f)
             {
@@ -68,26 +64,6 @@ namespace SecondBreath.Game.Battle
             _cellMaterial.color = newColor;
         }
 
-        public List<Cell> GetNearCells()
-        {
-            List<Cell> ans = new List<Cell>();
-            for (int i = -1; i < 2; i++)
-            {
-                for (int j = -1; j < 2; j++)
-                {
-                    if (i == 0 && j == 0) continue;
-                    if ((_indexes.x + i < _fieldSize.x) && (_indexes.x + i > -1) && 
-                        (_indexes.y + j < _fieldSize.y) && (_indexes.y + j > -1))
-                    {
-                        var chosenCell = Cells.GetValue(new Tuple<int, int>(_indexes.x + i, _indexes.y + j));
-                        if (!chosenCell.IsEmpty) continue;
-                        ans.Add(chosenCell);
-                    }
-                }
-            }
-            return ans;
-        }
-        
 
         public float GetCellDirection(Cell cell)
         {
