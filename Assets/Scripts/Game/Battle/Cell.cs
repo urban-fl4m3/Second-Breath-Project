@@ -47,16 +47,7 @@ namespace SecondBreath.Game.Battle
             _cellMaterial = _cellVisual.GetComponent<Renderer>().material;
 
             _indexes = new Vector2Int(x, y);
-
-            if (Random.Range(0.0f, 1.0f) < 0.35f)
-            {
-                IsEmpty = false;
-                SetCellColor(Color.black);
-            }
-            else
-            {
-                SetCellColor(Color.green);
-            }
+            SetCellColor(Color.green);
         }
 
         public void SetCellColor(Color newColor)
@@ -86,6 +77,11 @@ namespace SecondBreath.Game.Battle
         public int CompareTo(Cell other)
         {
             return CellCost.CompareTo(other.CellCost);
+        }
+
+        public Vector3 GetCellPosition()
+        {
+            return _cellVisual.transform.position;
         }
     }
 }

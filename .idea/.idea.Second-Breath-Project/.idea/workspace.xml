@@ -92,7 +92,7 @@
       <workItem from="1638720053275" duration="7346000" />
       <workItem from="1639161317429" duration="12574000" />
       <workItem from="1639218625282" duration="5987000" />
-      <workItem from="1639235216431" duration="605000" />
+      <workItem from="1639235216431" duration="5576000" />
     </task>
     <servers />
   </component>
@@ -105,6 +105,23 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs</url>
+          <line>49</line>
+          <properties documentPath="D:\SecondBreath\Second-Breath-Project\Assets\Scripts\Game\Battle\Cell.cs" initialLine="49" containingFunctionPresentation="constructor 'Cell'">
+            <startOffsets>
+              <option value="1402" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1428" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="UNITY_DEBUG_RUN_CONFIGURATION">
         <watch expression="nearCells" />

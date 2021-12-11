@@ -205,5 +205,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d43efd8de2ddd3d4d9bb6d5b1b82a9bd, type: 2}
   - {fileID: 11400000, guid: 04dd07da0ccae804d934bd1b6b63e0ab, type: 2}
   - {fileID: 11400000, guid: 1eedef2dd57cb4f4e84ac3f1bd5cdd36, type: 2}
-  _radius: 0.5
+  _radius: 1.5
   _height: 3

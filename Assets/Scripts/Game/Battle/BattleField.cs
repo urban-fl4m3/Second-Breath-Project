@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Common.Actors;
 using Common.Structures;
 using SecondBreath.Common.Extensions;
 using SecondBreath.Common.Logger;
+using SecondBreath.Game.Battle.Movement;
+using SecondBreath.Game.Battle.Registration;
 using SecondBreath.Game.Players;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,6 +18,7 @@ namespace SecondBreath.Game.Battle
     public class BattleField : SerializedMonoBehaviour, IBattleField
     {
         [Inject] private IDebugLogger _debugLogger;
+        [Inject] private  ITeamObjectRegisterer<IActor> _actorRegisterer;
         
         private const float FRIENDLY_FIELD_HEIGHT_RATIO = 0.0f;
         private const float ENEMY_FIELD_HEIGHT_RATIO = 0.5f;
@@ -75,8 +79,69 @@ namespace SecondBreath.Game.Battle
                     }
                 }
 
-                StartCoroutine(PathFinding());
+                PathFinding();
             }
+        }
+        
+        private Vector3 GetPointOnPlane(Camera camera)
+        {
+            var plane = GetPlane();
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if (plane.Raycast(ray, out var distance))
+            {
+                var point = ray.GetPoint(distance);
+                return point;
+            }
+            
+            return Vector3.negativeInfinity;
+        }
+
+        private void Update()
+        {
+            if (!pathFindingTest) return;
+            foreach (var cell in Cells)
+            {
+                cell.Value.SetCellColor(Color.green);
+                cell.Value.IsEmpty = true;
+                cell.Value.IsSelected = false;
+                cell.Value.CellDirection = Mathf.Infinity;
+                cell.Value.CellCost = Mathf.Infinity;
+            }
+
+            foreach (var actor in _actorRegisterer.GetRegisteredObjects())
+            {
+                var translatable = actor.Components.Get<ITranslatable>();
+                var position = translatable.Position.Value;
+                var radius = translatable.Radius;
+                var cellsInRadius = GetCellsInRadius(position, radius);
+                foreach (var cell in cellsInRadius)
+                {
+                    cell.SetCellColor(Color.black);
+                    cell.IsEmpty = false;
+                }
+            }
+            PathFinding();
+        }
+
+        private List<Cell> GetCellsInRadius(Vector3 point, float radius)
+        {
+            point.y = 0.0f;
+            List<Cell> ans = new List<Cell>();
+            for (int i = 0; i < _hSize; i++)
+            {
+                for (int j = 0; j < _wSize; j++)
+                {
+                    var cellPosition = GetCell(i, j).GetCellPosition();
+                    cellPosition.y = 0.0f;
+                    if (Vector3.Distance(point, cellPosition) <= radius)
+                    {
+                        ans.Add(GetCell(i, j));
+                    }
+                }
+            }
+
+            return ans;
         }
 
         private List<Cell> GetNearCells(Cell cell)
@@ -99,7 +164,7 @@ namespace SecondBreath.Game.Battle
             return ans;
         }
 
-        private IEnumerator PathFinding()
+        private void PathFinding()
         {
             Cell startCell = GetCell(_hSize - 1, 0);
             startCell.CellDirection = 0.0f;
@@ -113,7 +178,6 @@ namespace SecondBreath.Game.Battle
             while (true)
             {
                 startCell.IsSelected = true;
-                startCell.SetCellColor(Color.grey);
                 var nearCells = GetNearCells(startCell);
 
                 foreach (var cell in nearCells)
@@ -141,13 +205,9 @@ namespace SecondBreath.Game.Battle
             float coef = 0.0f;
             while (finishCell != null)
             {
-                yield return new WaitForSeconds(0.25f);
                 finishCell.SetCellColor(Color.yellow);
                 finishCell = finishCell.PreviousCell;
             }
-
-
-            yield break;
         }  
 
         private Cell GetCell(int x, int y)
