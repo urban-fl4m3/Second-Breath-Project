@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Common.Structures;
 using SecondBreath.Common.Extensions;
 using SecondBreath.Common.Logger;
 using SecondBreath.Game.Players;
@@ -86,7 +87,7 @@ namespace SecondBreath.Game.Battle
             finishCell.SetCellColor(Color.red);
             startCell.IsEmpty = true;
             finishCell.IsEmpty = true;
-            HashSet<Cell> openList = new HashSet<Cell>();
+            Heap<Cell> openList = new Heap<Cell>();
 
             while (true)
             {
@@ -108,20 +109,10 @@ namespace SecondBreath.Game.Battle
                 }
 
                 if (openList.Count == 0) break;
-                float minimumCost = Mathf.Infinity;
-                Cell nextCell = startCell;
-
-                foreach (var cell in openList)
-                {
-                    if (cell.CellCost < minimumCost)
-                    {
-                        minimumCost = cell.CellCost;
-                        nextCell = cell;
-                    }
-                }
+                Cell nextCell = openList.Pop();
+                float minimumCost = nextCell.CellCost;
 
                 if (finishCell.CellCost < minimumCost) break;
-                openList.Remove(nextCell);
                 startCell = nextCell;   
 
             }

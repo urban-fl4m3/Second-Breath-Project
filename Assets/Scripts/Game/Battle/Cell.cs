@@ -7,7 +7,7 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace SecondBreath.Game.Battle
 {
-    public class Cell
+    public class Cell : IComparable<Cell>
     {
         public static Dictionary<Tuple<int, int>, Cell> Cells = new Dictionary<Tuple<int, int>, Cell>();
         public bool IsEmpty = true;
@@ -22,9 +22,18 @@ namespace SecondBreath.Game.Battle
         private Vector2Int _indexes;
         private Vector2Int _fieldSize;
 
+        public static bool operator < (Cell lhs, Cell rhs)
+        {
+            return lhs?.CellCost < rhs?.CellCost;
+        }
+        
+        public static bool operator > (Cell lhs, Cell rhs)
+        {
+            return lhs?.CellCost > rhs?.CellCost;
+        }
+        
         public static bool operator ==(Cell lhs, Cell rhs)
         {
-            
             return lhs?._indexes == rhs?._indexes;
         }
         
@@ -78,6 +87,7 @@ namespace SecondBreath.Game.Battle
             }
             return ans;
         }
+        
 
         public float GetCellDirection(Cell cell)
         {
@@ -96,6 +106,10 @@ namespace SecondBreath.Game.Battle
         {
             return (Mathf.Abs(_indexes.x - cell._indexes.x) + Mathf.Abs(_indexes.y - cell._indexes.y)) * 10.0f;
         }
-        
+
+        public int CompareTo(Cell other)
+        {
+            return CellCost.CompareTo(other.CellCost);
+        }
     }
 }
