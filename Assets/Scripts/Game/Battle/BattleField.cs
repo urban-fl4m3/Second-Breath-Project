@@ -99,61 +99,122 @@ namespace SecondBreath.Game.Battle
             {
                 var translatable = actor.Components.Get<ITranslatable>();
                 var position = translatable.Position.Value;
-                var cellsInRadius = GetCellByWorldPosition(position);
-                cellsInRadius.SetCellColor(Color.black);
-                cellsInRadius.IsEmpty = false;
-                cellsInRadius.unitCounts++;
+                var cellsInRadius = GetCellByWorldPosition(position, translatable.Radius);
+                foreach (var cell in cellsInRadius)
+                {
+                    cell.SetCellColor(Color.black);
+                    cell.IsEmpty = false;
+                    cell.unitCounts++;
+                }
             }
 
             // if (objects.Count() < 2) return;
             // PathFinding(objects.First().Components.Get<ITranslatable>().Position.Value, 
             //     objects.Last().Components.Get<ITranslatable>().Position.Value);
         }
-
+        
         private Cell GetCellByWorldPosition(Vector3 point)
         {
             point.y = 0.0f;
             int xPos = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
             int yPos = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
-
             return GetCell(xPos, yPos);
         }
 
-        private List<Cell> GetNearCells(Cell cell)
+        private List<Cell> GetCellByWorldPosition(Vector3 point, float radius)
         {
-            List<Cell> ans = new List<Cell>();
-            for (int i = -1; i < 2; i++)
+            point.y = 0.0f;
+            int xPos = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
+            int yPos = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
+            
+            HashSet<Tuple<int, int>> flaged = new HashSet<Tuple<int, int>>();
+            List<Cell> activeCells = new List<Cell>();
+            
+            activeCells.Add(GetCell(xPos, yPos));
+            flaged.Add(new Tuple<int, int>(xPos, yPos));
+            int listIndex = 0;
+            while (listIndex < activeCells.Count)
             {
-                for (int j = -1; j < 2; j++)
+                var cellIndexes = activeCells[listIndex]._indexes;
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        if (cellIndexes.x + i < _hSize && cellIndexes.x + i > -1 &&
+                            cellIndexes.y + j < _wSize && cellIndexes.y + j > -1 &&
+                            !flaged.Contains(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j)))
+                        {
+                            var cell = GetCell(cellIndexes.x + i, cellIndexes.y + j);
+                            var cellPosition = cell.GetCellPosition();
+                            cellPosition.y = 0.0f;
+                            if (Vector3.Distance(point, cellPosition) <= radius)
+                            {
+                                flaged.Add(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j));
+                                activeCells.Add(cell);
+                            }
+                        }
+                    }
+                }
+                
+                listIndex++;
+            }
+            
+            return activeCells;
+        }
+
+        private List<Cell> GetNearCells(Cell cell, float Radius)
+        {
+            Cell chosenCell;
+            Vector2Int centerIndex;
+            int radiusInCells = Mathf.FloorToInt(Radius / _cellSize.x);
+            List<Cell> ans = new List<Cell>();
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
                 {
                     if (i == 0 && j == 0) continue;
                     if ((cell._indexes.x + i < _hSize) && (cell._indexes.x + i > -1) && 
                         (cell._indexes.y + j < _wSize) && (cell._indexes.y + j > -1))
                     {
-                        var chosenCell = Cells.GetValue(cell._indexes + new Vector2Int(i, j));
+                        centerIndex = cell._indexes + new Vector2Int(i, j);
+                        chosenCell = Cells.GetValue(centerIndex);
                         if (chosenCell.unitCounts > 0) continue;
                         ans.Add(chosenCell);
                     }
                 }
             }
+            
+            
             return ans;
         }
 
-        public Vector3 PathFinding(Vector3 startPosition, Vector3 finishPosition)
+        public Vector3 PathFinding(ITranslatable startPosition, ITranslatable finishPosition)
         {
-            
-            Cell startCell = GetCellByWorldPosition(startPosition);
-            if (startCell.unitCounts > 1)
+            var unitRadius = startPosition.Radius;
+            List<Cell> startCells = GetCellByWorldPosition(startPosition.Position.Value, startPosition.Radius);
+            foreach (var cell in startCells)
             {
-                startCell.unitCounts--;
-                return startPosition;
+                cell.unitCounts--;
             }
+
+            List<int> counts = new List<int>();
+            List<Cell> finishCells = GetCellByWorldPosition(finishPosition.Position.Value, finishPosition.Radius);
+            foreach (var cell in finishCells)
+            {
+                counts.Add(cell.unitCounts);
+                cell.unitCounts = 0;
+            }
+            Cell finishCell = GetCellByWorldPosition(finishPosition.Position.Value);
+            Cell startCell = GetCellByWorldPosition(startPosition.Position.Value);
             
-            Cell finishCell = GetCellByWorldPosition(finishPosition);
+            
+            // if (startCell.unitCounts > 0)
+            // {
+            //     return startPosition.Position.Value;
+            // }
             finishCell.CellCost = Mathf.Infinity;
             
             startCell.CellDirection = 0.0f;
-            finishCell.unitCounts--;
 
             bool finishFinded = false;
 
@@ -169,7 +230,7 @@ namespace SecondBreath.Game.Battle
 
             while (true)
             {
-                var nearCells = GetNearCells(currentCell);
+                var nearCells = GetNearCells(currentCell, unitRadius);
 
                 foreach (var cell in nearCells)
                 {
@@ -195,12 +256,22 @@ namespace SecondBreath.Game.Battle
 
             }
 
-            finishCell.unitCounts++;
+            for (int i = 0; i < finishCells.Count; i++)
+            {
+                finishCells[i].unitCounts = counts[i];
+            }
+            
+            foreach (var cell in startCells)
+            {
+                cell.unitCounts++;
+            }
+            
             if (!finishFinded) return startCell.GetCellPosition();
+            // Debug.Log("OKKKK");
             List<Cell> path = new List<Cell>();
             while (goalCell != null)
             {
-                // goalCell.SetCellColor(Color.yellow);
+                goalCell.SetCellColor(Color.yellow);
                 path.Add(goalCell);
                 goalCell = previousCells.GetValue(goalCell._indexes);
             }

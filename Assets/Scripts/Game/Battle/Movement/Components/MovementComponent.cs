@@ -88,15 +88,13 @@ namespace SecondBreath.Game.Battle.Movement.Components
                     
                     var distance = Vector3.SqrMagnitude(direction);
                     var position = _transform.position;
-
-                    var goalPosition = position + direction;
                     
                     
                     if (distance > _target.Radius * _target.Radius)
                     {
-                        var nextPos = _battleScene.Field.PathFinding(position, goalPosition);
+                        var nextPos = _battleScene.Field.PathFinding(this, _target);
                         nextPos.y = 0.0f;
-                        _rotationComponent.LookAt(_target);
+                        _rotationComponent.LookAt(nextPos);
                         direction = nextPos - new Vector3(position.x, 0.0f, position.z);
                         position += direction.normalized * _movementSpeed * Time.deltaTime * _movementFixDivider;
                         ChangePosition(position);
