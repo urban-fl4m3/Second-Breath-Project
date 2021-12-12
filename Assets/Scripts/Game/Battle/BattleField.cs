@@ -91,6 +91,7 @@ namespace SecondBreath.Game.Battle
                 cell.Value.IsEmpty = true;
                 cell.Value.CellDirection = Mathf.Infinity;
                 cell.Value.CellCost = Mathf.Infinity;
+                cell.Value.unitCounts = 0;
             }
 
             var objects = _actorRegisterer.GetRegisteredObjects();
@@ -101,11 +102,12 @@ namespace SecondBreath.Game.Battle
                 var cellsInRadius = GetCellByWorldPosition(position);
                 cellsInRadius.SetCellColor(Color.black);
                 cellsInRadius.IsEmpty = false;
+                cellsInRadius.unitCounts++;
             }
 
-            if (objects.Count() < 2) return;
-            PathFinding(objects.First().Components.Get<ITranslatable>().Position.Value, 
-                objects.Last().Components.Get<ITranslatable>().Position.Value);
+            // if (objects.Count() < 2) return;
+            // PathFinding(objects.First().Components.Get<ITranslatable>().Position.Value, 
+            //     objects.Last().Components.Get<ITranslatable>().Position.Value);
         }
 
         private Cell GetCellByWorldPosition(Vector3 point)
@@ -129,7 +131,7 @@ namespace SecondBreath.Game.Battle
                         (cell._indexes.y + j < _wSize) && (cell._indexes.y + j > -1))
                     {
                         var chosenCell = Cells.GetValue(cell._indexes + new Vector2Int(i, j));
-                        if (!chosenCell.IsEmpty) continue;
+                        if (chosenCell.unitCounts > 0) continue;
                         ans.Add(chosenCell);
                     }
                 }
@@ -137,17 +139,21 @@ namespace SecondBreath.Game.Battle
             return ans;
         }
 
-        private Vector3 PathFinding(Vector3 startPosition, Vector3 finishPosition)
+        public Vector3 PathFinding(Vector3 startPosition, Vector3 finishPosition)
         {
             
             Cell startCell = GetCellByWorldPosition(startPosition);
+            if (startCell.unitCounts > 1)
+            {
+                startCell.unitCounts--;
+                return startPosition;
+            }
+            
             Cell finishCell = GetCellByWorldPosition(finishPosition);
-            bool startCellIsEmpty = startCell.IsEmpty;
-            bool finishCellIsEmpty = finishCell.IsEmpty;
+            finishCell.CellCost = Mathf.Infinity;
             
             startCell.CellDirection = 0.0f;
-            startCell.IsEmpty = true;
-            finishCell.IsEmpty = true;
+            finishCell.unitCounts--;
 
             bool finishFinded = false;
 
@@ -188,19 +194,20 @@ namespace SecondBreath.Game.Battle
                 currentCell = nextCell;   
 
             }
-            startCell.IsEmpty = startCellIsEmpty;
-            finishCell.IsEmpty = finishCellIsEmpty;
-            
+
+            finishCell.unitCounts++;
             if (!finishFinded) return startCell.GetCellPosition();
             List<Cell> path = new List<Cell>();
             while (goalCell != null)
             {
-                goalCell.SetCellColor(Color.yellow);
+                // goalCell.SetCellColor(Color.yellow);
                 path.Add(goalCell);
                 goalCell = previousCells.GetValue(goalCell._indexes);
             }
             
-            return path.Last().GetCellPosition();
+            var nextPos = path[path.Count - 2].GetCellPosition();
+            nextPos.y = 0.0f;
+            return nextPos;
         }  
 
         private Cell GetCell(int x, int y)

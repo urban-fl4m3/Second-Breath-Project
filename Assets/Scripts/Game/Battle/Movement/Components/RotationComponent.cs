@@ -12,5 +12,13 @@ namespace SecondBreath.Game.Battle.Movement.Components
             
             transform.rotation = rotation;
         }
+        
+        public void LookAt(Vector3 position)
+        {
+            var direction = position - transform.position;
+            var rotation = Quaternion.LookRotation(direction, Vector3.up);
+            
+            transform.rotation = rotation;
+        }
     }
 }

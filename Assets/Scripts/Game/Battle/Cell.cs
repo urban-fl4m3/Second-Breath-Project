@@ -12,6 +12,7 @@ namespace SecondBreath.Game.Battle
         public bool IsEmpty = true;
         public float CellDirection = Mathf.Infinity;
         public float CellCost = Mathf.Infinity;
+        public int unitCounts = 0;
         
         
         private readonly GameObject _cellVisual;
@@ -70,7 +71,7 @@ namespace SecondBreath.Game.Battle
 
         public float DistanceToCell(Cell cell)
         {
-            return (Mathf.Abs(_indexes.x - cell._indexes.x) + Mathf.Abs(_indexes.y - cell._indexes.y)) * 10.0f;
+            return Vector2Int.Distance(_indexes, cell._indexes) * 10.0f;
         }
 
         public int CompareTo(Cell other)

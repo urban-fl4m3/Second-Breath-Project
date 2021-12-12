@@ -17,6 +17,8 @@ namespace SecondBreath.Game.Battle.Movement.Components
         private const float _movementFixDivider = 0.01f;
         
         [Inject] private IGameTickWriter _tickHandler;
+        
+        [Inject] private IBattleScene _battleScene;
     
         public IReadOnlyReactiveProperty<Vector3> Position => _position;
         public float Radius { get; private set; }
@@ -83,17 +85,23 @@ namespace SecondBreath.Game.Battle.Movement.Components
                 if (canMove)
                 {
                     var direction = _actorSearcher.GetDirectionToCurrentTarget();
+                    
                     var distance = Vector3.SqrMagnitude(direction);
                     var position = _transform.position;
+
+                    var goalPosition = position + direction;
+                    
                     
                     if (distance > _target.Radius * _target.Radius)
                     {
+                        var nextPos = _battleScene.Field.PathFinding(position, goalPosition);
+                        nextPos.y = 0.0f;
+                        _rotationComponent.LookAt(_target);
+                        direction = nextPos - new Vector3(position.x, 0.0f, position.z);
                         position += direction.normalized * _movementSpeed * Time.deltaTime * _movementFixDivider;
                         ChangePosition(position);
                     }
                 }
-
-                _rotationComponent.LookAt(_target);
 
                 _movementAnimator.IsRunning = canMove;
                 return;
