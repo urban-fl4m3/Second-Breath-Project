@@ -605,7 +605,7 @@ PrefabInstance:
       objectReference: {fileID: 5568728278037632285, guid: bbac6f7774d36154c8f1d90d8ac01174, type: 3}
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: pathFindingTest
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: serializationData.Prefab

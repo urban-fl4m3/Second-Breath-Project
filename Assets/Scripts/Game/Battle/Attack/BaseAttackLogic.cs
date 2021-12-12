@@ -5,6 +5,7 @@ using SecondBreath.Common.Logger;
 using SecondBreath.Game.Battle.Animations;
 using SecondBreath.Game.Battle.Characters.Configs;
 using SecondBreath.Game.Battle.Movement;
+using SecondBreath.Game.Battle.Movement.Components;
 using SecondBreath.Game.Battle.Searchers;
 using SecondBreath.Game.Stats;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace SecondBreath.Game.Battle.Attack
         private ActorSearcher _searcher;
         private ITranslatable _translatable;
         private IAttackAnimator _attackAnimator;
+        private RotationComponent _rotation;
         
         public void Init(
             IDebugLogger logger,
@@ -47,6 +49,7 @@ namespace SecondBreath.Game.Battle.Attack
             _translatable = components.Get<ITranslatable>();
             _attackAnimator = components.Get<IAttackAnimator>();
             _animationEventHandler = components.Get<AnimationEventHandler>();
+            _rotation = components.Get<RotationComponent>();
             
             _lastAttackTime = Mathf.NegativeInfinity;
         }
@@ -73,6 +76,7 @@ namespace SecondBreath.Game.Battle.Attack
 
             if (_searcher.IsInAttackRange())
             {
+                _rotation.LookAt(_target.Components.Get<ITranslatable>());
                 _attackAnimator.SetAttackTrigger();
                 _isAttacking = true;
                 

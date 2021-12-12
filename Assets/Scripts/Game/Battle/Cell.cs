@@ -72,7 +72,7 @@ namespace SecondBreath.Game.Battle
 
         public float DistanceToCell(Cell cell)
         {
-            return Vector2Int.Distance(_indexes, cell._indexes) * 20.0f;
+            return Vector2Int.Distance(_indexes, cell._indexes) * 20.0f + unitCounts * 150.0f;
         }
 
         public int CompareTo(Cell other)

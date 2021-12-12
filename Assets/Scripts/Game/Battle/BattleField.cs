@@ -169,7 +169,6 @@ namespace SecondBreath.Game.Battle
                     {
                         centerIndex = cell._indexes + new Vector2Int(i, j);
                         chosenCell = Cells.GetValue(centerIndex);
-                        if (chosenCell.unitCounts > 0) continue;
                         ans.Add(chosenCell);
                     }
                 }
