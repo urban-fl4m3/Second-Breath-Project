@@ -47,6 +47,7 @@ namespace SecondBreath.Game.Battle
             _cellMaterial = _cellVisual.GetComponent<Renderer>().material;
 
             _indexes = new Vector2Int(x, y);
+            cellVisual.name = $"Cell({_indexes.x:00},{_indexes.y:00})";
             SetCellColor(Color.green);
         }
 

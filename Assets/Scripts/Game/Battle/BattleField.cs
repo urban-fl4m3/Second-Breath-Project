@@ -121,27 +121,48 @@ namespace SecondBreath.Game.Battle
                     cell.IsEmpty = false;
                 }
             }
-            PathFinding();
+          PathFinding();
         }
 
         private List<Cell> GetCellsInRadius(Vector3 point, float radius)
         {
             point.y = 0.0f;
-            List<Cell> ans = new List<Cell>();
-            for (int i = 0; i < _hSize; i++)
+            int xPos = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
+            int yPos = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
+            
+            HashSet<Tuple<int, int>> flaged = new HashSet<Tuple<int, int>>();
+            List<Cell> activeCells = new List<Cell>();
+            
+            activeCells.Add(GetCell(xPos, yPos));
+            flaged.Add(new Tuple<int, int>(xPos, yPos));
+            int listIndex = 0;
+            while (listIndex < activeCells.Count)
             {
-                for (int j = 0; j < _wSize; j++)
+                var cellIndexes = activeCells[listIndex]._indexes;
+                for (int i = -1; i < 2; i++)
                 {
-                    var cellPosition = GetCell(i, j).GetCellPosition();
-                    cellPosition.y = 0.0f;
-                    if (Vector3.Distance(point, cellPosition) <= radius)
+                    for (int j = -1; j < 2; j++)
                     {
-                        ans.Add(GetCell(i, j));
+                        if (cellIndexes.x + i < _hSize && cellIndexes.x + i > -1 &&
+                            cellIndexes.y + j < _wSize && cellIndexes.y + j > -1 &&
+                            !flaged.Contains(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j)))
+                        {
+                            var cell = GetCell(cellIndexes.x + i, cellIndexes.y + j);
+                            var cellPosition = cell.GetCellPosition();
+                            cellPosition.y = 0.0f;
+                            if (Vector3.Distance(point, cellPosition) <= radius)
+                            {
+                                flaged.Add(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j));
+                                activeCells.Add(cell);
+                            }
+                        }
                     }
                 }
+                
+                listIndex++;
             }
 
-            return ans;
+            return activeCells;
         }
 
         private List<Cell> GetNearCells(Cell cell)
