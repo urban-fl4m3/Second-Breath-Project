@@ -40,9 +40,10 @@ namespace SecondBreath.Game.Battle
             return lhs?._indexes != rhs?._indexes;
         }
 
-        public Cell(int x, int y, GameObject cellVisual)
+        public Cell(int x, int y, GameObject cellVisual, bool visualOn)
         {
             _cellVisual = cellVisual;
+            _cellVisual.SetActive(visualOn);
             _cellMaterial = _cellVisual.GetComponent<Renderer>().material;
 
             _indexes = new Vector2Int(x, y);

@@ -62,29 +62,26 @@ namespace SecondBreath.Game.Battle
             _registeredRects.Add(Team.Red, _redRect);
 
 
-            if (pathFindingTest)
+            
+            _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize,
+                (_mainRect.yMax - _mainRect.yMin) / _hSize);
+
+            for (int i = 0; i < _hSize; i++)
             {
-                _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize,
-                    (_mainRect.yMax - _mainRect.yMin) / _hSize);
-
-                for (int i = 0; i < _hSize; i++)
+                for (int j = 0; j < _wSize; j++)
                 {
-                    for (int j = 0; j < _wSize; j++)
-                    {
-                        var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
-                            _cellSize.y * (j + 0.5f) + _mainRect.yMin);
+                    var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
+                        _cellSize.y * (j + 0.5f) + _mainRect.yMin);
 
-                        var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
-                        newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
-                        Cells.Add(new Vector2Int(i, j), new Cell(i, j, newObject));
-                    }
+                    var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
+                    newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
+                    Cells.Add(new Vector2Int(i, j), new Cell(i, j, newObject, pathFindingTest));
                 }
             }
         }
 
         private void Update()
         {
-            if (!pathFindingTest) return;
             foreach (var cell in Cells)
             {
                 cell.Value.SetCellColor(Color.green);
@@ -107,10 +104,6 @@ namespace SecondBreath.Game.Battle
                     cell.unitCounts++;
                 }
             }
-
-            // if (objects.Count() < 2) return;
-            // PathFinding(objects.First().Components.Get<ITranslatable>().Position.Value, 
-            //     objects.Last().Components.Get<ITranslatable>().Position.Value);
         }
         
         private Cell GetCellByWorldPosition(Vector3 point)
@@ -161,12 +154,10 @@ namespace SecondBreath.Game.Battle
             
             return activeCells;
         }
-
-        private List<Cell> GetNearCells(Cell cell, float Radius)
+        private List<Cell> GetNearCells(Cell cell)
         {
             Cell chosenCell;
             Vector2Int centerIndex;
-            int radiusInCells = Mathf.FloorToInt(Radius / _cellSize.x);
             List<Cell> ans = new List<Cell>();
             for (int i = -1; i <= 1; i++)
             {
@@ -190,7 +181,6 @@ namespace SecondBreath.Game.Battle
 
         public Vector3 PathFinding(ITranslatable startPosition, ITranslatable finishPosition)
         {
-            var unitRadius = startPosition.Radius;
             List<Cell> startCells = GetCellByWorldPosition(startPosition.Position.Value, startPosition.Radius);
             foreach (var cell in startCells)
             {
@@ -207,11 +197,6 @@ namespace SecondBreath.Game.Battle
             Cell finishCell = GetCellByWorldPosition(finishPosition.Position.Value);
             Cell startCell = GetCellByWorldPosition(startPosition.Position.Value);
             
-            
-            // if (startCell.unitCounts > 0)
-            // {
-            //     return startPosition.Position.Value;
-            // }
             finishCell.CellCost = Mathf.Infinity;
             
             startCell.CellDirection = 0.0f;
@@ -230,7 +215,7 @@ namespace SecondBreath.Game.Battle
 
             while (true)
             {
-                var nearCells = GetNearCells(currentCell, unitRadius);
+                var nearCells = GetNearCells(currentCell);
 
                 foreach (var cell in nearCells)
                 {
@@ -267,7 +252,6 @@ namespace SecondBreath.Game.Battle
             }
             
             if (!finishFinded) return startCell.GetCellPosition();
-            // Debug.Log("OKKKK");
             List<Cell> path = new List<Cell>();
             while (goalCell != null)
             {
