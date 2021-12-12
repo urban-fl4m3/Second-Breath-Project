@@ -10,14 +10,12 @@ namespace SecondBreath.Game.Battle
     public class Cell : IComparable<Cell>
     {
         public bool IsEmpty = true;
-        public bool IsSelected;
-        public Cell PreviousCell;
         public float CellDirection = Mathf.Infinity;
         public float CellCost = Mathf.Infinity;
         
         
-        private GameObject _cellVisual;
-        private Material _cellMaterial;
+        private readonly GameObject _cellVisual;
+        private readonly Material _cellMaterial;
         public Vector2Int _indexes;
 
         public static bool operator < (Cell lhs, Cell rhs)

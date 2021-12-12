@@ -593,11 +593,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: _hSize
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: _wSize
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2031217937934570372, guid: 6cc0bbfc9b92a91488357bcfaca382aa, type: 3}
       propertyPath: _cellVisual
