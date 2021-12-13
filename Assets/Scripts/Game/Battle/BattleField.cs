@@ -250,7 +250,7 @@ namespace SecondBreath.Game.Battle
                 cell.unitCounts++;
             }
             
-            if (!finishFinded) return startCell.GetCellPosition();
+            if (!finishFinded || goalCell.CellCost > 1000) return startCell.GetCellPosition();
             List<Cell> path = new List<Cell>();
             while (goalCell != null)
             {

@@ -61,8 +61,8 @@ namespace SecondBreath.Game.Battle
         {
             int dx = _indexes.x - cell._indexes.x;
             int dy = _indexes.y - cell._indexes.y;
-            if (dx != 0 && dy != 0) return 14.0f;
-            return 10.0f;
+            if (dx != 0 && dy != 0) return 14.0f + unitCounts * 150.0f;
+            return 10.0f + unitCounts * 150.0f;
         }
 
         public void UpdateCellCost(Cell finishCell)
@@ -72,7 +72,7 @@ namespace SecondBreath.Game.Battle
 
         public float DistanceToCell(Cell cell)
         {
-            return Vector2Int.Distance(_indexes, cell._indexes) * 20.0f + unitCounts * 150.0f;
+            return Vector2Int.Distance(_indexes, cell._indexes) * 20.0f;
         }
 
         public int CompareTo(Cell other)
