@@ -80,7 +80,7 @@ namespace SecondBreath.Game.Battle
             }
         }
 
-        private void Update()
+        private void ClearBF()
         {
             foreach (var cell in Cells)
             {
@@ -90,7 +90,10 @@ namespace SecondBreath.Game.Battle
                 cell.Value.CellCost = Mathf.Infinity;
                 cell.Value.unitCounts = 0;
             }
+        }
 
+        private void UpdateActorsOnBF()
+        {
             var objects = _actorRegisterer.GetRegisteredObjects();
             foreach (var actor in objects)
             {
@@ -104,6 +107,12 @@ namespace SecondBreath.Game.Battle
                     cell.unitCounts++;
                 }
             }
+        }
+
+        private void Update()
+        {
+            ClearBF();
+            UpdateActorsOnBF();
         }
         
         private Cell GetCellByWorldPosition(Vector3 point)
