@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using SecondBreath.Common.Extensions;
 using UnityEngine;
-using Random = UnityEngine.Random;
-using Vector2 = System.Numerics.Vector2;
 
 namespace SecondBreath.Game.Battle
 {
@@ -50,7 +46,7 @@ namespace SecondBreath.Game.Battle
             cellVisual.name = $"Cell({_indexes.x:00},{_indexes.y:00})";
             SetCellColor(Color.green);
         }
-
+        
         public void SetCellColor(Color newColor)
         {
             _cellMaterial.color = newColor;

@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b2a102d-8438-4d9e-9c49-3b57a69789f9" name="Changes" comment="" />
+    <list default="true" id="2b2a102d-8438-4d9e-9c49-3b57a69789f9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Second-Breath-Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Battle/Cell.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,6 +95,7 @@
       <workItem from="1639337734620" duration="1828000" />
       <workItem from="1639352506360" duration="793000" />
       <workItem from="1640887262599" duration="433000" />
+      <workItem from="1641210368985" duration="3557000" />
     </task>
     <servers />
   </component>
