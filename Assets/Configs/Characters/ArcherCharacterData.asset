@@ -226,5 +226,5 @@ MonoBehaviour:
   _prefab: {fileID: 7925901049854717938, guid: 241fa28db83ac7f40a4d40c64b754d29, type: 3}
   _projectile: {fileID: 2479051136284294989, guid: 9d791857b5824834b9687bc74a55943c, type: 3}
   _abilitiesData: []
-  _radius: 1
+  _radius: 0.4
   _height: 2

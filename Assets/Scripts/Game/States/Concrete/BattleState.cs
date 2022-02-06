@@ -14,7 +14,7 @@ namespace SecondBreath.Game.States.Concrete
 {
     public class BattleState : BaseState
     {
-        public const int DEBUG_UNITS_COUNT = 3;
+        public const int DEBUG_UNITS_COUNT = 10;
 
         private readonly IDebugLogger _logger;
         private readonly DiContainer _container;

@@ -30,8 +30,8 @@ namespace SecondBreath.Game.Battle
 
         private Dictionary<Vector2Int, Cell> Cells = new Dictionary<Vector2Int, Cell>();
         [SerializeField] private GameObject _cellVisual;
-        [SerializeField] private int _hSize = 1;
-        [SerializeField] private int _wSize = 1;
+        [SerializeField] private int _rows = 1;
+        [SerializeField] private int _columns = 1;
         private Vector2 _cellSize;
         [SerializeField] private bool pathFindingTest;
 
@@ -58,21 +58,19 @@ namespace SecondBreath.Game.Battle
             _registeredRects.Add(Team.Green, _greenRect);
             _registeredRects.Add(Team.Red, _redRect);
 
+            _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _columns,
+                (_mainRect.yMax - _mainRect.yMin) / _rows);
 
-            
-            _cellSize = new Vector2((_mainRect.xMax - _mainRect.xMin) / _wSize,
-                (_mainRect.yMax - _mainRect.yMin) / _hSize);
-
-            for (int i = 0; i < _hSize; i++)
+            for (int row = 0; row < _rows; row++)
             {
-                for (int j = 0; j < _wSize; j++)
+                for (int column = 0; column < _columns; column++)
                 {
-                    var cellPosition = new Vector3(_cellSize.x * (i + 0.5f) + _mainRect.xMin, 0.01f,
-                        _cellSize.y * (j + 0.5f) + _mainRect.yMin);
-
+                    var cellPosition = new Vector3(_cellSize.x * (column + 0.5f) + _mainRect.xMin, 0.1f,
+                        _cellSize.y * (row + 0.5f) + _mainRect.yMin);
+                    
                     var newObject = Instantiate(_cellVisual, cellPosition, Quaternion.identity);
-                    newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.5f, _cellSize.y - 0.05f);
-                    Cells.Add(new Vector2Int(i, j), new Cell(i, j, newObject, pathFindingTest));
+                    newObject.transform.localScale = new Vector3(_cellSize.x - 0.05f, 0.1f, _cellSize.y - 0.05f);
+                    Cells.Add(new Vector2Int(row, column), new Cell(row, column, newObject, pathFindingTest));
                 }
             }
         }
@@ -115,23 +113,25 @@ namespace SecondBreath.Game.Battle
         private Cell GetCellByWorldPosition(Vector3 point)
         {
             point.y = 0.0f;
-            int xPos = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
-            int yPos = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
-            return GetCell(xPos, yPos);
+            int column = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
+            int row = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
+            return GetCell(row, column);
         }
 
         private List<Cell> GetCellByWorldPosition(Vector3 point, float radius)
         {
             point.y = 0.0f;
-            int xPos = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
-            int yPos = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
+            var column = Mathf.FloorToInt((point.x - _mainRect.xMin) / _cellSize.x);
+            var row = Mathf.FloorToInt((point.z - _mainRect.yMin) / _cellSize.y);
             
             HashSet<Tuple<int, int>> flaged = new HashSet<Tuple<int, int>>();
             List<Cell> activeCells = new List<Cell>();
+
+            var cell = GetCell(row, column);
+            activeCells.Add(cell);
+            flaged.Add(new Tuple<int, int>(row, column));
+            var listIndex = 0;
             
-            activeCells.Add(GetCell(xPos, yPos));
-            flaged.Add(new Tuple<int, int>(xPos, yPos));
-            int listIndex = 0;
             while (listIndex < activeCells.Count)
             {
                 var cellIndexes = activeCells[listIndex]._indexes;
@@ -139,17 +139,17 @@ namespace SecondBreath.Game.Battle
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        if (cellIndexes.x + i < _hSize && cellIndexes.x + i > -1 &&
-                            cellIndexes.y + j < _wSize && cellIndexes.y + j > -1 &&
+                        if (cellIndexes.x + i < _rows && cellIndexes.x + i > -1 &&
+                            cellIndexes.y + j < _columns && cellIndexes.y + j > -1 &&
                             !flaged.Contains(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j)))
                         {
-                            var cell = GetCell(cellIndexes.x + i, cellIndexes.y + j);
-                            var cellPosition = cell.GetCellPosition();
+                            var neighbourCell = GetCell(cellIndexes.x + i, cellIndexes.y + j);
+                            var cellPosition = neighbourCell.GetCellPosition();
                             cellPosition.y = 0.0f;
                             if (Vector3.Distance(point, cellPosition) <= radius)
                             {
                                 flaged.Add(new Tuple<int, int>(cellIndexes.x + i, cellIndexes.y + j));
-                                activeCells.Add(cell);
+                                activeCells.Add(neighbourCell);
                             }
                         }
                     }
@@ -160,6 +160,7 @@ namespace SecondBreath.Game.Battle
             
             return activeCells;
         }
+        
         private List<Cell> GetNearCells(Cell cell)
         {
             Cell chosenCell;
@@ -170,8 +171,8 @@ namespace SecondBreath.Game.Battle
                 for (int j = -1; j <= 1; j++)
                 {
                     if (i == 0 && j == 0) continue;
-                    if ((cell._indexes.x + i < _hSize) && (cell._indexes.x + i > -1) && 
-                        (cell._indexes.y + j < _wSize) && (cell._indexes.y + j > -1))
+                    if ((cell._indexes.x + i < _rows) && (cell._indexes.x + i > -1) && 
+                        (cell._indexes.y + j < _columns) && (cell._indexes.y + j > -1))
                     {
                         centerIndex = cell._indexes + new Vector2Int(i, j);
                         chosenCell = Cells.GetValue(centerIndex);
@@ -201,6 +202,8 @@ namespace SecondBreath.Game.Battle
             }
             Cell finishCell = GetCellByWorldPosition(finishPosition.Position.Value);
             Cell startCell = GetCellByWorldPosition(startPosition.Position.Value);
+
+            if (finishCell == null || startCell == null) return startPosition.Position.Value;
             
             finishCell.CellCost = Mathf.Infinity;
             
